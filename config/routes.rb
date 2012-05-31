@@ -1,4 +1,8 @@
 Bitlag::Application.routes.draw do
+  get "utily/fbtest"
+  
+  match "parse_facebook_cookies" =>  'utily#parse_facebook_cookies'
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

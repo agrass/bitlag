@@ -3,10 +3,30 @@
 <head>
   <title>Bitlag</title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
+  <%= javascript_include_tag "application" %> 
+   <script type="text/javascript" src="http://connect.facebook.net/en_US/all.js">
   <%= csrf_meta_tags %>
 </head>
 <body>
+	<div id="fb-root"></div>
+ 
+<script type="text/javascript">
+ FB.init({
+ appId  : '<%= Facebook::APP_ID %>',
+ status : true, // check login status
+ cookie : true, // enable cookies to allow the server to access the session
+ xfbml  : true  // parse XFBML
+ });
+ 
+ FB.login(function(response) {
+ if (response.session) {
+ location.href = '/home'
+ } else {
+ // user cancelled login
+ }
+});
+</script>
+	
 
 <%= yield %>
 
