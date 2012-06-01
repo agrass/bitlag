@@ -3,6 +3,7 @@
 <head>
   <title>Bitlag</title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= stylesheet_link_tag 'gmaps4rails' %>
   <%= javascript_include_tag "application" %> 
    <script type="text/javascript" src="http://connect.facebook.net/en_US/all.js">
   <%= csrf_meta_tags %>
@@ -29,6 +30,6 @@
 	
 
 <%= yield %>
-
+<%= yield :scripts %>
 </body>
 </html>

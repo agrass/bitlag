@@ -1,4 +1,6 @@
 Bitlag::Application.routes.draw do
+  resources :events
+
   get "utily/fbtest"
   
   match "parse_facebook_cookies" =>  'utily#parse_facebook_cookies'
