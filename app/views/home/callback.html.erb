@@ -1,0 +1,10 @@
+My events<br />
+<ul>
+
+<% @eventos.each do |evento| %>
+<%= evento["name"] %> (<i><%=evento["start_time"]%></i>)<hr>
+<% end %>
+</ul>
+
+
+

@@ -1,7 +1,14 @@
 Bitlag::Application.routes.draw do
-  get "utily/fbtest"
+  get "home/index"
+
+  resources :events
+
+  get "utily/fbtest" 
+
   
-  match "parse_facebook_cookies" =>  'utily#parse_facebook_cookies'
+  root :to => 'home#index'
+
+  match 'home/callback' => 'home#callback'
   
   # The priority is based upon order of creation:
   # first created -> highest priority.
