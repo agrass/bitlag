@@ -1,10 +1,10 @@
 Bitlag::Application.routes.draw do
+
   get "home/index"
 
   resources :events
 
-  get "utily/fbtest" 
-
+  get "utily/fbtest"  
   
   root :to => 'home#index'
 
