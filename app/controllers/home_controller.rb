@@ -40,10 +40,9 @@ class HomeController < ApplicationController
       #@friend_event = @api.get_object(friendq, "fields"=>"name, id, owner, description, start_time, end_time, location, venue, privacy, picture")      
       #@friend_event.each do |fevent|        
      #Event.create(:name => fevent["name"], :address => fevent["location"]) 
-    # end
-          
+    # end        
       
-    end
+    #end
     
     
     
