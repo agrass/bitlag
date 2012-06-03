@@ -1,10 +1,15 @@
 My events<br />
 <ul>
 
-<% @eventos.each do |evento| %>
+<% @friend_event.each do |evento| %>
 <%= evento["name"] %> (<i><%=evento["start_time"]%></i>)<hr>
 <% end %>
 </ul>
 
+
+<p><%= session[:friend_count] %></p>
+
+<p><%=  @temp_friend %></p>
+ 
 
 

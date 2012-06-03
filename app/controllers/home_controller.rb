@@ -20,32 +20,50 @@ class HomeController < ApplicationController
      # auth established, now do a graph call:
       
     @api = Koala::Facebook::API.new(session[:access_token])
-    begin
-      @eventos= @api.get_object("/me/events", "fields"=>"name, id, owner, description, start_time, end_time, location, venue, privacy, picture")
-    rescue Exception=>ex
-      puts ex.message
+    
+    if session[:friend_list] == nil      
+      session[:friend_count] = 0
     end
-    
-    
-       begin
-      @amigos= @api.get_object("/me/friends")
-    rescue Exception=>ex
-      puts ex.message
-    end
-    
-    
-    #funciona pero se queda muy pegado
-      #@amigos.each do |friend|      
-      #friendq = "/" +friend["id"] + "/events"      
-      #@friend_event = @api.get_object(friendq, "fields"=>"name, id, owner, description, start_time, end_time, location, venue, privacy, picture")      
-      #@friend_event.each do |fevent|        
-     #Event.create(:name => fevent["name"], :address => fevent["location"]) 
-    # end        
+   
+      @eventos= @api.get_object("/me/events", "fields"=>"name, id, owner, description, start_time, end_time, location, venue, privacy, picture")      
+      @amigos= @api.get_object("/me/friends", "fields"=>"id")   
+        
+        
+      #obtener los 10 proximos amigos
+      temp_max = [10, @amigos.length].min
+      @temp_friend = @amigos[session[:friend_count]..temp_max]
       
-    #end
+      #achicar el arreglo de amigos
+      @amigos = @amigos[temp_max..@amigos.length - 1]
+      
+      session[:friend_count] = session[:friend_count] + temp_max
     
     
+      @temp_friend.each do |friend|      
+      friendq = "/" +friend["id"] + "/events"      
+      @friend_event = @api.get_object(friendq, "fields"=>"name, id, owner, description, start_time, end_time, location, venue, privacy, picture")           
+           
+     @friend_event.each do |fevent|
+       if fevent!= nil
+       #si tiene un id de venue asociado
+       
+       if fevent["venue"] != nil
+       if fevent["venue"]["id"] != nil
+         @venue= @api.get_object("/"+fevent["venue"]["id"], "fields"=>"location")         
+         Event.create(:name => fevent["name"], :latitude => @venue["location"]["latitude"], :longitude =>  @venue["location"]["longitude"] )    
+       elsif fevent["venue"]["latitude"] != nil
+         Event.create(:name => fevent["name"],  :latitude => fevent["venue"]["latitude"], :longitude =>  fevent["venue"]["longitude"] )
+       end
+       else
+         Event.create(:name => fevent["name"], :address => fevent["location"])
+       end
+       end
+       
     
+     end        
+      
+    end
+
   
     respond_to do |format|
      format.html {   }       
