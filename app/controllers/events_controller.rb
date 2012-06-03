@@ -2,8 +2,8 @@ class EventsController < ApplicationController
   # GET /events
   # GET /events.json
   def index
-    @events = Event.all
-	@json = Event.all.to_gmaps4rails
+  @events = Event.find :all, :conditions => ['privacy = "OPEN" AND end_time >= ?', Time.now.utc]
+	@json = @events.to_gmaps4rails
 	
     respond_to do |format|
       format.html # index.html.erb

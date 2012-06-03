@@ -21,7 +21,7 @@ class HomeController < ApplicationController
       
     @api = Koala::Facebook::API.new(session[:access_token])
     
-    if session[:friend_list] == nil      
+    if session[:friend_count] == nil      
       session[:friend_count] = 0
     end
    
@@ -30,39 +30,23 @@ class HomeController < ApplicationController
         
         
       #obtener los 10 proximos amigos
-      temp_max = [10, @amigos.length].min
-      @temp_friend = @amigos[session[:friend_count]..temp_max]
+      temp_max = [session[:friend_count] + 10, @amigos.length].min
+      @temp_friend = @amigos[session[:friend_count]..temp_max]      
       
-      #achicar el arreglo de amigos
-      @amigos = @amigos[temp_max..@amigos.length - 1]
       
-      session[:friend_count] = session[:friend_count] + temp_max
+      session[:friend_count] = session[:friend_count] + 10
     
     
       @temp_friend.each do |friend|      
       friendq = "/" +friend["id"] + "/events"      
       @friend_event = @api.get_object(friendq, "fields"=>"name, id, owner, description, start_time, end_time, location, venue, privacy, picture")           
            
-     @friend_event.each do |fevent|
-       if fevent!= nil
-       #si tiene un id de venue asociado
-       
-       if fevent["venue"] != nil
-       if fevent["venue"]["id"] != nil
-         @venue= @api.get_object("/"+fevent["venue"]["id"], "fields"=>"location")         
-         Event.create(:name => fevent["name"], :latitude => @venue["location"]["latitude"], :longitude =>  @venue["location"]["longitude"] )    
-       elsif fevent["venue"]["latitude"] != nil
-         Event.create(:name => fevent["name"],  :latitude => fevent["venue"]["latitude"], :longitude =>  fevent["venue"]["longitude"] )
-       end
-       else
-         Event.create(:name => fevent["name"], :address => fevent["location"])
-       end
-       end
-       
-    
-     end        
-      
-    end
+    @friend_event.each do |fevent|
+     
+    Event.add_from_facebook(fevent, @api)
+     
+     end #end fevent do    
+    end #end friend do
 
   
     respond_to do |format|

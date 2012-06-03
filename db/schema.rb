@@ -19,8 +19,19 @@ ActiveRecord::Schema.define(:version => 20120601204426) do
     t.float    "longitude"
     t.float    "latitude"
     t.boolean  "gmaps"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.string   "description"
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.string   "location"
+    t.integer  "fb_id",       :limit => 8
+    t.integer  "owner_id",    :limit => 8
+    t.string   "city"
+    t.string   "country"
+    t.string   "picture"
+    t.integer  "atenders"
+    t.string   "privacy"
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
   end
 
 end
