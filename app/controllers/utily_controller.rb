@@ -2,19 +2,67 @@ class UtilyController < ApplicationController
 
  require 'koala'  
  
-before_filter :parse_facebook_cookies
-def parse_facebook_cookies
- @facebook_cookies = Koala::Facebook::OAuth.new.get_user_info_from_cookie(cookies)
-end
+
     
   def fbtest
-    @facebook_cookies = Koala::Facebook::OAuth.new.get_user_info_from_cookie(cookies)
-    
-    
-    @graph = Koala::Facebook::GraphAPI.new
-    @example = @graph.get_object("koppel")
    
+    @token_app = session[:oauth].get_app_access_token
+    
+    @api = Koala::Facebook::API.new(@token_app)
+    
+    @amigos= @api.get_object("/727525843/friends", "fields"=>"id") 
+    
+    @amigos = @amigos[10..15]
+    
+    @friend_event = []
+    
+    @amigos.each do |friend|
+    
+    @friendq = "/" +friend["id"]+ "/events"   
+    
+    @friend_event << @api.get_object(@friendq, "fields"=>"name, id, owner, description, start_time, end_time, location, venue, privacy, picture")
+    
+    end 
   end
+  
+  
+  #respuesta al facebook
+  def callback
+    
+    if params[:code]
+      # acknowledge code and get access token from FB
+      session[:access_token] = session[:oauth].get_access_token(params[:code])
+    end   
+
+     # auth established, now do a graph call:
+      
+    @api = Koala::Facebook::API.new(session[:access_token])    
+ 
+    @me= @api.get_object("/me")      
+    
+    User.create(:fb_id => @me["id"], :access_token => session[:access_token])
+    
+    session[:user_id] = @me["id"]      
+  
+    respond_to do |format|
+     format.html {   }       
+    end
+    
+    redirect_to root_path
+  end
+  
+  
+  def logout
+    session[:user_id] = nil
+    redirect_to root_path
+  end
+  
+  
+  
+  
+  
+  
+  
 end
 
 def redirect

@@ -1,5 +1,7 @@
 Bitlag::Application.routes.draw do
 
+  resources :users
+
   get "home/index"
 
   resources :events
@@ -8,7 +10,9 @@ Bitlag::Application.routes.draw do
   
   root :to => 'events#index'
 
-  match 'home/callback' => 'home#callback'
+  match 'callback' => 'utily#callback'
+  
+   match 'logout' => 'utily#logout'
   
   match 'home/ajaxcallback' => 'home#ajax_callback'
  

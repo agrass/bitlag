@@ -2,8 +2,8 @@ class EventsController < ApplicationController
   # GET /events
   # GET /events.json
   def index
-    session[:oauth] = Koala::Facebook::OAuth.new(APP_ID, APP_SECRET, SITE_URL + '/home/callback')
-    @auth_url =  session[:oauth].url_for_oauth_code(:permissions=>"read_stream")  
+    session[:oauth] = Koala::Facebook::OAuth.new(APP_ID, APP_SECRET, SITE_URL + '/callback')
+    @auth_url =  session[:oauth].url_for_oauth_code(:permissions=>"email, user_events, friends_events, offline_access, rsvp_event")  
     puts session.to_s + "<<< session"
     
   @events = Event.find :all, :conditions => ['privacy = "OPEN" AND end_time >= ?', Time.now.utc]

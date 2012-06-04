@@ -12,7 +12,7 @@
   <% if session[:friend_count] != nil %>
 <script>
 	
-	loadEvents(<%=session[:friend_count] %>);
+	//loadEvents(<%=session[:friend_count] %>);
 	
 
 	
@@ -44,7 +44,13 @@
 	<div id ="head">
 		<h1>Bitlag <sup>beta</sup></h1>
 		<div id="headLogin">
+			<% if session[:user_id] == nil %>
 			<%= link_to 'Facebook Login', @auth_url, :class=>"button"%>
+			
+			<% else %>
+			<%= link_to 'Logout', logout_path , :class=>"button"%>
+			<% end %>
+			
 			</div>
 		
 		</div>
