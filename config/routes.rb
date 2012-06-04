@@ -6,9 +6,12 @@ Bitlag::Application.routes.draw do
 
   get "utily/fbtest"  
   
-  root :to => 'home#index'
+  root :to => 'events#index'
 
   match 'home/callback' => 'home#callback'
+  
+  match 'home/ajaxcallback' => 'home#ajax_callback'
+ 
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

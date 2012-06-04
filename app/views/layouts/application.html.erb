@@ -8,11 +8,62 @@
   <%= javascript_include_tag "application" %> 
 
   <%= csrf_meta_tags %>
+  
+  <% if session[:friend_count] != nil %>
+<script>
+	
+	loadEvents(<%=session[:friend_count] %>);
+	
+
+	
+	function loadEvents(value )
+	{
+		if(value < <%= session[:friend_total] %>)
+		{
+	$(document).ready(function increment(){
+	$('#rightSide').load('home/ajaxcallback', function() {  
+  loadEvents(value + 10)
+});
+
+});
+			
+			
+		}
+		
+		
+	}
+	
+	
+	
+</script>
+
+<% end %>
 </head>
 <body>
+	
+	<div id ="head">
+		<h1>Bitlag <sup>beta</sup></h1>
+		<div id="headLogin">
+			<%= link_to 'Facebook Login', @auth_url, :class=>"button"%>
+			</div>
+		
+		</div>
+		
+		<div id="leftSide">
+			</div>
+			
+			<div id="center">
+				<%= yield %>
+				<%= yield :scripts %>
+				</div>
 
-<%= yield %>
-<%= yield :scripts %>
+<div id="rightSide">
+	hola
+	</div>
+
+<div id="footer"></div>
+
+
 
 </body>
 </html>

@@ -7,7 +7,7 @@ def gmaps4rails_address
 end
 
 def gmaps4rails_infowindow
-         "<p><h2>#{name}</h2></p><p>#{address}</p>"
+         "<p><strong>#{name}</strong></p><p>#{address}</p><p>#{start_time}</P"
 end
 
 #agregar un evento desde el json de facebook

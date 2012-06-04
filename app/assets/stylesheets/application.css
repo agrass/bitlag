@@ -11,3 +11,41 @@
  *= require_self
  *= require_tree .
 */
+
+/* style the head section */
+
+/* reset */
+* {	margin: 0; padding: 0; }
+
+/* tell the browser to render HTML 5 elements as block */
+header, footer, section, aside, nav, article { display: block; }
+
+/* basic styles */
+body { font-size: 14px; line-height: 1.5em; font-family: Verdana,Helvetica,Arial,sans-serif; background-color: #ffffff; }
+
+h1 { font-size: 18px; margin-bottom: 40px; }
+h2 { font-size: 16px; margin-bottom: 30px; }
+h3 { font-size: 14px; margin-bottom: 20px; }
+h4, h5, h6 { font-size: 14px; margin-bottom: 10px; }
+
+ul { list-style: square; margin: 0 0 0 40px; padding: 0; }
+
+p { margin: 0 0 10px 0; }
+.small { font-size: 12px; }
+.nomargin { margin: 0; }
+
+a { color: #74809a; text-decoration: none !important;}
+a:visited { color: #74809a; }
+a:hover { color: #c81419; }
+
+#head { margin-bottom: 20px; padding: 0px 20px 20px 20px; border-bottom: 1px solid #bbbbbb; background-color: #eeeeee; }
+#head h1 { font-size: 24px; color: #c81419; margin: 0; }
+#head h1 sup { color: #74809a; font-style: italic; }
+
+
+#headLogin {float:right; margin-right: 20px; margin-bottom: 5px;}
+
+
+#leftSide{ float:left;}
+#center{ float:left; }
+#rightSide{float:left;}
