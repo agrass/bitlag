@@ -1,5 +1,16 @@
 class Event < ActiveRecord::Base
 acts_as_gmappable
+has_and_belongs_to_many :tags
+
+before_save :set_tag
+
+def set_tag
+   Tag.find(:all).each do |tag|
+      if !(self.name =~ /#{tag.expression}/).nil? || !(self.description =~ /#{tag.expression}/).nil?
+	    self.tags.push(tag)
+	  end
+   end
+end
 
 def gmaps4rails_address
 #describe how to retrieve the address from your model, if you use directly a db column, you can dry your code, see wiki
@@ -8,6 +19,14 @@ end
 
 def gmaps4rails_infowindow
          "<p><strong>#{name}</strong></p><p>#{address}</p><p>#{start_time}</P"
+end
+
+def gmaps4rails_marker_picture
+  {
+   "picture" => "/assets/#{self.tags.first().name}.png",
+   "width" => 60,
+   "height" => 80,
+   }
 end
 
 #agregar un evento desde el json de facebook

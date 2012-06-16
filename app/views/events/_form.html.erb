@@ -28,6 +28,18 @@
     <%= f.text_field :latitude %>
   </div>
   <div class="field">
+    <%= f.label :privacy %><br />
+    <%= f.text_field :privacy %>
+  </div>
+  <div class="field">
+    <%= f.label :start_time %><br />
+    <%= f.datetime_select :start_time %>
+  </div>
+  <div class="field">
+    <%= f.label :end_time %><br />
+    <%= f.datetime_select :end_time %>
+  </div>
+  <div class="field">
     <%= f.label :gmaps %><br />
     <%= f.check_box :gmaps %>
   </div>

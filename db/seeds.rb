@@ -5,3 +5,5 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
+Tag.create(:name =>'fiesta', :expression => '(.*)[Ff][Ii][Ee][Ss][Tt][Aa](.*)')
+Tag.create(:name =>'otro', :expression => '(.*)')
