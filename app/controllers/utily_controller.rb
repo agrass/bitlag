@@ -8,7 +8,7 @@ class UtilyController < ApplicationController
    
     @token_app = session[:oauth].get_app_access_token
     
-    @api = Koala::Facebook::API.new(@token_app)
+    @api = Koala::Facebook::API.new(@token_app)    
     
     @amigos= @api.get_object("/727525843/friends", "fields"=>"id") 
     
@@ -40,7 +40,13 @@ class UtilyController < ApplicationController
  
     @me= @api.get_object("/me")      
     
+    @user = User.find_by_fb_id(@me["id"]) 
+    if @user == nil
     User.create(:fb_id => @me["id"], :access_token => session[:access_token])
+    else
+      @user.update_attributes(:acces_token => session[:access_token])
+      
+    end
     
     session[:user_id] = @me["id"]      
   

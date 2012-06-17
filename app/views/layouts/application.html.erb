@@ -7,37 +7,8 @@
   <%= javascript_include_tag "application" %>  
   <%= javascript_include_tag "application" %> 
 
-  <%= csrf_meta_tags %>
-  
-  <% if session[:friend_count] != nil %>
-<script>
-	
-	//loadEvents(<%=session[:friend_count] %>);
-	
+  <%= csrf_meta_tags %> 
 
-	
-	function loadEvents(value )
-	{
-		if(value < <%= session[:friend_total] %>)
-		{
-	$(document).ready(function increment(){
-	$('#rightSide').load('home/ajaxcallback', function() {  
-  loadEvents(value + 10)
-});
-
-});
-			
-			
-		}
-		
-		
-	}
-	
-	
-	
-</script>
-
-<% end %>
 </head>
 <body>
 	
@@ -64,7 +35,7 @@
 				</div>
 
 <div id="rightSide">
-	hola
+	<%= link_to 'Add Events', add_events_path %>
 	</div>
 
 <div id="footer"></div>

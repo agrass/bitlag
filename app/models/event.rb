@@ -12,19 +12,25 @@ end
 
 #agregar un evento desde el json de facebook
 def self.add_from_facebook(fevent , api)
-  if Event.find_by_fb_id(fevent["id"]) == nil
-    if fevent!= nil       
-      if fevent["venue"] != nil
+  if Event.find_by_fb_id(fevent["eid"]) == nil
+    #ver la cantidad de asistentes
+    @attending= api.get_object("/"+fevent["eid"].to_s + "/attending", "fields"=>"id")
+    @attending = @attending.length
+    
+    
+    if fevent!= nil  
+      if fevent["venue"].count > 0
           if fevent["venue"]["id"] != nil
-         @venue= api.get_object("/"+fevent["venue"]["id"], "fields"=>"location")         
-         Event.create(:name => fevent["name"], :latitude => @venue["location"]["latitude"], :longitude =>  @venue["location"]["longitude"], :fb_id => fevent["id"], :start_time => fevent["start_time"], :end_time => fevent["end_time"], :privacy => fevent["privacy"]  )    
+         @venue= api.get_object("/"+fevent["venue"]["id"].to_s, "fields"=>"location")         
+         Event.create(:name => fevent["name"], :description => fevent["description"], :latitude => @venue["location"]["latitude"], :longitude =>  @venue["location"]["longitude"], :fb_id => fevent["eid"], :start_time => fevent["start_time"], :end_time => fevent["end_time"], :privacy => fevent["privacy"], :atenders => @attending, :gmaps => false )    
           elsif fevent["venue"]["latitude"] != nil
-         Event.create(:name => fevent["name"],  :latitude => fevent["venue"]["latitude"], :longitude =>  fevent["venue"]["longitude"], :fb_id => fevent["id"], :start_time => fevent["start_time"], :end_time => fevent["end_time"], :privacy => fevent["privacy"]  )
+         Event.create(:name => fevent["name"], :description => fevent["description"],  :latitude => fevent["venue"]["latitude"], :longitude =>  fevent["venue"]["longitude"], :fb_id => fevent["eid"], :start_time => fevent["start_time"], :end_time => fevent["end_time"], :privacy => fevent["privacy"], :atenders => @attending, :gmaps => false)
           end
       else
-         Event.create(:name => fevent["name"], :address => fevent["location"], :fb_id => fevent["id"], :start_time => fevent["start_time"], :end_time => fevent["end_time"], :privacy => fevent["privacy"]  )
+         Event.create(:name => fevent["name"], :description => fevent["description"], :location => fevent["location"], :fb_id => fevent["eid"], :start_time => fevent["start_time"], :end_time => fevent["end_time"], :privacy => fevent["privacy"] , :atenders => @attending, :gmaps => true  )
       end
-     end
+     end     
+     
    end #end fb_id
 end
 

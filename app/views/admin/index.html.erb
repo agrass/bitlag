@@ -1,0 +1,67 @@
+
+
+  
+<script>
+	
+	
+		$(document).ready(function increment(){
+    refreshCount();
+			
+	loadEvents(0);
+	
+	
+	
+	
+	}
+	
+);
+
+
+	function loadEvents(value )
+	{
+		
+
+	$('#rightSide').load('admin/add_events/'+value, function() { 
+		
+		 if(value + 1 < <%=User.count%> )
+		 {
+  			loadEvents(value + 1)
+  			
+  		}
+  		
+  		else
+  		{
+  			alert("termino");
+  		}
+});
+
+}
+
+
+	function refreshCount()
+	{
+		
+	
+	 setTimeout( function()
+      {
+           $('#rightSide').load('admin/refresh/', function() { 
+    
+    refreshCount()
+    
+    });
+      }, 2000);	
+	
+	
+		}
+		
+		
+	
+	
+	</script>
+	
+
+
+
+
+<h1>Admin#add_events</h1>
+

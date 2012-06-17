@@ -1,5 +1,7 @@
 Bitlag::Application.routes.draw do
 
+
+
   resources :users
 
   get "home/index"
@@ -7,14 +9,18 @@ Bitlag::Application.routes.draw do
   resources :events
 
   get "utily/fbtest"  
-  
   root :to => 'events#index'
+  
+  #facebook callback y logout
+  match 'callback' => 'utily#callback'  
+  match 'logout' => 'utily#logout'
+  
+  #agregar eventos 
+  match 'admin' => 'admin#index'
+  match "add_events" => 'admin#add_events', :as => 'add_events'
+  match "admin/refresh" => 'admin#refresh_count'
+  
 
-  match 'callback' => 'utily#callback'
-  
-   match 'logout' => 'utily#logout'
-  
-  match 'home/ajaxcallback' => 'home#ajax_callback'
  
   
   # The priority is based upon order of creation:

@@ -8,21 +8,19 @@
 <table>
   <tr>
     <th>Name</th>
-    <th>Address</th> 
-    <th></th>
-    <th></th>
-    <th></th>
+
   </tr>
 
 <% @events.each do |event| %>
   <tr>
     <td><%= event.name %></td>
-    <td><%= event.address %></td>
-    <td><%= event.longitude %></td>
-    <td><%= event.latitude %></td>  
+   
+   
   </tr>
 <% end %>
 </table>
 
 
 <%= link_to 'New Event', new_event_path %>
+
+<%= Time.now.to_i%>
