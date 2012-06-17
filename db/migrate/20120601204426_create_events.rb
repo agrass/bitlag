@@ -8,7 +8,7 @@ class CreateEvents < ActiveRecord::Migration
       t.string :description
       t.timestamp :start_time
       t.timestamp :end_time
-      t.string :location
+      t.string :address
       t.integer :fb_id, :limit => 8
       t.integer :owner_id, :limit => 8
       t.string :city

@@ -14,7 +14,11 @@ end
 
 def gmaps4rails_address
 #describe how to retrieve the address from your model, if you use directly a db column, you can dry your code, see wiki
-   "#{self.latitude}, #{self.longitude}"
+   if self.latitude   
+   return "#{self.latitude}, #{self.longitude}"
+   else
+     return address
+   end
 end
 
 def gmaps4rails_infowindow
@@ -36,21 +40,29 @@ def self.add_from_facebook(fevent , api)
     @attending= api.get_object("/"+fevent["eid"].to_s + "/attending", "fields"=>"id")
     @attending = @attending.length
     
-    
+    @temp = Event.new
     if fevent!= nil  
       if fevent["venue"].count > 0
           if fevent["venue"]["id"] != nil
          @venue= api.get_object("/"+fevent["venue"]["id"].to_s, "fields"=>"location")         
-         Event.create(:name => fevent["name"], :description => fevent["description"], :latitude => @venue["location"]["latitude"], :longitude =>  @venue["location"]["longitude"], :fb_id => fevent["eid"], :start_time => fevent["start_time"], :end_time => fevent["end_time"], :privacy => fevent["privacy"], :atenders => @attending, :gmaps => false )    
+        @temp = Event.new(:name => fevent["name"], :description => fevent["description"], :address => fevent["location"],  :latitude => @venue["location"]["latitude"], :longitude =>  @venue["location"]["longitude"], :fb_id => fevent["eid"], :start_time => fevent["start_time"], :end_time => fevent["end_time"], :privacy => fevent["privacy"], :atenders => @attending )    
           elsif fevent["venue"]["latitude"] != nil
-         Event.create(:name => fevent["name"], :description => fevent["description"],  :latitude => fevent["venue"]["latitude"], :longitude =>  fevent["venue"]["longitude"], :fb_id => fevent["eid"], :start_time => fevent["start_time"], :end_time => fevent["end_time"], :privacy => fevent["privacy"], :atenders => @attending, :gmaps => false)
-          end
+         @temp = Event.new(:name => fevent["name"], :description => fevent["description"], :address => fevent["location"],  :latitude => fevent["venue"]["latitude"], :longitude =>  fevent["venue"]["longitude"], :fb_id => fevent["eid"], :start_time => fevent["start_time"], :end_time => fevent["end_time"], :privacy => fevent["privacy"], :atenders => @attending)
+          else
+         @temp = Event.new(:name => fevent["name"], :description => fevent["description"], :address => fevent["location"], :fb_id => fevent["eid"], :start_time => fevent["start_time"], :end_time => fevent["end_time"], :privacy => fevent["privacy"] , :atenders => @attending, :gmaps => true)
+      end         
       else
-         Event.create(:name => fevent["name"], :description => fevent["description"], :location => fevent["location"], :fb_id => fevent["eid"], :start_time => fevent["start_time"], :end_time => fevent["end_time"], :privacy => fevent["privacy"] , :atenders => @attending, :gmaps => true  )
+         @temp = Event.new(:name => fevent["name"], :description => fevent["description"], :address => fevent["location"], :fb_id => fevent["eid"], :start_time => fevent["start_time"], :end_time => fevent["end_time"], :privacy => fevent["privacy"] , :atenders => @attending, :gmaps => true)
       end
      end     
      
+     if !@temp.save
+       
+      return @temp.errors
+     end
    end #end fb_id
+   
+   return nil
 end
 
 

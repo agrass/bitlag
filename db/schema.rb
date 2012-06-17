@@ -41,6 +41,13 @@ ActiveRecord::Schema.define(:version => 20120615202534) do
 
   add_index "events_tags", ["event_id", "tag_id"], :name => "index_events_tags_on_event_id_and_tag_id"
 
+  create_table "fb_infos", :force => true do |t|
+    t.string   "fb_id"
+    t.string   "access_token"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
   create_table "tags", :force => true do |t|
     t.string   "name"
     t.string   "expression"

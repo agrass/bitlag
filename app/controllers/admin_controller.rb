@@ -47,8 +47,15 @@ class AdminController < ApplicationController
     @events.each do |evento| 
    
       @fevent = @api.fql_query(" SELECT eid, name, description, venue, location, start_time, end_time, privacy from event where eid = " + evento["eid"].to_s)      
-      Event.add_from_facebook(@fevent[0], @api)
-      @qry += @fevent[0].to_s
+      @error = Event.add_from_facebook(@fevent[0], @api)
+      if @error
+       @error.full_messages.each do |msg|
+        @qry += '<li>'+ msg + '</li>'       
+      end
+      else
+        @qry += @agregados.to_s
+      end      
+     
       @agregados = @agregados + 1       
     end
     
