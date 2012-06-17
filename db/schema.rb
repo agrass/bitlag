@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120604203528) do
+ActiveRecord::Schema.define(:version => 20120615202534) do
 
   create_table "events", :force => true do |t|
     t.string   "name"
@@ -34,11 +34,18 @@ ActiveRecord::Schema.define(:version => 20120604203528) do
     t.datetime "updated_at",               :null => false
   end
 
-  create_table "fb_infos", :force => true do |t|
-    t.string   "fb_id"
-    t.string   "access_token"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+  create_table "events_tags", :id => false, :force => true do |t|
+    t.integer "event_id"
+    t.integer "tag_id"
+  end
+
+  add_index "events_tags", ["event_id", "tag_id"], :name => "index_events_tags_on_event_id_and_tag_id"
+
+  create_table "tags", :force => true do |t|
+    t.string   "name"
+    t.string   "expression"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "users", :force => true do |t|
