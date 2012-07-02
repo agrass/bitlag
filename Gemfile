@@ -7,7 +7,13 @@ gem 'koala', '1.3.0'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'sqlite3'
+gem 'heroku'
+group :development, :test do
+   gem 'sqlite3'
+end
+group :production do
+   gem 'pg'
+end
 
 gem 'gmaps4rails'
 
