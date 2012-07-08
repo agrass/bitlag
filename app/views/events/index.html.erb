@@ -1,7 +1,33 @@
 
+ <script type="text/javascript">
+ $(document).ready(function(){
+ if(navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(geo_success);
+  }
+
+  function geo_success(position)
+  {
+    Gmaps.map.createMarker({
+                        Lat: position.coords.latitude,
+                        Lng: position.coords.longitude, 
+                        rich_marker: null, 
+                        marker_picture: "<%= asset_path 'position.png' %>",
+                        marker_width: 60,
+   			marker_height: 80,
+   			marker_anchor: null,
+   			shadow_anchor: null,
+   			shadow_picture: null,
+   			shadow_width: null,
+   			shadow_height: null
+                       });
+    Gmaps.map.serviceObject.setCenter(new google.maps.LatLng(position.coords.latitude,position.coords.longitude));
+  }
+ 
+})
 
 
-<%= gmaps4rails(@json) %>
+</script>
+<%= gmaps(:map_options => {:auto_adjust => false, :detect_location => true, :center_on_user => true, :auto_zoom => false, :zoom => 15}, :markers => {:data => @json, :do_clustering=> true, :clusterer_maxZoom=> 16} ) %>
 
 <br />
 
