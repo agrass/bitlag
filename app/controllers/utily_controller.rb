@@ -44,7 +44,7 @@ class UtilyController < ApplicationController
     if @user == nil
     User.create(:fb_id => @me["id"], :access_token => session[:access_token])
     else
-      @user.update_attributes(:acces_token => session[:access_token])
+      @user.update_attributes(:access_token => session[:access_token])
       
     end
     

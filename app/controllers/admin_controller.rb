@@ -30,12 +30,12 @@ class AdminController < ApplicationController
     end 
     
      
-    @user = User.find(:all)[session[:user_index]]
+    @user = User.find(:all)[1]
       
     @api = Koala::Facebook::API.new(@user.access_token)
     
-    @events = @api.fql_query("SELECT eid from event_member WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = me()) AND rsvp_status = 'attending' AND start_time >"+ Time.now.to_i.to_s+" LIMIT 5 OFFSET "+ session[:offset].to_s)
-    
+    @events = @api.fql_query("SELECT eid from event_member WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = me()) AND rsvp_status = 'attending' AND start_time >"+ Time.now.to_i.to_s)
+    #@events = @api.fql_query("SELECT eid from event_member WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = me()) AND rsvp_status = 'attending' AND start_time >"+ Time.now.to_i.to_s+" LIMIT 5 OFFSET "+ session[:offset].to_s)
     session[:offset] = session[:offset] + 5    
     if @events.length < 2      
       session[:next] = true
@@ -77,6 +77,8 @@ class AdminController < ApplicationController
     @user = User.find(:all)[params[:id].to_i]
       
     @api = Koala::Facebook::API.new(@user.access_token)
+
+    Koala::Facebook::API.new
     
       #agregar mis eventos
       @eventos= @api.get_object("/me/events", "fields"=>"name, id, owner, description, start_time, end_time, location, venue, privacy, picture")      
