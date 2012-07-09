@@ -15,13 +15,14 @@ ActiveRecord::Schema.define(:version => 20120709205221) do
 
   create_table "events", :force => true do |t|
     t.string   "name"
+    t.string   "address"
     t.float    "longitude"
     t.float    "latitude"
     t.boolean  "gmaps"
     t.string   "description"
     t.datetime "start_time"
     t.datetime "end_time"
-    t.string   "address"
+    t.string   "location"
     t.integer  "fb_id",       :limit => 8
     t.integer  "owner_id",    :limit => 8
     t.string   "city"
@@ -49,6 +50,13 @@ ActiveRecord::Schema.define(:version => 20120709205221) do
 
   add_index "expressions", ["tag_id"], :name => "index_expressions_on_tag_id"
 
+  create_table "fb_infos", :force => true do |t|
+    t.string   "fb_id"
+    t.string   "access_token"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
   create_table "tags", :force => true do |t|
     t.string   "name"
     t.datetime "created_at", :null => false
@@ -58,7 +66,6 @@ ActiveRecord::Schema.define(:version => 20120709205221) do
   create_table "users", :force => true do |t|
     t.string   "fb_id"
     t.string   "access_token"
-    t.boolean  "scaned"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
   end
