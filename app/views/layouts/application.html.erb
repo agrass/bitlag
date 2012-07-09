@@ -13,18 +13,24 @@
 <body>
 	
 	<div id ="head">
-		<h1>Bitlag <sup>beta</sup></h1>
+		<%= image_tag "logochico.png"%>
+		
+		
+		
+		
+		
+		<div id="nav_bar">
+			<%= link_to 'Home', '/' %> <%= link_to 'Events', '/' %>  <%= link_to 'Map', maps_path %>  <%= link_to 'Calendar', '/' %> 	 <%= link_to 'Contact', '/' %> 	
+			</div>
+		
+		
 		<div id="headLogin">
-			<% if session[:user_id] == nil %>
-			<%= link_to 'Facebook Login', @auth_url, :class=>"button"%>
-			
-			<% else %>
-			<%= link_to 'Logout', logout_path , :class=>"button"%>
-			<% end %>
 			
 			</div>
 		
 		</div>
+		
+		<div id="main">
 		
 		<div id="leftSide">
 			</div>
@@ -35,10 +41,20 @@
 				</div>
 
 <div id="rightSide">
-	<%= link_to 'Add Events', add_events_path %>
+	
 	</div>
 
-<div id="footer"></div>
+</div>
+
+<div id="footer">
+	<% if session[:user_id] == nil %>
+			<%= link_to 'Facebook Login', @auth_url, :class=>"button"%>
+			
+			<% else %>
+			<%= link_to 'Logout', logout_path , :class=>"button"%>
+			<% end %>
+			<%= link_to 'Add Events', add_events_path %>
+</div>
 
 
 

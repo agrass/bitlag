@@ -14,6 +14,22 @@ class EventsController < ApplicationController
       format.json { render json: @events }
     end
   end
+  
+  
+  def maps
+    session[:oauth] = Koala::Facebook::OAuth.new(APP_ID, APP_SECRET, SITE_URL + '/callback')
+    @auth_url =  session[:oauth].url_for_oauth_code(:permissions=>"email, user_events, friends_events")  
+    puts session.to_s + "<<< session"
+    
+  @events = Event.find :all, :order => 'atenders DESC', :conditions => ['privacy = "OPEN" and start_time > ?', Time.now.to_i]
+  @json = @events.to_gmaps4rails
+  
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @events }
+    end
+    
+  end
 
   # GET /events/1
   # GET /events/1.json

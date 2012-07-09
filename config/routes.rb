@@ -9,7 +9,7 @@ Bitlag::Application.routes.draw do
   resources :events
 
   get "utily/fbtest"  
-  root :to => 'events#index'
+  root :to => 'home#index'
   
   #facebook callback y logout
   match 'callback' => 'utily#callback'  
@@ -19,6 +19,8 @@ Bitlag::Application.routes.draw do
   match 'admin' => 'admin#index'
   match "add_events" => 'admin#add_events', :as => 'add_events'
   match "admin/refresh" => 'admin#refresh_count'
+  
+  match 'maps' => 'events#maps', :as => 'maps'
   
 
  

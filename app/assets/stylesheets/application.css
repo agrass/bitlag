@@ -21,7 +21,9 @@
 header, footer, section, aside, nav, article { display: block; }
 
 /* basic styles */
-body { font-size: 14px; line-height: 1.5em; font-family: Verdana,Helvetica,Arial,sans-serif; background-color: #ffffff; }
+
+body { font-size: 14px; line-height: 1.5em; font-family: Verdana,Helvetica,Arial,sans-serif;  background:  #F2F2F2;  }
+#main{ text-align:center; background-color: #F2F2F2;  }
 
 h1 { font-size: 18px; margin-bottom: 40px; }
 h2 { font-size: 16px; margin-bottom: 30px; }
@@ -38,14 +40,28 @@ a { color: #74809a; text-decoration: none !important;}
 a:visited { color: #74809a; }
 a:hover { color: #c81419; }
 
-#head { margin-bottom: 20px; padding: 0px 20px 20px 20px; border-bottom: 1px solid #bbbbbb; background-color: #eeeeee; }
-#head h1 { font-size: 24px; color: #c81419; margin: 0; }
-#head h1 sup { color: #74809a; font-style: italic; }
 
 
-#headLogin {float:right; margin-right: 20px; margin-bottom: 5px;}
+
+#headLogin {float:right; margin-right: 20px; margin-bottom: 5px; background-color: #F2F2F2; }
 
 
 #leftSide{ float:left;}
-#center{ float:left; }
+#center{  text-align:left; margin:0 auto 0 auto; width: 850px;  }
 #rightSide{float:left;}
+
+#nav_bar{ float: right; margin-right: 15%; margin-bottom: 5px; margin-top: 5px; border-bottom: solid 1px #DCDCDC; width: 600px; margin-top: 20px; padding-bottom: 10px;}
+
+#main{ width: 100%; float: left;}
+
+#footer{ float:left; }
+
+
+.index_menu{  float:left; margin:0 auto 0 auto; width: 850px; text-align:left; }
+
+
+
+.menu_image{ float:left; width: 150px; margin-right: 40px; margin-left: 20px; } 
+.menu_image p { padding-left: 18px; margin-left: 10px; float: left; margin-top: 15px;}
+
+
