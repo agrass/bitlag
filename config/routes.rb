@@ -22,6 +22,8 @@ Bitlag::Application.routes.draw do
   
   match 'maps' => 'events#maps', :as => 'maps'
   
+  match 'lists' => 'events#lists', :as => 'lists'
+  
 
  
   

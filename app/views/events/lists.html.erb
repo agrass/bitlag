@@ -1,0 +1,38 @@
+<% @events.each do |event|  %>
+
+<div class="listObject">
+	
+   <div class="photo">
+   	<%= image_tag "event_standar.png"%>
+	
+	</div>
+	
+	<div class="title">
+	<%= link_to event.name, event %>
+	</div>
+	
+	<div class="date">
+	<%= Time.at(event.start_time).strftime(t('time.formats.short')) %> | <%= Time.at(event.end_time).strftime(t('time.formats.short')) %> 
+	</div>
+	
+	
+	</div>
+
+
+
+<% end %>
+
+
+<% content_for :left do %>
+
+<div class="list_cat">
+	<p><%= link_to t('tags.fiesta'), '/' %></p>
+	<p><%= link_to t('tags.concierto'), '/' %></p>
+	<p><%= link_to t('tags.teatro'), '/' %></p>
+	<p><%= link_to t('tags.cine'), '/' %></p>
+	
+	</div>
+
+<% end %>
+
+

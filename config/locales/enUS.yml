@@ -1,4 +1,16 @@
 enUS:
+  tags:
+    fiesta: fiesta
+    concierto: concierto
+    teatro: teatro
+    cine: cine
+    arte: arte
+    otros: otros   
+  menu:
+    home: Inicio
+    event_list: Lista Eventos
+    map: Mapa
+    calendar: Calendario
   static:
     home: Home
     profile: Profile

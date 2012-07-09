@@ -1,5 +1,11 @@
 class Event < ActiveRecord::Base
 acts_as_gmappable
+acts_as_mappable :default_units => :kms,
+                   :default_formula => :sphere,
+                   :distance_field_name => :distance,
+                   :lat_column_name => :latitude,
+                   :lng_column_name => :longitude
+
 has_and_belongs_to_many :tags
 
 before_save :set_tag
