@@ -20,7 +20,7 @@
 		
 		
 		<div id="nav_bar">
-			<%= link_to 'Home', '/' %> <%= link_to 'Events', '/' %>  <%= link_to 'Map', maps_path %>  <%= link_to 'Calendar', '/' %> 	 <%= link_to 'Contact', '/' %> 	
+			<%= link_to t('menu.home'), '/' %> <%= link_to t('menu.event_list'), lists_path %>  <%= link_to t('menu.map'), maps_path %>  <%= link_to t('menu.calendar'), '/' %> 	 <%= link_to 'Contact', '/' %> 	
 			</div>
 		
 		
@@ -33,6 +33,7 @@
 		<div id="main">
 		
 		<div id="leftSide">
+			<%= yield :left %>
 			</div>
 			
 			<div id="center">

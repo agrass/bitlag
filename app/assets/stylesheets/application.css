@@ -65,3 +65,8 @@ a:hover { color: #c81419; }
 .menu_image p { padding-left: 18px; margin-left: 10px; float: left; margin-top: 15px;}
 
 
+.listObject{ float: left;  width: 850px; height: 80px; margin-top: 15px; border-bottom: solid 1px #DCDCDC; }
+
+.listObject .photo { float: left; width: 65px; }
+
+
