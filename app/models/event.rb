@@ -6,9 +6,12 @@ before_save :set_tag
 
 def set_tag
    Tag.find(:all).each do |tag|
-      if !(self.name =~ /#{tag.expression}/).nil? || !(self.description =~ /#{tag.expression}/).nil?
-	    self.tags.push(tag)
-	  end
+   	tag.expressions.each do |expression|
+		if !(self.name =~ /#{expression.expression}/).nil? || !(self.description =~ /#{expression.expression}/).nil?
+	    		self.tags.push(tag)
+	    		break
+		end
+	end
    end
 end
 
