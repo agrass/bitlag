@@ -29,7 +29,7 @@ class EventsController < ApplicationController
     @auth_url =  session[:oauth].url_for_oauth_code(:permissions=>"email, user_events, friends_events")  
     puts session.to_s + "<<< session"
     
-  @events = Event.find :all, :order => 'atenders DESC', :conditions => ['start_time > ?',  Time.now.to_i]
+  @events = Event.find :all, :order => 'atenders DESC', :conditions => ['start_time > ?',  Time.now]
 	@json = @events.to_gmaps4rails
 	
     respond_to do |format|
@@ -44,7 +44,7 @@ class EventsController < ApplicationController
     @auth_url =  session[:oauth].url_for_oauth_code(:permissions=>"email, user_events, friends_events")  
     puts session.to_s + "<<< session"
     
-  @events = Event.find :all, :order => 'atenders DESC', :conditions => ['start_time > ?', Time.now.to_i]
+  @events = Event.find :all, :order => 'atenders DESC', :conditions => ['start_time > ?', Time.now]
   @json = @events.to_gmaps4rails
   
     respond_to do |format|
