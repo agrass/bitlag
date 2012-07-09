@@ -28,11 +28,10 @@ class AdminController < ApplicationController
     if  session[:offset] == nil
       session[:offset] = 0
     end 
-    
-     
-    @user = User.find(:all)[1]
+        
+  
       
-    @api = Koala::Facebook::API.new(@user.access_token)
+    @api = Koala::Facebook::API.new(session[:access_token])
     
     @events = @api.fql_query("SELECT eid from event_member WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = me()) AND rsvp_status = 'attending' AND start_time >"+ Time.now.to_i.to_s)
     #@events = @api.fql_query("SELECT eid from event_member WHERE uid IN (SELECT uid2 FROM friend WHERE uid1 = me()) AND rsvp_status = 'attending' AND start_time >"+ Time.now.to_i.to_s+" LIMIT 5 OFFSET "+ session[:offset].to_s)
