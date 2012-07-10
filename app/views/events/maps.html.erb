@@ -27,7 +27,7 @@
 
 
 </script>
-<%= gmaps(:map_options => {:auto_adjust => false, :detect_location => true, :center_on_user => true, :auto_zoom => false, :zoom => 15}, :markers => {:data => @json, :do_clustering=> true, :clusterer_maxZoom=> 16} ) %>
+<%= gmaps(:map_options => {:auto_adjust => false, :detect_location => true, :center_on_user => true, :auto_zoom => false, :zoom => 15}, :markers => {:data => @json, :options => {:do_clustering=> true, :clusterer_maxZoom=> 16} } ) %>
 
 <br />
 
