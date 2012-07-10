@@ -24,7 +24,8 @@ Bitlag::Application.routes.draw do
   
   match 'lists' => 'events#lists', :as => 'lists'
   
-
+  #ajax filter
+  match 'filter' => 'events#filter', :as => 'filter'
  
   
   # The priority is based upon order of creation:

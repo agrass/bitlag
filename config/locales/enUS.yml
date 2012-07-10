@@ -1,11 +1,11 @@
 enUS:
   tags:
-    fiesta: fiesta
-    concierto: concierto
-    teatro: teatro
-    cine: cine
-    arte: arte
-    otros: otros   
+    fiesta: Fiesta
+    concierto: Concierto
+    teatro: Teatro
+    cine: Cine
+    arte: Arte
+    todos: Todos   
   menu:
     home: Inicio
     event_list: Lista Eventos

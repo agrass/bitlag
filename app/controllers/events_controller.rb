@@ -21,7 +21,14 @@ class EventsController < ApplicationController
   end
     
     
-  
+  def filter
+    if params[:data]
+       @array = params[:data]
+       @events = Event.find :all
+       @data = @events.to_gmaps4rails
+       render :filter, :layout => false 
+    end
+  end
   
   
   def index
