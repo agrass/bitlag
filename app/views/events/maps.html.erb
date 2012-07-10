@@ -1,39 +1,98 @@
+<style>
+  .menu {opacity:0.4;}
+</style>
 
- <script type="text/javascript">
- $(document).ready(function(){
- if(navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(geo_success);
-  }
-
-  function geo_success(position)
-  {
-    Gmaps.map.createMarker({
-                        Lat: position.coords.latitude,
-                        Lng: position.coords.longitude, 
-                        rich_marker: null, 
-                        marker_picture: "<%= asset_path 'position.png' %>",
-                        marker_width: 60,
-   			marker_height: 80,
-   			marker_anchor: null,
-   			shadow_anchor: null,
-   			shadow_picture: null,
-   			shadow_width: null,
-   			shadow_height: null
-                       });
-    Gmaps.map.serviceObject.setCenter(new google.maps.LatLng(position.coords.latitude,position.coords.longitude));
-  }
- 
-})
-
-
-</script>
 <%= gmaps(:map_options => {:auto_adjust => false, :detect_location => true, :center_on_user => true, :auto_zoom => false, :zoom => 15}, :markers => {:data => @json, :options => {:do_clustering=> true, :clusterer_maxZoom=> 16} } ) %>
 
 <br />
-
-
+<div class="dock" id="dock2">
+  <div class="dock-container2">
+  <% Tag.all.each do |tag|%>
+  <a class="dock-item2" ><span><%=t('tags.'+ tag.name)%></span><img src="<%= asset_path 'Filters/'+tag.name+'.png' %>" alt="<%= tag.id %>" class="menu"/></a>
+  <% end %>
+  </div>
+</div>
 <%= link_to 'New Event', new_event_path %>
 
-
-
 <%= session[:access_token] %>
+<script type="text/javascript">
+	
+	$(document).ready(
+		function()
+		{
+		//html5 geolocalization
+		         if(navigator.geolocation) {
+    				navigator.geolocation.getCurrentPosition(geo_success);
+  			}
+
+  			function geo_success(position)
+  			{
+    				Gmaps.map.createMarker({
+                        		Lat: position.coords.latitude,
+                       			Lng: position.coords.longitude, 
+                        		rich_marker: null, 
+                        		marker_picture: "<%= asset_path 'position.png' %>",
+                        		marker_width: 60,
+   					marker_height: 80,
+   					marker_anchor: null,
+   					shadow_anchor: null,
+   					shadow_picture: null,
+   					shadow_width: null,
+   					shadow_height: null
+                       		});
+    				Gmaps.map.serviceObject.setCenter(new google.maps.LatLng(position.coords.latitude,position.coords.longitude));
+  			}
+
+  		//Filters
+			$('#dock2').Fisheye(
+				{
+					maxWidth: 60,
+					items: 'a',
+					itemsText: 'span',
+					container: '.dock-container2',
+					itemWidth: 40,
+					proximity: 80,
+					alignment : 'left',
+					valign: 'bottom',
+					halign : 'center'
+				}
+			)
+			$('.menu').click (function(){
+				if((this).getAttribute("alt")== "<%= Tag.find_by_name("todos").id %>")
+				{
+					if((this).getAttribute("class")== "menu")
+					{
+						$('.menu').each(function(index) { (this).setAttribute("class", "select");});
+					}
+					else
+					{
+						$('.select').each(function(index) { (this).setAttribute("class", "menu");});
+					}
+				}
+				else if((this).getAttribute("class")== "menu"  )
+				{
+				    (this).setAttribute("class", "select");
+				}
+				else
+				{
+				    (this).setAttribute("class", "menu");
+				}
+				 var items = [];
+				$('.select').each(function(index) {
+					items.push((this).getAttribute("alt"));
+				});
+				/*
+				$.ajax({
+  					type: 'POST',
+  					url: '<%= filter_path %>',
+  					data: {data : items},
+  					success: function(data){
+  					   Gmaps.map.replaceMarkers(data);
+  					}
+				});
+				*/
+			})
+		}
+	);
+
+</script>
