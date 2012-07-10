@@ -12,7 +12,12 @@
 	</div>
 	
 	<div class="date">
-	<%= Time.at(event.start_time).strftime(t('time.formats.short')) %> | <%= Time.at(event.end_time).strftime(t('time.formats.short')) %> 
+	<% if event.start_time %>
+	<%= Time.at(event.start_time).strftime(t('time.formats.short')) %>
+	<%end %> |
+	<% if event.end_time %>
+	<%= Time.at(event.end_time).strftime(t('time.formats.short')) %> 
+	<%end %>
 	</div>
 	
 	
