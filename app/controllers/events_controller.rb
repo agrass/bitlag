@@ -14,7 +14,7 @@ class EventsController < ApplicationController
   end
   
   def lists
-     @events = Event.find(:all)[0..10]
+     @events = Event.find(:all, :order => "atenders DESC")[0..10]
      
   
     
