@@ -5,7 +5,7 @@ class CreateEvents < ActiveRecord::Migration
       t.float :longitude
       t.float :latitude
       t.boolean :gmaps
-      t.string :description
+      t.text :description
       t.timestamp :start_time
       t.timestamp :end_time
       t.string :address
@@ -15,7 +15,7 @@ class CreateEvents < ActiveRecord::Migration
       t.string :country
       t.string :picture
       t.integer :atenders
-      t.string :privacy
+      t.integer :privacy
       t.timestamps
       
      

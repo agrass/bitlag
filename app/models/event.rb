@@ -54,9 +54,9 @@ def self.add_from_facebook(fevent , api)
       if fevent["venue"].count > 0
           if fevent["venue"]["id"] != nil
          @venue= api.get_object("/"+fevent["venue"]["id"].to_s, "fields"=>"location")         
-        @temp = Event.new(:name => fevent["name"], :description => fevent["description"], :address => fevent["location"],  :latitude => @venue["location"]["latitude"], :longitude =>  @venue["location"]["longitude"], :fb_id => fevent["eid"], :start_time => fevent["start_time"], :end_time => fevent["end_time"], :privacy => fevent["privacy"], :atenders => @attending )    
+        @temp = Event.new(:name => fevent["name"], :description => fevent["description"], :address => fevent["location"],  :latitude => @venue["location"]["latitude"], :longitude =>  @venue["location"]["longitude"], :fb_id => fevent["eid"], :start_time => fevent["start_time"], :end_time => fevent["end_time"], :atenders => @attending )    
           elsif fevent["venue"]["latitude"] != nil
-         @temp = Event.new(:name => fevent["name"], :description => fevent["description"], :address => fevent["location"],  :latitude => fevent["venue"]["latitude"], :longitude =>  fevent["venue"]["longitude"], :fb_id => fevent["eid"], :start_time => fevent["start_time"], :end_time => fevent["end_time"], :privacy => fevent["privacy"], :atenders => @attending)
+         @temp = Event.new(:name => fevent["name"], :description => fevent["description"], :address => fevent["location"],  :latitude => fevent["venue"]["latitude"], :longitude =>  fevent["venue"]["longitude"], :fb_id => fevent["eid"], :start_time => fevent["start_time"], :end_time => fevent["end_time"],  :atenders => @attending)
           else
          @temp = Event.new(:name => fevent["name"], :description => fevent["description"], :address => fevent["location"], :fb_id => fevent["eid"], :start_time => fevent["start_time"], :end_time => fevent["end_time"], :privacy => fevent["privacy"] , :atenders => @attending, :gmaps => true)
       end         
