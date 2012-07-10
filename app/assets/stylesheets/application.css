@@ -52,12 +52,18 @@ a:hover { color: #c81419; }
 
 #nav_bar{ float: right; margin-right: 15%; margin-bottom: 5px; margin-top: 5px; border-bottom: solid 1px #DCDCDC; width: 600px; margin-top: 20px; padding-bottom: 10px;}
 
-#main{ width: 100%; float: left;}
+#main{ width: 100%; float: left; margin-top: 80px;}
 
 #footer{ float:left; }
 
+#logo{ position: absolute; left: 150px; top: 20px; z-index: 999999;}
+
+.sliderMain{ overflow:hidden; width:960px; margin: 10px auto; margin-left: -60px; margin-top: -60px; }
+
 
 .index_menu{  float:left; margin:0 auto 0 auto; width: 850px; text-align:left; }
+
+.menu_container{ margin-left: 100px; }
 
 
 
