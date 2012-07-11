@@ -1,9 +1,26 @@
+
+
+<div class="category_nav">
+  <% Tag.all.each do |tag|%>
+ 
+  <a ><%=t('tags.'+ tag.name)%></a> |
+  
+  <% end %>
+  
+  </div>
+
 <% @events.each do |event|  %>
+
+
 
 <div class="listObject">
 	
    <div class="photo">
+   	<% if event.picture %>
+   	<%= image_tag event.picture %>
+   	<%else %>
    	<%= image_tag "event_standar.png"%>
+   	<%end%>
 	
 	</div>
 	
@@ -31,13 +48,11 @@
 <% content_for :left do %>
 
 <div class="list_cat">
-	<p><%= link_to t('tags.fiesta'), '/' %></p>
-	<p><%= link_to t('tags.concierto'), '/' %></p>
-	<p><%= link_to t('tags.teatro'), '/' %></p>
-	<p><%= link_to t('tags.cine'), '/' %></p>
 	
 	</div>
 
 <% end %>
+
+
 
 

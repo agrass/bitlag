@@ -6,15 +6,15 @@ class EventsController < ApplicationController
 
   def refreshlist
     @limit = 10
+    @active_filters = params[:filter]
     @offset = params[:offset]
-    @filter = params[:filter]
-    #@events = 
-    render :file => 'events/refreshList', :layout => false   
     
+      
+    render :file => 'events/refreshList', :layout => false    
   end
   
   def lists
-     @events = Event.find(:all, :order => "atenders DESC")[0..10]
+     @events = Event.find(:all, :order => "atenders DESC", :conditions => ["start_time < ? AND start_time > ? ", Time.now + 10.days, Time.now - 1.days] )[0..10]
      
   
     

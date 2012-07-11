@@ -52,16 +52,16 @@ a:hover { color: #c81419; }
 
 #nav_bar{ float: right; margin-right: 15%;  padding-left:20px; margin-bottom: 5px; margin-top: 5px; border-bottom: solid 1px #DCDCDC; width: 600px; margin-top: 20px; padding-bottom: 10px;}
 
-#main{ width: 100%; float: left; margin-top: 80px;}
+#main{ width: 100%; float: left; margin-top: 20px;}
 
 #footer{ float:left; }
 
-#logo{ position: absolute; left: 150px; top: 20px; z-index: 999999;}
+#logo{ float:left;  margin-left:300px; margin-top:10px;}
 
-.sliderMain{ overflow:hidden; width:960px; margin: 10px auto; margin-left: -60px; margin-top: -60px; }
+.sliderMain{ overflow:hidden; width:960px; margin: 10px auto; margin-left: -60px; margin-top: -20px; }
 
 
-.index_menu{  float:left; margin:0 auto 0 auto; width: 850px; text-align:left; }
+.index_menu{  float:left; margin:0 auto 0 auto; width: 850px; text-align:left; height: 160px; }
 
 .menu_container{ margin-left: 100px; }
 
@@ -71,8 +71,20 @@ a:hover { color: #c81419; }
 .menu_image p { padding-left: 18px; margin-left: 10px; float: left; margin-top: 15px;}
 
 
-.listObject{ float: left;  width: 850px; height: 80px; margin-top: 15px; border-bottom: solid 1px #DCDCDC; }
+.listObject{ float: left; margin-left: 30px; width: 850px; height: 80px; margin-top: 15px; border-bottom: solid 1px #DCDCDC; }
 
-.listObject .photo { float: left; width: 65px; }
+.listObject .photo { float: left; width: 65px; margin-left: 15px; }
+
+
+.category_nav{ background: #ffffff; border-bottom: solid 1px #DCDCDC; height: 20px; width: 100%; float: left; margin-top: -15px;}
+
+
+/* event show */
+
+.show_picture{ float:left; }
+.show_name{ float: left; margin-left: 30px; width: 600px; height: 25px; }
+.show_description{ float:left; width: 600px; margin-left: 30px;}
+.show_time{ float:left; margin-left: 30px; }
+
 
 
