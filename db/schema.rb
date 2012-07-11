@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(:version => 20120711220253) do
     t.integer  "owner_id",    :limit => 8
     t.string   "city"
     t.string   "country"
-    t.text     "picture",     :limit => 255
+    t.text     "picture"
     t.integer  "atenders"
     t.string   "privacy"
     t.datetime "created_at",                 :null => false
