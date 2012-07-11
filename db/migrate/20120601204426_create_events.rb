@@ -13,7 +13,7 @@ class CreateEvents < ActiveRecord::Migration
       t.integer :owner_id, :limit => 8
       t.string :city
       t.string :country
-      t.string :picture
+      t.text :picture
       t.integer :atenders
       t.integer :privacy
       t.timestamps
