@@ -77,20 +77,18 @@
 				{
 				    (this).setAttribute("class", "menu");
 				}
-				 var items = [];
+				 var items = "";
 				$('.select').each(function(index) {
-					items.push((this).getAttribute("alt"));
+					items = items + "&data=" + (this).getAttribute("alt");
 				});
-				
-				$.getJSON('/filter.json' , function(data){
-          Gmaps.map.replaceMarkers(data);
-          
-                   if(navigator.geolocation) {
-    				navigator.geolocation.getCurrentPosition(geo_success);
-  			}
 
-       });
-						
+				$.getJSON('/filter.json', items , function(data){
+          						Gmaps.map.replaceMarkers(data);
+                   					if(navigator.geolocation) {
+    								navigator.geolocation.getCurrentPosition(geo_success);
+  							}
+
+       				});	
 				
 			})
 		}
