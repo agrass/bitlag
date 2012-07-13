@@ -2,7 +2,10 @@
 
 
 <div class="show_picture">
+	<% if @event.picture != nil %>
 <%= image_tag @event.picture[0..@event.picture.length - 6] + "n.jpg" %>
+
+<% end %>
 </div>
 
 
@@ -30,7 +33,9 @@
 
 
 <div class="show_description">
+	<% if @event.description != nil %>
 	<%= @event.description[0..600] %>.. <a>read more</a>
+	<% end %>
 	</div>
 
 

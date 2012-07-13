@@ -22,12 +22,16 @@ class EventsController < ApplicationController
     
     
   def filter
-    if params[:data]
+    #if params[:data]
        @array = params[:data]
        @events = Event.find :all
        @data = @events.to_gmaps4rails
-       render :filter, :layout => false 
-    end
+       
+    respond_to do |format|      
+    format.json { render json: @data }
+    end       
+    #end
+    
   end
   
   

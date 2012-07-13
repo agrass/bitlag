@@ -81,16 +81,17 @@
 				$('.select').each(function(index) {
 					items.push((this).getAttribute("alt"));
 				});
-				/*
-				$.ajax({
-  					type: 'POST',
-  					url: '<%= filter_path %>',
-  					data: {data : items},
-  					success: function(data){
-  					   Gmaps.map.replaceMarkers(data);
-  					}
-				});
-				*/
+				
+				$.getJSON('/filter.json' , function(data){
+          Gmaps.map.replaceMarkers(data);
+          
+                   if(navigator.geolocation) {
+    				navigator.geolocation.getCurrentPosition(geo_success);
+  			}
+
+       });
+						
+				
 			})
 		}
 	);
