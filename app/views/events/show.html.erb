@@ -1,6 +1,29 @@
+
+<style>
+  .map_container {
+  	float:right;
+  	margin-right: 20px;
+  padding: 6px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: #ccc #ccc #999 #ccc;
+  -webkit-box-shadow: rgba(64, 64, 64, 0.5) 0 2px 5px;
+  -moz-box-shadow: rgba(64, 64, 64, 0.5) 0 2px 5px;
+  box-shadow: rgba(64, 64, 64, 0.1) 0 2px 5px;
+  width: 300px;
+}
+
+.gmaps4rails_map {
+  width: 300px;
+  height: 200px;
+}
+
+
+</style>
+
 <p id="notice"><%= notice %></p>
 
-
+<div class="show_general">
 <div class="show_picture">
 	<% if @event.picture != nil %>
 <%= image_tag @event.picture[0..@event.picture.length - 6] + "n.jpg" %>
@@ -27,9 +50,6 @@
 	</div>
 
 
-  <div class="show_address">
-  <%= @event.address %>
-  </div>
 
 
 <div class="show_description">
@@ -37,7 +57,16 @@
 	<%= @event.description[0..600] %>.. <a>read more</a>
 	<% end %>
 	</div>
+	
+	</div>
 
+  <div class="show_address">
+  <%= @event.address %>
+  </div>
+
+<div class="show_map">
+<%= gmaps4rails(@json) %>
+</div>
 
 
 

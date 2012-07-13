@@ -54,7 +54,7 @@ a:hover { color: #c81419; }
 
 #main{ width: 100%; float: left; margin-top: 20px;}
 
-#footer{ float:left; }
+#footer{ float:left;   background: #222; width: 100%; margin-bottom: 0px; height: 30px; bottom: 0px; margin-top: 25px; }
 
 #logo{ float:left;  margin-left:300px; margin-top:10px;}
 
@@ -85,6 +85,9 @@ a:hover { color: #c81419; }
 .show_name{ float: left; margin-left: 30px; width: 600px; height: 25px; }
 .show_description{ float:left; width: 600px; margin-left: 30px;}
 .show_time{ float:left; margin-left: 30px; }
+.show_address{ float: left; margin-bottom: 10px; width: 100%; margin-left: 30px; }
 
 
+.show_map{ float:left; }
 
+.show_general{ float: left; width: 100%; margin-bottom: 30px;}
