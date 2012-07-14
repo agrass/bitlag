@@ -1,9 +1,16 @@
 <style>
   .menu {opacity:0.4;}
+  .menu_top {opacity:0.4;}
 </style>
-
+<div class="dock" id="dock">
+  <div class="dock-container">
+  <a class="dock-item"><img src="<%= asset_path 'Filters/today.png' %>" alt="today" class="select_top"/><span><%=t('filter.today')%></span></a> 
+  <a class="dock-item"><img src="<%= asset_path 'Filters/week.png' %>" class="menu_top"/><span><%=t('filter.week')%></span></a> 
+  <a class="dock-item"><img src="<%= asset_path 'Filters/weekend.png' %>" class="menu_top"/><span><%=t('filter.weekend')%></span></a> 
+</div>
+</div>
+<br />
 <%= gmaps(:map_options => {:auto_adjust => false, :detect_location => true, :center_on_user => true, :auto_zoom => false, :zoom => 15}, :markers => {:data => @json, :options => {:do_clustering=> true, :clusterer_maxZoom=> 18} } ) %>
-
 <br />
 <div class="dock" id="dock2">
   <div class="dock-container2">
@@ -16,7 +23,6 @@
 
 <%= session[:access_token] %>
 <script type="text/javascript">
-	
 	$(document).ready(
 		function()
 		{
@@ -24,7 +30,6 @@
 		         if(navigator.geolocation) {
     				navigator.geolocation.getCurrentPosition(geo_success);
   			}
-
   			function geo_success(position)
   			{
     				Gmaps.map.createMarker({
@@ -40,10 +45,24 @@
    					shadow_width: null,
    					shadow_height: null
                        		});
-    				Gmaps.map.serviceObject.setCenter(new google.maps.LatLng(position.coords.latitude,position.coords.longitude));
+    				set_center(position);
   			}
-
+  			function set_center(position)
+  			{
+  			Gmaps.map.serviceObject.setCenter(new google.maps.LatLng(position.coords.latitude,position.coords.longitude));
+  			}
   		//Filters
+  			$('#dock').Fisheye(
+				{
+					maxWidth: 50,
+					items: 'a',
+					itemsText: 'span',
+					container: '.dock-container',
+					itemWidth: 40,
+					proximity: 90,
+					halign : 'center'
+				}
+			)
 			$('#dock2').Fisheye(
 				{
 					maxWidth: 60,
@@ -84,16 +103,13 @@
 					count++;
 				});
 				if(count == 0 ){items = []}
+				var position = {coords: {latitude: Gmaps.map.map.getCenter().lat(), longitude: Gmaps.map.map.getCenter().lng()} }
 				$.getJSON('/filter.json', items , function(data){
           						Gmaps.map.replaceMarkers(data);
-                   					if(navigator.geolocation) {
-    								navigator.geolocation.getCurrentPosition(geo_success);
-  							}
+                   					set_center(position);
 
        				});	
-				
 			})
 		}
 	);
-
 </script>

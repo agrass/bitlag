@@ -6,6 +6,10 @@ enUS:
     cine: Cine
     arte: Arte
     todos: Todos   
+  filter:
+    today: Hoy
+    week: Semana
+    weekend: Fin de Semana
   menu:
     home: Inicio
     event_list: Lista Eventos
