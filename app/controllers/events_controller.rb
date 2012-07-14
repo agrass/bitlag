@@ -23,7 +23,7 @@ class EventsController < ApplicationController
     
   def filter
     if params[:data]
-       @array = params[:data]
+       @array = params[:data].split(',')
        @events = Event.joins(:tags).where(:tags => {:id => @array })
        @data = @events.to_gmaps4rails
     else

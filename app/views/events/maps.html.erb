@@ -2,7 +2,7 @@
   .menu {opacity:0.4;}
 </style>
 
-<%= gmaps(:map_options => {:auto_adjust => false, :detect_location => true, :center_on_user => true, :auto_zoom => false, :zoom => 15}, :markers => {:data => @json, :options => {:do_clustering=> true, :clusterer_maxZoom=> 16} } ) %>
+<%= gmaps(:map_options => {:auto_adjust => false, :detect_location => true, :center_on_user => true, :auto_zoom => false, :zoom => 15}, :markers => {:data => @json, :options => {:do_clustering=> true, :clusterer_maxZoom=> 18} } ) %>
 
 <br />
 <div class="dock" id="dock2">
@@ -77,11 +77,13 @@
 				{
 				    (this).setAttribute("class", "menu");
 				}
-				 var items = "";
+				 var count = 0;
+				 var items = "data=";
 				$('.select').each(function(index) {
-					items = items + "&data=" + (this).getAttribute("alt");
+					items = items + (this).getAttribute("alt") + ",";
+					count++;
 				});
-
+				if(count == 0 ){items = []}
 				$.getJSON('/filter.json', items , function(data){
           						Gmaps.map.replaceMarkers(data);
                    					if(navigator.geolocation) {
