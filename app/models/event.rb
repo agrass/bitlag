@@ -82,6 +82,20 @@ def self.getEventsOnChile(limit, offset, condi)
  Event.find(:all, :conditions => [ "latitude < -17.056785 AND latitude > -55.329144 AND longitude < -70.048828 AND longitude > -75.322266" + condi], :limit => limit, :offset => offset)
 end
 
+def self.get_events_with_time(time)
+   if time == "today"
+   	Event.where(:end_time => (Time.now)..(Time.now.end_of_day))
+   elsif time == "week"
+   	Event.where(:end_time => (Time.now)..(Time.now.end_of_week))
+   else
+   	if Time.now > Time.now.end_of_week.ago(86400 * 3)
+   		Event.where(:end_time => (Time.now)..(Time.now.end_of_week))
+   	else
+   		Event.where(:end_time => (Time.now.end_of_week.ago(86400 * 3))..(Time.now.end_of_week))
+   	end
+   end
+end
+
 end
 
 

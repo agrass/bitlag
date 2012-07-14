@@ -22,12 +22,19 @@ class EventsController < ApplicationController
     
     
   def filter
+    if params[:time].nil?
+    	respond_to do |format|      
+    	format.json { render json: @data }
+    	end
+    	return
+    end
+    
     if params[:data]
        @array = params[:data].split(',')
-       @events = Event.joins(:tags).where(:tags => {:id => @array })
+       @events = Event.get_events_with_time(params[:time]).joins(:tags).where(:tags => {:id => @array }).group(:id)
        @data = @events.to_gmaps4rails
     else
-       @events = Event.all
+       @events = Event.get_events_with_time(params[:time])
        @data = @events.to_gmaps4rails
     end
           

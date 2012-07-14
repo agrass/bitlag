@@ -5,8 +5,8 @@
 <div class="dock" id="dock">
   <div class="dock-container">
   <a class="dock-item"><img src="<%= asset_path 'Filters/today.png' %>" alt="today" class="select_top"/><span><%=t('filter.today')%></span></a> 
-  <a class="dock-item"><img src="<%= asset_path 'Filters/week.png' %>" class="menu_top"/><span><%=t('filter.week')%></span></a> 
-  <a class="dock-item"><img src="<%= asset_path 'Filters/weekend.png' %>" class="menu_top"/><span><%=t('filter.weekend')%></span></a> 
+  <a class="dock-item"><img src="<%= asset_path 'Filters/week.png' %>" alt="week" class="menu_top"/><span><%=t('filter.week')%></span></a> 
+  <a class="dock-item"><img src="<%= asset_path 'Filters/weekend.png' %>" alt="weekend" class="menu_top"/><span><%=t('filter.weekend')%></span></a> 
 </div>
 </div>
 <br />
@@ -49,7 +49,7 @@
   			}
   			function set_center(position)
   			{
-  			Gmaps.map.serviceObject.setCenter(new google.maps.LatLng(position.coords.latitude,position.coords.longitude));
+  				Gmaps.map.serviceObject.setCenter(new google.maps.LatLng(position.coords.latitude,position.coords.longitude));
   			}
   		//Filters
   			$('#dock').Fisheye(
@@ -76,7 +76,11 @@
 					halign : 'center'
 				}
 			)
-			$('.menu').click (function(){
+			$('.menu').click (select);
+			$('.menu_top').click (select_top);
+			$('.select_top').click (select_top);
+
+			function select(){
 				if((this).getAttribute("alt")== "<%= Tag.find_by_name("todos").id %>")
 				{
 					if((this).getAttribute("class")== "menu")
@@ -96,6 +100,19 @@
 				{
 				    (this).setAttribute("class", "menu");
 				}
+				filters();
+			}
+
+			function select_top(){
+				if((this).getAttribute("class")== "menu_top"  )
+				{
+				    $('.select_top').each(function(){(this).setAttribute("class", "menu_top")});
+				    (this).setAttribute("class", "select_top");
+				    filters();
+				}
+			}
+			
+			function filters(){
 				 var count = 0;
 				 var items = "data=";
 				$('.select').each(function(index) {
@@ -103,13 +120,18 @@
 					count++;
 				});
 				if(count == 0 ){items = []}
+				items = items + "&time=";
+				$('.select_top').each(function(index) {
+					items = items + (this).getAttribute("alt");
+				});
+				
 				var position = {coords: {latitude: Gmaps.map.map.getCenter().lat(), longitude: Gmaps.map.map.getCenter().lng()} }
 				$.getJSON('/filter.json', items , function(data){
           						Gmaps.map.replaceMarkers(data);
                    					set_center(position);
 
        				});	
-			})
+			}
 		}
 	);
 </script>
