@@ -24,6 +24,9 @@ Bitlag::Application.routes.draw do
   
   match 'lists' => 'events#lists', :as => 'lists'
   
+  #ajax list refres
+  match 'refreshList/:offset' => 'events#refreshlist', :as => 'refreshList'
+  
   #ajax filter
   match 'filter' => 'events#filter', :as => 'filter'
  

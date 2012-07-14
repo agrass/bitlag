@@ -1,1 +1,36 @@
-refrescar lista
+<% @events.each do |event|  %>
+
+
+
+<div class="listObject">
+	
+   <div class="photo">
+   	<% if event.picture %>
+   	<%= image_tag event.picture %>
+   	<%else %>
+   	<%= image_tag "event_standar.png"%>
+   	<%end%>
+	
+	</div>
+	
+	<div class="title">
+	<%= link_to event.name, event %>
+	</div>
+	
+	<div class="date">
+	<% if event.start_time %>
+	<%= Time.at(event.start_time).strftime(t('time.formats.short')) %>
+	<%end %> |
+	<% if event.end_time %>
+	<%= Time.at(event.end_time).strftime(t('time.formats.short')) %> 
+	<%end %>
+	</div>
+	
+	
+	</div>
+
+
+
+<% end %>
+
+

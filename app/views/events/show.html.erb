@@ -68,9 +68,11 @@
   </h3>
   </div>
 
+<% if @event.latitude != nil %>
 <div class="show_map">
 <%= gmaps4rails(@json) %>
 </div>
+<% end %>
 
 </div>
 

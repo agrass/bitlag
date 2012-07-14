@@ -1,4 +1,24 @@
+<script>
+var valoffset = 0;
 
+
+$(window).scroll(function(){
+			if  ($(window).scrollTop() == $(document).height() - $(window).height()){			
+				if(valoffset < <%= Event.count %>){						
+				valoffset = valoffset + 10;						
+			    $.ajax({ url: 'refreshList/'+valoffset, 
+			    success: function(data) {					   
+			   $('.event_list').append(data);					    
+					                 }
+					        });
+						   
+			  }
+			  
+			  
+			}
+			
+});
+</script>
 
 <div class="category_nav">
   <% Tag.all.each do |tag|%>
@@ -9,6 +29,8 @@
   
   </div>
 
+
+<div class="event_list" >
 <% @events.each do |event|  %>
 
 
@@ -43,6 +65,8 @@
 
 
 <% end %>
+
+</div>
 
 
 <% content_for :left do %>
