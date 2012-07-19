@@ -1,9 +1,12 @@
+# encoding: utf-8
+
 class AdminController < ApplicationController
-  
+
   def index
     
+
     
-  end
+   end
   
   
   def refresh_count  
@@ -29,7 +32,9 @@ class AdminController < ApplicationController
       session[:offset] = 0
     end 
         
-  
+    if session[:access_token] == nil
+      session[:access_token]  = User.find(1).access_token
+    end
       
     @api = Koala::Facebook::API.new(session[:access_token])
     

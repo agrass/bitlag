@@ -16,7 +16,7 @@ class EventsController < ApplicationController
   end
   
   def lists
-     @events = Event.find(:all, :order => "atenders DESC" , :conditions => ["start_time < ?", Time.now + 10.days], :limit => 10 )
+     @events = Event.find(:all, :order => "atenders DESC" , :conditions => ["start_time < ? AND start_time > ? ", Time.now + 10.days, Time.now - 1.days], :limit => 10 )
      #@events = Event.find(:all, :limit => 10)
   end
     

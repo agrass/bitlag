@@ -10,6 +10,8 @@ has_and_belongs_to_many :tags
 
 before_save :set_tag
 
+validates :fb_id, :uniqueness => true
+
 def set_tag
    Tag.find(:all).each do |tag|
    	tag.expressions.each do |expression|
@@ -52,19 +54,27 @@ def self.add_from_facebook(fevent , api)
     #obtener la imagen
     picture = api.get_picture(fevent["eid"])
     
+    @end_time = Time.at(fevent["end_time"].to_i)
+    
+    if fevent["end_time"] == nil
+      @end_time =  Time.at(fevent["end_time"].to_i) + 1.days
+    end
+    
+    @start_time = Time.at(fevent["start_time"].to_i)
+    
     @temp = Event.new
     if fevent!= nil  
       if fevent["venue"].count > 0
           if fevent["venue"]["id"] != nil
          @venue= api.get_object("/"+fevent["venue"]["id"].to_s, "fields"=>"location")         
-        @temp = Event.new(:name => fevent["name"], :description => fevent["description"], :address => fevent["location"],  :latitude => @venue["location"]["latitude"], :longitude =>  @venue["location"]["longitude"], :fb_id => fevent["eid"], :start_time => fevent["start_time"], :end_time => fevent["end_time"], :atenders => @attending, :picture => picture )    
+        @temp = Event.new(:name => fevent["name"], :description => fevent["description"], :address => fevent["location"],  :latitude => @venue["location"]["latitude"], :longitude =>  @venue["location"]["longitude"], :fb_id => fevent["eid"], :start_time => @start_time , :end_time => @end_time, :atenders => @attending, :picture => picture )    
           elsif fevent["venue"]["latitude"] != nil
-         @temp = Event.new(:name => fevent["name"], :description => fevent["description"], :address => fevent["location"],  :latitude => fevent["venue"]["latitude"], :longitude =>  fevent["venue"]["longitude"], :fb_id => fevent["eid"], :start_time => fevent["start_time"], :end_time => fevent["end_time"],  :atenders => @attending,  :picture => picture)
+         @temp = Event.new(:name => fevent["name"], :description => fevent["description"], :address => fevent["location"],  :latitude => fevent["venue"]["latitude"], :longitude =>  fevent["venue"]["longitude"], :fb_id => fevent["eid"], :start_time => @start_time , :end_time => @end_time,  :atenders => @attending,  :picture => picture)
           else
-         @temp = Event.new(:name => fevent["name"], :description => fevent["description"], :address => fevent["location"], :fb_id => fevent["eid"], :start_time => fevent["start_time"], :end_time => fevent["end_time"], :privacy => fevent["privacy"] , :atenders => @attending, :gmaps => true, :picture => picture)
+         @temp = Event.new(:name => fevent["name"], :description => fevent["description"], :address => fevent["location"], :fb_id => fevent["eid"], :start_time => @start_time , :end_time => @end_time, :privacy => fevent["privacy"] , :atenders => @attending, :gmaps => true, :picture => picture)
       end         
       else
-         @temp = Event.new(:name => fevent["name"], :description => fevent["description"], :address => fevent["location"], :fb_id => fevent["eid"], :start_time => fevent["start_time"], :end_time => fevent["end_time"], :privacy => fevent["privacy"] , :atenders => @attending, :gmaps => true, :picture => picture)
+         @temp = Event.new(:name => fevent["name"], :description => fevent["description"], :address => fevent["location"], :fb_id => fevent["eid"], :start_time => @start_time , :end_time => @end_time, :privacy => fevent["privacy"] , :atenders => @attending, :gmaps => true, :picture => picture)
       end
      end     
      
