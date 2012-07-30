@@ -12,6 +12,10 @@ before_save :set_tag
 
 validates :fb_id, :uniqueness => true
 
+
+reverse_geocoded_by :latitude, :longitude
+after_validation :reverse_geocode  # auto-fetch address
+
 def set_tag
    Tag.find(:all).each do |tag|
    	tag.expressions.each do |expression|

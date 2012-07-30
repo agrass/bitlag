@@ -16,8 +16,13 @@ class EventsController < ApplicationController
   end
   
   def lists
+    if request.location.city.length == 0
      @events = Event.find(:all, :order => "atenders DESC" , :conditions => ["start_time < ? AND start_time > ? ", Time.now + 10.days, Time.now - 1.days], :limit => 10 )
      #@events = Event.find(:all, :limit => 10)
+     else            
+     @events = Event.near(request.location.city, 100)
+     
+     end
   end
     
     
