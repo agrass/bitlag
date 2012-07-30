@@ -16,6 +16,7 @@ img {
 	height: 50px;
 	background: url(/assets/Filters/dock-bg2.gif);
 	padding-left: 20px;
+	border-radius: 50px;
 }
 a.dock-item {
 	display: block;
@@ -51,6 +52,7 @@ a.dock-item {
 	height: 50px;
 	background: url(/assets/Filters/dock-bg.gif);
 	padding-left: 20px;
+	border-radius: 50px;
 }
 a.dock-item2 {
 	display: block; 
