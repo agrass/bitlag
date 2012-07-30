@@ -20,4 +20,3 @@ Expression.create(:expression => '(\s[Cc]|^[Cc])[Ii][Nn][Ee]' , :tag_id => Tag.f
 Expression.create(:expression => '(\s[Aa]|^[Aa])[Rr][Tt][Ee]' , :tag_id => Tag.find_by_name('arte').id)
 Expression.create(:expression => '(.*)', :tag_id => Tag.find_by_name('todos').id )
 
-

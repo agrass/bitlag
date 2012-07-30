@@ -31,7 +31,7 @@ class EventsController < ApplicationController
     
     if params[:data]
        @array = params[:data].split(',')
-       @events = Event.get_events_with_time(params[:time]).joins(:tags).where(:tags => {:id => @array }).group(:id)
+       @events = Event.get_events_with_time(params[:time]).joins(:tags).where(:tags => {:id => @array }).group("events.id")
        @data = @events.to_gmaps4rails
     else
        @events = Event.get_events_with_time(params[:time])
