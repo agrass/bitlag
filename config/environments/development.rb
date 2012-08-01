@@ -34,4 +34,8 @@ Bitlag::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+
+  APP_ID= '207769156010988'
+  APP_SECRET= 'e4e4009be6c46530682798741f43053a'
+  SITE_URL = 'http://localhost:3000'
 end

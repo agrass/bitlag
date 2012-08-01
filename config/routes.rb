@@ -1,6 +1,7 @@
 Bitlag::Application.routes.draw do
 
-
+namespace :api, defaults: {format: 'json'} do
+  end
 
   resources :users
 

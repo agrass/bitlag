@@ -8,83 +8,82 @@ class EventsController < ApplicationController
     @limit = 10
     @active_filters = params[:filter]
     @offset = params[:offset]
-    
+
     @events = Event.find(:all, :order => "atenders DESC" , :conditions => ["start_time < ? AND start_time > ?", Time.now + 10.days, Time.now - 1.days], :limit => 10, :offset => @offset )
-    
-      
-    render :file => 'events/refreshList', :layout => false    
+
+    render :file => 'events/refreshList', :layout => false
   end
-  
+
   def lists
     if request.location.city.length == 0
-     @events = Event.find(:all, :order => "atenders DESC" , :conditions => ["start_time < ? AND start_time > ? ", Time.now + 10.days, Time.now - 1.days], :limit => 10 )
-     #@events = Event.find(:all, :limit => 10)
-     else            
-     @events = Event.near(request.location.city, 100)
-     
-     end
+      @events = Event.find(:all, :order => "atenders DESC" , :conditions => ["start_time < ? AND start_time > ? ", Time.now + 10.days, Time.now - 1.days], :limit => 10 )
+      #@events = Event.find(:all, :limit => 10)
+    else
+      @events = Event.near(request.location.city, 100)
+
+    end
   end
-    
-    
+
+
   def filter
     if params[:time].nil?
-    	respond_to do |format|      
-    	format.json { render json: @data }
-    	end
-    	return
+      respond_to do |format|
+        format.json { render json: @data }
+      end
+      return
     end
-    
+
     if params[:data]
-       @array = params[:data].split(',')
-       @events = Event.get_events_with_time(params[:time]).joins(:tags).where(:tags => {:id => @array }).uniq
-       @data = @events.to_gmaps4rails
+      @array = params[:data].split(',')
+      @events = Event.get_events_with_time(params[:time]).joins(:tags).where(:tags => {:id => @array }).uniq
+      @data = @events.to_gmaps4rails
     else
-       @events = Event.get_events_with_time(params[:time])
-       @data = @events.to_gmaps4rails
+      @events = Event.get_events_with_time(params[:time])
+      @data = @events.to_gmaps4rails
     end
-          
-    respond_to do |format|      
-    format.json { render json: @data }
-    end       
-    
+
+    respond_to do |format|
+      format.json { render json: @data }
+    end
+
   end
-  
-  
+
+
   def index
     session[:oauth] = Koala::Facebook::OAuth.new(APP_ID, APP_SECRET, SITE_URL + '/callback')
-    @auth_url =  session[:oauth].url_for_oauth_code(:permissions=>"email, user_events, friends_events")  
+    @auth_url =  session[:oauth].url_for_oauth_code(:permissions=>"email, user_events, friends_events")
     puts session.to_s + "<<< session"
-    
-  @events = Event.find :all, :order => 'atenders DESC', :conditions => ['start_time > ?',  Time.now]
-	@json = @events.to_gmaps4rails
-	
+
+    @events = Event.find :all, :order => 'atenders DESC', :conditions => ['start_time > ?',  Time.now]
+    @json = @events.to_gmaps4rails
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @events }
     end
   end
-  
-  
+
+
   def maps
     session[:oauth] = Koala::Facebook::OAuth.new(APP_ID, APP_SECRET, SITE_URL + '/callback')
-    @auth_url =  session[:oauth].url_for_oauth_code(:permissions=>"email, user_events, friends_events")  
+    @auth_url =  session[:oauth].url_for_oauth_code(:permissions=>"email, user_events, friends_events")
     puts session.to_s + "<<< session"
-    
-  @events = Event.find :all, :order => 'atenders DESC', :conditions => ['start_time > ?', Time.now]
-  @json = @events.to_gmaps4rails
-  
+
+    @events = Event.find :all, :order => 'atenders DESC', :conditions => ['start_time > ?', Time.now]
+    @json = @events.to_gmaps4rails
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @events }
     end
-    
+
   end
 
   # GET /events/1
   # GET /events/1.json
   def show
     @event = Event.find(params[:id])
-     @json = @event.to_gmaps4rails
+    @json = @event.to_gmaps4rails
 
     respond_to do |format|
       format.html # show.html.erb
