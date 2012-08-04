@@ -8,30 +8,36 @@ class EventsController < ApplicationController
     @limit = 10
     @active_filters = params[:filter]
     @offset = params[:offset]
-
-    #si no logra ller la ciudad
+<<<<<<< HEAD
+    
     if request.location.city.length == 0
        @events = Event.find(:all, :order => "atenders DESC" , :conditions => ["start_time < ? AND start_time > ?", Time.now + 10.days, Time.now - 1.days], :limit => 10, :offset => @offset )
-    else    
+    else
+    
     @events = Event.near(request.location.city + ", " + request.location.country  , 100).find(:all, :order => "atenders DESC" , :conditions => ["start_time < ? AND start_time > ?", Time.now + 10.days, Time.now - 1.days], :limit => 10, :offset => @offset )
+    #@events = Event.near("Temuco, Chile" , 100).find(:all, :order => "atenders DESC" , :conditions => ["start_time < ? AND start_time > ?", Time.now + 10.days, Time.now - 1.days], :limit => 10, :offset => @offset )
     end
     render :file => 'events/refreshList', :layout => false    
+=======
+
+    @events = Event.find(:all, :order => "atenders DESC" , :conditions => ["start_time < ? AND start_time > ?", Time.now + 10.days, Time.now - 1.days], :limit => 10, :offset => @offset )
+
+    render :file => 'events/refreshList', :layout => false
+>>>>>>> 30560e6ff0e187258417eb3123e9d41c55aa530c
   end
 
   def lists
     
-    #si contiene filtro
-    if params[:data]
-     #si no logra reconocer la ciudad
+    if params[:data]    
     if request.location.city.length == 0
-     @events = Event.find(:all, :order => "atenders DESC" , :conditions => ["start_time < ? AND start_time > ? ", Time.now + 10.days, Time.now - 1.days], :limit => 10 )      
+<<<<<<< HEAD
+     @events = Event.find(:all, :order => "atenders DESC" , :conditions => ["start_time < ? AND start_time > ? ", Time.now + 10.days, Time.now - 1.days], :limit => 10 )
+      #@events = Event.near("Temuco, Chile" , 100).find(:all, :order => "atenders DESC" , :conditions => ["start_time < ? AND start_time > ? ", Time.now + 10.days, Time.now - 1.days], :limit => 10 )
      else            
      @events = Event.near(request.location.city + ", " + request.location.country  , 100).find(:all, :order => "atenders DESC" , :conditions => ["start_time < ? AND start_time > ? ", Time.now + 10.days, Time.now - 1.days], :limit => 10 )      
      end
-     
-     #sin filtro
      else
-     if request.location.city.length == 0
+         if request.location.city.length == 0
      @events = Event.find(:all, :order => "atenders DESC" , :conditions => ["start_time < ? AND start_time > ? ", Time.now + 10.days, Time.now - 1.days], :limit => 10 )
       #@events = Event.near("Temuco, Chile" , 100).find(:all, :order => "atenders DESC" , :conditions => ["start_time < ? AND start_time > ? ", Time.now + 10.days, Time.now - 1.days], :limit => 10 )
      else            
@@ -40,6 +46,14 @@ class EventsController < ApplicationController
        
      end
      
+=======
+      @events = Event.find(:all, :order => "atenders DESC" , :conditions => ["start_time < ? AND start_time > ? ", Time.now + 10.days, Time.now - 1.days], :limit => 10 )
+      #@events = Event.find(:all, :limit => 10)
+    else
+      @events = Event.near(request.location.city, 100)
+
+    end
+>>>>>>> 30560e6ff0e187258417eb3123e9d41c55aa530c
   end
 
 

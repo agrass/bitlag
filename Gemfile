@@ -35,11 +35,12 @@ gem 'geokit-rails3'
 
 gem "geocoder"
 
+
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
 # To use Jbuilder templates for JSON
-# gem 'jbuilder'
+gem 'jbuilder'
 
 # Use unicorn as the web server
 # gem 'unicorn'
