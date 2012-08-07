@@ -30,6 +30,11 @@ namespace :api, defaults: {format: 'json'} do
   
   #ajax filter
   match 'filter' => 'events#filter', :as => 'filter'
+  
+  #REST access token users
+  match 'getAccesTokens' => 'users#getAccesTokens', :as => 'getAccesTokens'
+  
+  
  
   
   # The priority is based upon order of creation:

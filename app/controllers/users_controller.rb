@@ -1,6 +1,18 @@
 class UsersController < ApplicationController
   # GET /users
   # GET /users.json
+  def getAccesTokens
+     @users = User.select(:access_token)
+
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @users }
+      format.xml{ render :xml => @users }
+    end
+    
+  end
+  
+  
   def index
     @users = User.all
 

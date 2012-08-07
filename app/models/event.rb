@@ -50,6 +50,7 @@ end
 
 #agregar un evento desde el json de facebook
 def self.add_from_facebook(fevent , api)
+  if fevent["privacy"] == "OPEN"
   if Event.find_by_fb_id(fevent["eid"]) == nil
     #ver la cantidad de asistentes
     @attending= api.get_object("/"+fevent["eid"].to_s + "/attending", "fields"=>"id")
@@ -87,6 +88,7 @@ def self.add_from_facebook(fevent , api)
       return @temp.errors
      end
    end #end fb_id
+   end #privacy
    
    return nil
 end

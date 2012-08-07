@@ -13,7 +13,7 @@ class EventsController < ApplicationController
     if request.location.city.length == 0
        @events = Event.find(:all, :order => "atenders DESC" , :conditions => ["start_time < ? AND start_time > ?", Time.now + 10.days, Time.now - 1.days], :limit => 10, :offset => @offset )
     else    
-    @events = Event.near(request.location.city + ", " + request.location.country  , 100).find(:all, :order => "atenders DESC" , :conditions => ["start_time < ? AND start_time > ?", Time.now + 10.days, Time.now - 1.days], :limit => 10, :offset => @offset )
+    @events = Event.near(request.location.city + ", " + request.location.country  , 100).find(:all, :order => "atenders DESC" , :conditions => ["start_time < ? AND start_time > ?", Time.now + 10.days, Time.now - 10.hours], :limit => 10, :offset => @offset )
     end
     render :file => 'events/refreshList', :layout => false    
   end
@@ -24,7 +24,7 @@ class EventsController < ApplicationController
     if params[:data]
      #si no logra reconocer la ciudad
     if request.location.city.length == 0
-     @events = Event.find(:all, :order => "atenders DESC" , :conditions => ["start_time < ? AND start_time > ? ", Time.now + 10.days, Time.now - 1.days], :limit => 10 )      
+     @events = Event.find(:all, :order => "atenders DESC" , :conditions => ["start_time < ? AND start_time > ? ", Time.now + 10.days, Time.now - 10.hours], :limit => 10 )      
      else            
      @events = Event.near(request.location.city + ", " + request.location.country  , 100).find(:all, :order => "atenders DESC" , :conditions => ["start_time < ? AND start_time > ? ", Time.now + 10.days, Time.now - 1.days], :limit => 10 )      
      end
@@ -127,6 +127,7 @@ class EventsController < ApplicationController
 
   # POST /events
   # POST /events.json
+  # POST /events.xml
   def create
     @event = Event.new(params[:event])
 
@@ -134,9 +135,16 @@ class EventsController < ApplicationController
       if @event.save
         format.html { redirect_to @event, notice: 'Event was successfully created.' }
         format.json { render json: @event, status: :created, location: @event }
+         format.xml do
+         render :xml => "<result>sucess</result>", :status => :created 
+         end
+
+        
       else
         format.html { render action: "new" }
         format.json { render json: @event.errors, status: :unprocessable_entity }
+        format.xml  { render :xml => @event.errors, :status => :unprocessable_entity }
+
       end
     end
   end
