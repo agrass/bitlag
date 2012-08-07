@@ -53,10 +53,18 @@ class EventsController < ApplicationController
 
     if params[:data]
       @array = params[:data].split(',')
-      @events = Event.get_events_with_time(params[:time]).joins(:tags).where(:tags => {:id => @array }).uniq
+      if request.location.city.length == 0
+      	@events = Event.near(request.location.city + ", " + request.location.country  , 100).get_events_with_time(params[:time]).joins(:tags).where(:tags => {:id => @array }).uniq
+      else
+      	@events = Event.get_events_with_time(params[:time]).joins(:tags).where(:tags => {:id => @array }).uniq
+      end
       @data = @events.to_gmaps4rails
     else
-      @events = Event.get_events_with_time(params[:time])
+      if request.location.city.length == 0
+      	@events = Event.get_events_with_time(params[:time])
+      else
+      	@events = Event.near(request.location.city + ", " + request.location.country  , 100).get_events_with_time(params[:time])
+      end
       @data = @events.to_gmaps4rails
     end
 
