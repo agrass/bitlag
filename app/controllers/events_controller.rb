@@ -44,29 +44,8 @@ class EventsController < ApplicationController
 
 
   def filter
-    if params[:time].nil?
-      respond_to do |format|
-        format.json { render json: @data }
-      end
-      return
-    end
 
-    if params[:data]
-      @array = params[:data].split(',')
-      if request.location.city.length == 0
-      	@events = Event.near(request.location.city + ", " + request.location.country  , 100).get_events_with_time(params[:time]).joins(:tags).where(:tags => {:id => @array }).uniq
-      else
-      	@events = Event.get_events_with_time(params[:time]).joins(:tags).where(:tags => {:id => @array }).uniq
-      end
-      @data = @events.to_gmaps4rails
-    else
-      if request.location.city.length == 0
-      	@events = Event.get_events_with_time(params[:time])
-      else
-      	@events = Event.near(request.location.city + ", " + request.location.country  , 100).get_events_with_time(params[:time])
-      end
-      @data = @events.to_gmaps4rails
-    end
+    filter_events()
 
     respond_to do |format|
       format.json { render json: @data }
@@ -74,6 +53,32 @@ class EventsController < ApplicationController
 
   end
 
+  def filter_events
+    if params[:time]
+  	@time = params[:time]
+    else
+  	@time = 'today'
+    end
+  
+  #Si hay parámetros de tags, se hace una query con ellos
+    if params[:data]
+      @array = params[:data].split(',')
+      if request.location.city.length == 0
+      	@events = Event.get_events_with_time(@time).joins(:tags).where(:tags => {:id => @array }).uniq
+      else
+      	@events = Event.near(request.location.city + ", " + request.location.country  , 100).get_events_with_time(@time).joins(:tags).where(:tags => {:id => @array }).uniq
+      end
+      @data = @events.to_gmaps4rails
+    #Si no, solo se usan filtros de tiempo
+    else
+      if request.location.city.length == 0
+      	@events = Event.get_events_with_time(@time)
+      else
+      	@events = Event.near(request.location.city + ", " + request.location.country  , 100).get_events_with_time(@time)
+      end
+      @data = @events.to_gmaps4rails
+    end
+  end
 
   def index
     session[:oauth] = Koala::Facebook::OAuth.new(APP_ID, APP_SECRET, SITE_URL + '/callback')
@@ -91,13 +96,10 @@ class EventsController < ApplicationController
 
 
   def maps
-    session[:oauth] = Koala::Facebook::OAuth.new(APP_ID, APP_SECRET, SITE_URL + '/callback')
-    @auth_url =  session[:oauth].url_for_oauth_code(:permissions=>"email, user_events, friends_events")
-    puts session.to_s + "<<< session"
-
-    @events = Event.find :all, :order => 'atenders DESC', :conditions => ['start_time > ?', Time.now]
-    @json = @events.to_gmaps4rails
-
+  
+    filter_events()
+    @json = @data
+    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @events }
