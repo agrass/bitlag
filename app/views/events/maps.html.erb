@@ -65,7 +65,7 @@
 					filters();
 				},
 				slide: function(event, ui) { 
-					Gmaps.map.circles[0].serviceObject.setRadius(ui.value * 1.609344);
+					Gmaps.map.circles[0].serviceObject.setRadius(ui.value * 1.609344 * 1000);
 				}
 		 	});
 		}

@@ -66,7 +66,7 @@ class EventsController < ApplicationController
         @circles_json = '[{"lng": 0, "lat": 0, "radius": 0}]'
     if request.location.city.length == 0
     	@s = Geocoder.search(request.location.city+ ", " + request.location.country)
-    	@circles_json = '[{"lng": ' + @s[0].longitude.to_s + ', "lat": ' + @s[0].latitude.to_s + ', "radius": ' + (1.609344*5).to_s + ' }]'
+    	@circles_json = '[{"lng": ' + @s[0].longitude.to_s + ', "lat": ' + @s[0].latitude.to_s + ', "radius": ' + (1.609344*5*1000).to_s + ' }]'
     end
   #Si hay parámetros de tags, se hace una query con ellos
     if params[:data]
