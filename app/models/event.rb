@@ -8,7 +8,7 @@ acts_as_mappable :default_units => :kms,
 
 has_and_belongs_to_many :tags
 
-before_save :set_tag
+#before_save :set_tag
 
 validates :fb_id, :uniqueness => true
 
