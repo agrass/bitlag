@@ -6,7 +6,7 @@
 </div>
 </div>
 <br />
-<%= gmaps(:map_options => {:auto_adjust => false, :detect_location => true, :center_on_user => true, :auto_zoom => false, :zoom => 15}, :markers => {:data => @json, :options => {:do_clustering=> true, :clusterer_maxZoom=> 18} } ) %>
+<%= gmaps(:map_options => {:auto_adjust => false, :detect_location => true, :center_on_user => true, :auto_zoom => false, :zoom => 15}, :markers => {:data => @json, :options => {:do_clustering=> true, :clusterer_maxZoom=> 18} }, :circles => { :data => @circles_json, :options => {fillColor: "#000",fillOpacity: 0.25}}) %>
 <br />
 <div class="dock" id="dock2">
   <div class="dock-container2">
@@ -61,9 +61,11 @@
 			$('#slider').slider({ 
 				max: 45,
 				min: 5,
-				step: 5,
 				change: function(event, ui) { 
 					filters();
+				},
+				slide: function(event, ui) { 
+					Gmaps.map.circles[0].serviceObject.setRadius(ui.value * 1.609344 * 1000);
 				}
 		 	});
 		}
