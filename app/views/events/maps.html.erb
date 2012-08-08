@@ -16,7 +16,7 @@
   </div>
 </div>
 <%= link_to 'New Event', new_event_path %>
-<%= session[:access_token] %>
+<div id="slider"></div>
 <div id="img-cont"></div>
 <script type="text/javascript">
 	var ajax = false;
@@ -26,27 +26,6 @@
 		//html5 geolocalization
 		         if(navigator.geolocation) {
     				navigator.geolocation.getCurrentPosition(geo_success);
-  			}
-  			function geo_success(position)
-  			{
-    				Gmaps.map.createMarker({
-                        		Lat: position.coords.latitude,
-                       			Lng: position.coords.longitude, 
-                        		rich_marker: null, 
-                        		marker_picture: "<%= asset_path 'position.png' %>",
-                        		marker_width: 60,
-   					marker_height: 80,
-   					marker_anchor: null,
-   					shadow_anchor: null,
-   					shadow_picture: null,
-   					shadow_width: null,
-   					shadow_height: null
-                       		});
-    				set_center(position);
-  			}
-  			function set_center(position)
-  			{
-  				Gmaps.map.serviceObject.setCenter(new google.maps.LatLng(position.coords.latitude,position.coords.longitude));
   			}
   		//Filters
   			$('#dock').Fisheye(
@@ -73,82 +52,116 @@
 					halign : 'center'
 				}
 			)
+		//Filter events
 			$('.menu').click (select);
 			$('.menu_top').click (select_top);
 			$('.select_top').click (select_top);
-
-			function select(){
-				if(ajax){
-					return;
-				}
-				
-				if((this).getAttribute("alt")== "<%= Tag.find_by_name("todos").id %>")
-				{
-					if((this).getAttribute("class")== "menu")
-					{
-						$('.menu').each(function(index) { (this).setAttribute("class", "select");});
-					}
-					else
-					{
-						$('.select').each(function(index) { (this).setAttribute("class", "menu");});
-					}
-				}
-				else if((this).getAttribute("class")== "menu"  )
-				{
-				    (this).setAttribute("class", "select");
-				}
-				else
-				{
-				    (this).setAttribute("class", "menu");
-				}
-				filters();
-			}
-
-			function select_top(){
-				if(ajax){
-					return;
-				}
-				
-				if((this).getAttribute("class")== "menu_top"  )
-				{
-				    $('.select_top').each(function(){(this).setAttribute("class", "menu_top")});
-				    (this).setAttribute("class", "select_top");
-				    filters();
-				}
-			}
 			
-			function filters(){
-				 var count = 0;
-				 var items = "data=";
-				$('.select').each(function(index) {
-					items = items + (this).getAttribute("alt") + ",";
-					count++;
-				});
-				if(count == 0 ){items = []}
-				items = items + "&time=";
-				$('.select_top').each(function(index) {
-					items = items + (this).getAttribute("alt");
-				});
-				
-				var position = {coords: {latitude: Gmaps.map.map.getCenter().lat(), longitude: Gmaps.map.map.getCenter().lng()} }
-				putImage();
-				$.getJSON('/filter.json', items , function(data){
-          						Gmaps.map.replaceMarkers(data);
-                   					set_center(position);
-                   					removeImage();
-
-       				});	
-			}
-
-			function putImage(){
-				ajax = true;
-				$('#img-cont').append('<img src="<%= asset_path 'ajax-loader.gif' %>" class="ajax-wait" >');
-			}
-
-			function removeImage(){
-				ajax = false;
-				$('.ajax-wait').remove();
-			}
+		//Slider
+			$('#slider').slider({ 
+				max: 45,
+				min: 5,
+				step: 5,
+				change: function(event, ui) { 
+					filters();
+				}
+		 	});
 		}
 	);
+	
+	function geo_success(position)
+  	{
+    		Gmaps.map.createMarker({
+                        Lat: position.coords.latitude,
+                       	Lng: position.coords.longitude, 
+                        rich_marker: null, 
+                        marker_picture: "<%= asset_path 'position.png' %>",
+                        marker_width: 60,
+   			marker_height: 80,
+   			marker_anchor: null,
+   			shadow_anchor: null,
+   			shadow_picture: null,
+   			shadow_width: null,
+   			shadow_height: null
+                       		});
+    			set_center(position);
+  			}
+  			
+  	function set_center(position)
+  	{
+  				Gmaps.map.serviceObject.setCenter(new google.maps.LatLng(position.coords.latitude,position.coords.longitude));
+  	}
+
+  	function select(){
+		if(ajax){
+			return;
+		}
+				
+		if((this).getAttribute("alt")== "<%= Tag.find_by_name("todos").id %>")
+		{
+			if((this).getAttribute("class")== "menu")
+			{
+				$('.menu').each(function(index) { (this).setAttribute("class", "select");});
+			}
+			else
+			{
+				$('.select').each(function(index) { (this).setAttribute("class", "menu");});
+			}
+		}
+		else if((this).getAttribute("class")== "menu"  )
+		{
+		    (this).setAttribute("class", "select");
+		}
+		else
+		{
+		    (this).setAttribute("class", "menu");
+		}
+		filters();
+	}
+
+	function select_top(){
+		if(ajax){
+			return;
+		}
+			
+		if((this).getAttribute("class")== "menu_top"  )
+		{
+		    $('.select_top').each(function(){(this).setAttribute("class", "menu_top")});
+		    (this).setAttribute("class", "select_top");
+		    filters();
+		}
+	}
+			
+	function filters(){
+		 var count = 0;
+		 var items = "data=";
+		$('.select').each(function(index) {
+			items = items + (this).getAttribute("alt") + ",";
+			count++;
+		});
+		if(count == 0 ){items = []}
+		items = items + "&time=";
+		$('.select_top').each(function(index) {
+			items = items + (this).getAttribute("alt");
+		});
+		items = items + "&radius=" + $('#slider').slider("option", "value");
+		var position = {coords: {latitude: Gmaps.map.map.getCenter().lat(), longitude: Gmaps.map.map.getCenter().lng()} }
+		putImage();
+		$.getJSON('/filter.json', items , function(data){
+        				Gmaps.map.replaceMarkers(data);
+       					set_center(position);
+          				removeImage();
+
+       		});	
+	}
+
+	function putImage(){
+		ajax = true;
+		$('#img-cont').append('<img src="<%= asset_path 'ajax-loader.gif' %>" class="ajax-wait" >');
+	}
+
+	function removeImage(){
+		ajax = false;
+		$('.ajax-wait').remove();
+	}
 </script>

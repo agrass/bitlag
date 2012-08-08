@@ -2,8 +2,6 @@ class EventsController < ApplicationController
   # GET /events
   # GET /events.json
 
-
-
   def refreshlist
     @limit = 10
     @active_filters = params[:filter]
@@ -59,6 +57,12 @@ class EventsController < ApplicationController
     else
   	@time = 'today'
     end
+
+    if params[:radius]
+        @radius = params[:radius]
+    else
+    	@radius = 5
+    end
   
   #Si hay parámetros de tags, se hace una query con ellos
     if params[:data]
@@ -66,7 +70,7 @@ class EventsController < ApplicationController
       if request.location.city.length == 0
       	@events = Event.get_events_with_time(@time).joins(:tags).where(:tags => {:id => @array }).uniq
       else
-      	@events = Event.near(request.location.city + ", " + request.location.country  , 100).get_events_with_time(@time).joins(:tags).where(:tags => {:id => @array }).uniq
+      	@events = Event.near(request.location.city + ", " + request.location.country  , @radius).get_events_with_time(@time).joins(:tags).where(:tags => {:id => @array }).uniq
       end
       @data = @events.to_gmaps4rails
     #Si no, solo se usan filtros de tiempo
@@ -74,7 +78,7 @@ class EventsController < ApplicationController
       if request.location.city.length == 0
       	@events = Event.get_events_with_time(@time)
       else
-      	@events = Event.near(request.location.city + ", " + request.location.country  , 100).get_events_with_time(@time)
+      	@events = Event.near(request.location.city + ", " + request.location.country  , @radius).get_events_with_time(@time)
       end
       @data = @events.to_gmaps4rails
     end
