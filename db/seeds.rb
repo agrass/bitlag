@@ -1,3 +1,4 @@
+# encoding: utf-8
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 #
@@ -34,7 +35,7 @@ Expression.create(:expression => '(\s[Ff]|^[Ff])[Oo0][Nn][Dd][Aa@] ', :tag_id =>
 
 #Filtros para eventos Culturales
 
-Expression.create(:expression => '(\s[Ee]|^[Ee])[Xx][Pp][Oo0][SsCc][Ii][Ooó][Nn] ', :tag_id => Tag.find_by_name('exposicion').id )
+Expression.create(:expression => '(\s[Ee]|^[Ee])[Xx][Pp][Oo0][SsCc][Ii][Oo][Nn] ', :tag_id => Tag.find_by_name('exposicion').id )
 Expression.create(:expression => '(\s[Cc]|^[Cc])[Hh][Aa][Rr][Ll][Aa@] ', :tag_id => Tag.find_by_name('charla').id )
 Expression.create(:expression => '(\s[CckK]|^[CckK])[Aa][Ff][EeéÉ][Cc][Oo0][Nn][Cc][Ee3][Rr][Tt] ', :tag_id => Tag.find_by_name('cafeconcert').id )
 Expression.create(:expression => '(\s[Oo0]|^[Oo0])[Bb][Rr][Aa] ', :tag_id => Tag.find_by_name('obra').id )
