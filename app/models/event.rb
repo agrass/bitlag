@@ -41,13 +41,21 @@ def gmaps4rails_infowindow
 end
 
 def gmaps4rails_marker_picture
-  if(self.tags.first().name != nil)
+  if self.tags.first() != nil
   {
     
    "picture" => "/assets/#{self.tags.first().name}.png",
    "width" => 40,
-   "height" => 60,
- 
+   "height" => 53,
+   
+   }
+   else
+       {
+    
+   "picture" => "/assets/todos.png",
+   "width" => 40,
+   "height" => 53,
+   
    }
    end
 end
