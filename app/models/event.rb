@@ -41,11 +41,15 @@ def gmaps4rails_infowindow
 end
 
 def gmaps4rails_marker_picture
+  if(self.tags.first().name != nil)
   {
+    
    "picture" => "/assets/#{self.tags.first().name}.png",
-   "width" => 60,
-   "height" => 80,
+   "width" => 40,
+   "height" => 60,
+ 
    }
+   end
 end
 
 def self.get_events_with_time(time)
