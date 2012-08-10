@@ -20,6 +20,8 @@
 <div id="img-cont"></div>
 <script type="text/javascript">
 	var ajax = false;
+	var lat = 0;
+	var lon = 0;
 	$(document).ready(
 		function()
 		{
@@ -64,9 +66,7 @@
 				change: function(event, ui) { 
 					filters();
 				},
-				slide: function(event, ui) { 
-					Gmaps.map.circles[0].serviceObject.setRadius(ui.value * 1.609344 * 1000);
-				}
+				slide: alignCircle
 		 	});
 		}
 	);
@@ -86,7 +86,8 @@
    			shadow_width: null,
    			shadow_height: null
                  });
-                 
+                lat = position.coords.latitude;
+                lon = position.coords.longitude;
     		set_center(position);
   	}
   			
@@ -136,6 +137,7 @@
 	}
 			
 	function filters(){
+	        alignCircle();
 		 var count = 0;
 		 var items = "data=";
 		$('.select').each(function(index) {
@@ -149,7 +151,7 @@
 		});
 		items = items + "&radius=" + $('#slider').slider("option", "value");
 		var position = {coords: {latitude: Gmaps.map.map.getCenter().lat(), longitude: Gmaps.map.map.getCenter().lng()} }
-		items = items + "&lat=" + position.coords.latitude + "&lon=" + position.coords.longitude;
+		items = items + "&lat=" + lat + "&lon=" + lon;
 		putImage();
 		$.getJSON('/filter.json', items , function(data){
         				Gmaps.map.replaceMarkers(data);
@@ -167,5 +169,12 @@
 	function removeImage(){
 		ajax = false;
 		$('.ajax-wait').remove();
+	}
+
+	function alignCircle (event, ui){
+	        var radius = $('#slider').slider("option", "value");
+	        if(radius == 0) {radius = 5;}
+		Gmaps.map.circles[0].serviceObject.setRadius(radius * 1.609344 * 1000);
+		Gmaps.map.circles[0].serviceObject.setCenter(new google.maps.LatLng(lat,lon));
 	}
 </script>
