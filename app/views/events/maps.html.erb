@@ -85,13 +85,14 @@
    			shadow_picture: null,
    			shadow_width: null,
    			shadow_height: null
-                       		});
-    			set_center(position);
-  			}
+                 });
+                 
+    		set_center(position);
+  	}
   			
   	function set_center(position)
   	{
-  				Gmaps.map.serviceObject.setCenter(new google.maps.LatLng(position.coords.latitude,position.coords.longitude));
+  		Gmaps.map.serviceObject.setCenter(new google.maps.LatLng(position.coords.latitude,position.coords.longitude));
   	}
 
   	function select(){
@@ -148,6 +149,7 @@
 		});
 		items = items + "&radius=" + $('#slider').slider("option", "value");
 		var position = {coords: {latitude: Gmaps.map.map.getCenter().lat(), longitude: Gmaps.map.map.getCenter().lng()} }
+		items = items + "&lat=" + position.coords.latitude + "&lon=" + position.coords.longitude;
 		putImage();
 		$.getJSON('/filter.json', items , function(data){
         				Gmaps.map.replaceMarkers(data);

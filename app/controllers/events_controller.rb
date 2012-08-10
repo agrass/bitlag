@@ -57,26 +57,34 @@ class EventsController < ApplicationController
     else
   	@time = 'today'
     end
-
-    if params[:radius]
+    if params[:radius] && params[:radius] != 0
         @radius = params[:radius]
     else
     	@radius = 5
     end
-
-    if request.location.city.length == 0
-    	@circles_json = '[{"lng": 0, "lat": 0, "radius": 0 }]'
+    if params[:lat] && params[:lon]
+        @lat = params[:lat]
+        @lon = params[:lon]
     else
-    	@s = Geocoder.search(request.location.city+ ", " + request.location.country)
-    	@circles_json = '[{"lng": ' + @s[0].longitude.to_s + ', "lat": ' + @s[0].latitude.to_s + ', "radius": ' + (1.609344*5*1000).to_s + ' }]'
+        if request.location.city.length == 0
+    	   @lat = (0).to_s
+           @lon = (0).to_s
+        else
+           #@s = Geocoder.search(request.location.city+ ", " + request.location.country)
+           @lat = request.location.latitude.to_s
+           @lon = request.location.longitude.to_s
+        end
     end
+    
+    	@circles_json = '[{"lng": ' + @lon + ', "lat": ' + @lat + ', "radius": ' + (1.609344*5*1000).to_s + ' }]'
+
   #Si hay parámetros de tags, se hace una query con ellos
     if params[:data]
       @array = params[:data].split(',')
       if request.location.city.length == 0
       	@events = Event.get_events_with_time(@time).joins(:tags).where(:tags => {:id => @array }).uniq
       else
-      	@events = Event.near(request.location.city + ", " + request.location.country  , @radius).get_events_with_time(@time).joins(:tags).where(:tags => {:id => @array }).uniq
+      	@events = Event.near('[' + @lat + ',' + @lon + ']'  , @radius).get_events_with_time(@time).joins(:tags).where(:tags => {:id => @array }).uniq
       end
       @data = @events.to_gmaps4rails
     #Si no, solo se usan filtros de tiempo
@@ -84,7 +92,7 @@ class EventsController < ApplicationController
       if request.location.city.length == 0
       	@events = Event.get_events_with_time(@time)
       else
-      	@events = Event.near(request.location.city + ", " + request.location.country  , @radius).get_events_with_time(@time)
+      	@events = Event.near('[' + @lat + ',' + @lon + ']'  , @radius).get_events_with_time(@time)
       end
       @data = @events.to_gmaps4rails
     end
