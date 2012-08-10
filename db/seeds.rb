@@ -6,12 +6,13 @@
 #
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
-Tag.create(:name =>'fiesta')
-Tag.create(:name =>'concierto')
-Tag.create(:name =>'teatro')
-Tag.create(:name =>'cine')
-Tag.create(:name =>'arte')
+Tag.create(:name =>'noche')
+Tag.create(:name =>'musica')
+Tag.create(:name =>'cultura')
 Tag.create(:name =>'todos')
+
+
+
 Expression.create(:expression => '(\s[Ff]|^[Ff])[Ii][Ee][Ss][Tt][Aa]', :tag_id => Tag.find_by_name('fiesta').id )
 Expression.create(:expression => '(\s[Cc]|^[Cc])[Aa][Rr][Rr][Ee][Tt][Ee]' , :tag_id => Tag.find_by_name('fiesta').id)
 Expression.create(:expression => '(\s[Cc]|^[Cc])[Oo][Nn][Cc][Ii][Ee][Rr][Tt][Oo]', :tag_id => Tag.find_by_name('concierto').id )

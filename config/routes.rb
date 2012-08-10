@@ -34,6 +34,9 @@ namespace :api, defaults: {format: 'json'} do
   #REST access token users
   match 'getAccesTokens' => 'users#getAccesTokens', :as => 'getAccesTokens'
   
+  #REST add tags
+  match 'addTags/:tag_id/:event_id' => 'events#addTags', :as => 'addTags'
+  
   
  
   

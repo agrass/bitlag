@@ -97,6 +97,15 @@ class EventsController < ApplicationController
     end
   end
 
+
+  #add Tags
+  
+  def addTags
+    tag = Tag.find(params[:tag_id].to_i)
+    event = Event.find_by_fb_id(params[:event_id].to_i)    
+    event.tags.push(tag)    
+  end
+
   def index
     session[:oauth] = Koala::Facebook::OAuth.new(APP_ID, APP_SECRET, SITE_URL + '/callback')
     @auth_url =  session[:oauth].url_for_oauth_code(:permissions=>"email, user_events, friends_events")
