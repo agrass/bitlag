@@ -24,27 +24,23 @@
 </head>
 <body>
 	
-	<div id ="head">
-		
-		<div id="logo">
-		<%= link_to image_tag('logochico.png'), root_path %>
-		</div>
-		
-		
-		
-		
-		
-		<div id="nav_bar">
-			<%= link_to t('menu.home'), '/' %> <%= link_to t('menu.event_list'), lists_path %>  <%= link_to t('menu.map'), maps_path %>  <%= link_to t('menu.calendar'), '/' %> 	 <%= link_to 'Contact', '/' %> 	
-			</div>
-		
-		
-		<div id="headLogin">
-			
-			</div>
-		
-		</div>
-		
+  <!-- header -->
+  <header>
+ 
+<div id="logo"><%= image_tag "logo2w.png" %> </div>
+    	
+      <nav>
+        <ul>
+        	<li><%= link_to t('menu.home'), '/' %></li>
+          <li><%= link_to t('menu.event_list'), lists_path %> </li>
+          <li><%= link_to t('menu.map'), maps_path %></li>
+          <li><%= link_to t('menu.calendar'), '/' %> </li>
+          <li><a href="#">List</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </nav>
+  
+	</header>
 		<div id="main">
 		
 		<div id="leftSide">
