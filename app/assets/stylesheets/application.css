@@ -80,7 +80,7 @@ h3 {
 
 #main{ width: 100%; float: left; margin-top: 20px; margin-bottom: 0px;}
 
-#footer{ float:left;   background: #222; width: 100%; margin-bottom: 0px; height: 30px; bottom: 0px; margin-top: 0px; }
+#footer{ float:left;   background: #222; width: 100%; margin-bottom: 0px; height: 100%; margin-top: 0px; }
 
 #logo{ float:left; width: 150px; margin-left: 6%; margin-top: 5px;}
 

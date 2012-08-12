@@ -70,6 +70,22 @@
 	
 	</div>
 	
+		<% if session[:user_id] == nil %>
+	<div class="login">
+			<%= link_to image_tag('login.png'), @auth_url, :class=>"button"%>
+	</div>
+			
+			<% else %>
+			<%= link_to 'Logout', logout_path , :class=>"button"%>
+			<% end %>
+			
+			
+			<div class="movilapp">
+				<%= image_tag 'appstore.png' %>
+				<%= image_tag 'android.png' %>
+				
+				</div>
+	
 	
 	<script language="JavaScript">
 
