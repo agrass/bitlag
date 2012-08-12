@@ -24,6 +24,8 @@
 </head>
 <body>
 	
+	<div id="feedback"><a href="#" ><%= image_tag "feedback.png" %></a></div>
+	
   <!-- header -->
   <header>
  
@@ -34,7 +36,7 @@
         	<li><%= link_to t('menu.home'), '/' %></li>
           <li><%= link_to t('menu.event_list'), lists_path %> </li>
           <li><%= link_to t('menu.map'), maps_path %></li>
-          <li><%= link_to t('menu.calendar'), '/' %> </li>         
+          <li><%= link_to t('menu.calendar'), '#' %> </li>         
           <li><a href="#">Contact</a></li>
         </ul>
       </nav>
@@ -61,12 +63,21 @@
 
 <div id="footer">
 	<% if session[:user_id] == nil %>
-			<%= link_to 'Facebook Login', @auth_url, :class=>"button"%>
+	<div class="login">
+			<%= link_to image_tag('login.png'), @auth_url, :class=>"button"%>
+	</div>
 			
 			<% else %>
 			<%= link_to 'Logout', logout_path , :class=>"button"%>
 			<% end %>
-			<%= link_to 'Add Events', add_events_path %>
+			
+			
+			<div class="movilapp">
+				<%= image_tag 'appstore.png' %>
+				<%= image_tag 'android.png' %>
+				
+				</div>
+			
 </div>
 
 
