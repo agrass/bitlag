@@ -84,7 +84,7 @@ h3 {
 
 #logo{ float:left; width: 150px; margin-left: 6%; margin-top: 5px;}
 
-#feedback{ position: absolute; right: 0px; top:100px;}
+#feedback{ position: absolute; right: 0px; top:100px; }
 
 .login{ position:absolute; top: 580px; right: 30px; z-index: 16;}
 .movilapp{ position: absolute; top:565px; left:30px; z-index: 16;}
