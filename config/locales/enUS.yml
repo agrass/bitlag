@@ -11,9 +11,9 @@ enUS:
     weekend: Fin de Semana
   menu:
     home: Inicio
-    event_list: Lista Eventos
+    event_list: Eventos
     map: Mapa
-    calendar: Calendario
+    calendar: Agenda
   static:
     home: Home
     profile: Profile

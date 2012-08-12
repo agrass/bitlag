@@ -22,28 +22,46 @@
 
 </div>
 
+<div class="index_menu_back">
+		<div class="index_menu_back_down">
+			</div>
+		
+		</div>
 
 <div class="index_menu">
+	
 	
 	<div class="menu_container">
 	
 	<a href="lists">
-	<div class="menu_image">
-		<%= image_tag "event_list.png" %>
-		<p><h2><%= link_to 'Event List', lists_path %></h2></p>		
+	<div class="menu_image1">
+		<div class="menu_image">
+		<%= image_tag "list_menu.png" %>
+		</div>
+		<div class="menu_text menu_text_grey">
+		<p><h2>Lista</h2></p>	
+		</div>	
 		</div>
 		</a>
 	
 	<a href="maps">
-	<div class="menu_image">
-		<%= image_tag "event_map.png" %>
-		<p><h2><%= link_to 'Map', maps_path %></h2></p>
+	<div class="menu_image2">
+		<div class="menu_image">
+		<%= image_tag "mapa_menu.png" %>
+		</div>
+		<div class="menu_text">
+		<p><h2>Mapa</h2></p>
+		</div>
 		
 		</div>
 		
-		<div class="menu_image">
-		<%= image_tag "calendar.png" %>
+		<div class="menu_image3">
+			<div class="menu_image">
+		<%= image_tag "calendar_menu.png" %>
+		</div>
+		<div class="menu_text menu_text_grey">
 		<p><h2>Calendar</h2></p>
+		</div>
 		
 		</div>
 	
@@ -57,18 +75,14 @@
 
 $('.menu_image').mouseover(function() {
   $(this).stop().animate({
-    opacity: 1,
-    marginRight: "45px",
-    marginLeft: "25px"
+    opacity: 1   
     
   }, 200);
 });
 
 $('.menu_image').mouseout(function() {
   $(this).stop().animate({
-  	opacity: 0.5,
-   marginRight: "40px",
-   marginLeft: "20px"
+  	opacity: 0.5
   }, 200);
 });
 </script>
