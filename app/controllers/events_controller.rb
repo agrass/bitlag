@@ -9,9 +9,17 @@ class EventsController < ApplicationController
 
     #si no logra ller la ciudad
     if request.location.city.length == 0
-       @events = Event.find(:all, :order => "atenders DESC" , :conditions => ["start_time < ? AND start_time > ?", Time.now + 10.days, Time.now - 1.days], :limit => 10, :offset => @offset )
-    else    
-    @events = Event.near(request.location.city + ", " + request.location.country  , 100).find(:all, :order => "atenders DESC" , :conditions => ["start_time < ? AND start_time > ?", Time.now + 10.days, Time.now - 10.hours], :limit => 10, :offset => @offset )
+	if @active_filters == (0).to_s
+       		@events = Event.find(:all, :order => "atenders DESC" , :conditions => ["start_time < ? AND start_time > ?", Time.now + 10.days, Time.now - 1.days], :limit => 10, :offset => @offset )
+	else
+		@events = Event.joins(:tags).where('tags.id = ? AND start_time < ? AND start_time > ?' ,@active_filters, Time.now + 10.days, Time.now - 1.days ).limit(10).offset(@offset).order('atenders DESC, start_time ASC')
+	end
+    else
+	if @active_filters == (0).to_s
+		 @events = Event.near(request.location.city + ", " + request.location.country  , 100).find(:all, :order => "atenders DESC" , :conditions => ["start_time < ? AND start_time > ?", Time.now + 10.days, Time.now - 10.hours], :limit => 10, :offset => @offset )
+	else
+		@events = Event.near(request.location.city + ", " + request.location.country  , 100).joins(:tags).where('tags.id = ? AND start_time < ? AND start_time > ?' ,@active_filters, Time.now + 10.days, Time.now - 1.days ).limit(10).offset(@offset).order('atenders DESC, start_time ASC')
+	end
     end
     render :file => 'events/refreshList', :layout => false    
   end
