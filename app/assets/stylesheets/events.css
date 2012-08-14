@@ -11,3 +11,11 @@ left: 420px;
 bottom: 280px;
 z-index: 3;
 }
+
+.menu {
+opacity:0.4;
+}
+
+.menu_top {
+opacity:0.4;
+}

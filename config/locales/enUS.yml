@@ -1,10 +1,9 @@
 enUS:
   tags:
-    fiesta: Fiesta
-    concierto: Concierto
-    teatro: Teatro
-    cine: Cine
-    arte: Arte
+    noche: Eventos Nocturnos
+    musica: Conciertos y tocatas
+    cultura: Teatro, Arte y Charlas
+    cine: Cine    
     todos: Todos   
   filter:
     today: Hoy
@@ -12,9 +11,9 @@ enUS:
     weekend: Fin de Semana
   menu:
     home: Inicio
-    event_list: Lista Eventos
+    event_list: Eventos
     map: Mapa
-    calendar: Calendario
+    calendar: Agenda
   static:
     home: Home
     profile: Profile

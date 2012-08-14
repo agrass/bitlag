@@ -4,34 +4,46 @@
   <title>iWuanaGo</title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
   <%= stylesheet_link_tag 'gmaps4rails' %>
+  <%= stylesheet_link_tag 'jquery-ui-1.8.22.custom' %>
   <%= javascript_include_tag "application" %>
+      <script type="text/javascript"
+    src="http://plugins.learningjquery.com/expander/jquery.expander.js">
+    </script>
+    <script type="text/javascript">
+        $(function () {
+            $('div.show_description').expander({
+                slicePoint: 600,
+                expandText: 'Read More',
+                userCollapseText: 'Hide'
+            });
+        });
+    </script>
 
   <%= csrf_meta_tags %> 
 
 </head>
 <body>
 	
-	<div id ="head">
-		
-		<div id="logo">
-		<%= link_to image_tag('logochico.png'), root_path %>
-		</div>
-		
-		
-		
-		
-		
-		<div id="nav_bar">
-			<%= link_to t('menu.home'), '/' %> <%= link_to t('menu.event_list'), lists_path %>  <%= link_to t('menu.map'), maps_path %>  <%= link_to t('menu.calendar'), '/' %> 	 <%= link_to 'Contact', '/' %> 	
-			</div>
-		
-		
-		<div id="headLogin">
-			
-			</div>
-		
-		</div>
-		
+	<div id="feedback"><a href="#" ><%= image_tag "feedback.png" %></a></div>
+	
+  <!-- header -->
+  <header>
+ 
+<div id="logo"><a href="/" ><%= image_tag "logo2w.png" %></a></div>
+    	
+      <nav>
+        <ul>
+        	<li><%= link_to t('menu.home'), '/' %></li>
+          <li><%= link_to t('menu.event_list'), lists_path %> </li>
+          <li><%= link_to t('menu.map'), maps_path %></li>
+          <li><%= link_to t('menu.calendar'), '#' %> </li>         
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </nav>
+      
+      <div class="efect"><div class="color1"> </div><div class="color2"> </div><div class="color3"> </div> <div class="color4"> </div> <div class="color5"> </div> <div class="color6"> </div></div> 
+  
+	</header>
 		<div id="main">
 		
 		<div id="leftSide">
@@ -50,13 +62,8 @@
 </div>
 
 <div id="footer">
-	<% if session[:user_id] == nil %>
-			<%= link_to 'Facebook Login', @auth_url, :class=>"button"%>
+
 			
-			<% else %>
-			<%= link_to 'Logout', logout_path , :class=>"button"%>
-			<% end %>
-			<%= link_to 'Add Events', add_events_path %>
 </div>
 
 

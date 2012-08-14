@@ -2,8 +2,6 @@ class EventsController < ApplicationController
   # GET /events
   # GET /events.json
 
-
-
   def refreshlist
     @limit = 10
     @active_filters = params[:filter]
@@ -11,9 +9,17 @@ class EventsController < ApplicationController
 
     #si no logra ller la ciudad
     if request.location.city.length == 0
-       @events = Event.find(:all, :order => "atenders DESC" , :conditions => ["start_time < ? AND start_time > ?", Time.now + 10.days, Time.now - 1.days], :limit => 10, :offset => @offset )
-    else    
-    @events = Event.near(request.location.city + ", " + request.location.country  , 100).find(:all, :order => "atenders DESC" , :conditions => ["start_time < ? AND start_time > ?", Time.now + 10.days, Time.now - 1.days], :limit => 10, :offset => @offset )
+	if @active_filters == (0).to_s
+       		@events = Event.find(:all, :order => "atenders DESC" , :conditions => ["start_time < ? AND start_time > ?", Time.now + 10.days, Time.now - 1.days], :limit => 10, :offset => @offset )
+	else
+		@events = Event.joins(:tags).where('tags.id = ? AND start_time < ? AND start_time > ?' ,@active_filters, Time.now + 10.days, Time.now - 1.days ).limit(10).offset(@offset).order('atenders DESC, start_time ASC')
+	end
+    else
+	if @active_filters == (0).to_s
+		 @events = Event.near(request.location.city + ", " + request.location.country  , 100).find(:all, :order => "atenders DESC" , :conditions => ["start_time < ? AND start_time > ?", Time.now + 10.days, Time.now - 10.hours], :limit => 10, :offset => @offset )
+	else
+		@events = Event.near(request.location.city + ", " + request.location.country  , 100).joins(:tags).where('tags.id = ? AND start_time < ? AND start_time > ?' ,@active_filters, Time.now + 10.days, Time.now - 1.days ).limit(10).offset(@offset).order('atenders DESC, start_time ASC')
+	end
     end
     render :file => 'events/refreshList', :layout => false    
   end
@@ -24,7 +30,7 @@ class EventsController < ApplicationController
     if params[:data]
      #si no logra reconocer la ciudad
     if request.location.city.length == 0
-     @events = Event.find(:all, :order => "atenders DESC" , :conditions => ["start_time < ? AND start_time > ? ", Time.now + 10.days, Time.now - 1.days], :limit => 10 )      
+     @events = Event.find(:all, :order => "atenders DESC" , :conditions => ["start_time < ? AND start_time > ? ", Time.now + 10.days, Time.now - 10.hours], :limit => 10 )      
      else            
      @events = Event.near(request.location.city + ", " + request.location.country  , 100).find(:all, :order => "atenders DESC" , :conditions => ["start_time < ? AND start_time > ? ", Time.now + 10.days, Time.now - 1.days], :limit => 10 )      
      end
@@ -44,21 +50,8 @@ class EventsController < ApplicationController
 
 
   def filter
-    if params[:time].nil?
-      respond_to do |format|
-        format.json { render json: @data }
-      end
-      return
-    end
 
-    if params[:data]
-      @array = params[:data].split(',')
-      @events = Event.get_events_with_time(params[:time]).joins(:tags).where(:tags => {:id => @array }).uniq
-      @data = @events.to_gmaps4rails
-    else
-      @events = Event.get_events_with_time(params[:time])
-      @data = @events.to_gmaps4rails
-    end
+    filter_events()
 
     respond_to do |format|
       format.json { render json: @data }
@@ -66,6 +59,60 @@ class EventsController < ApplicationController
 
   end
 
+  def filter_events
+    if params[:time]
+  	@time = params[:time]
+    else
+  	@time = 'today'
+    end
+    if params[:radius] && params[:radius] != (0).to_s
+        @radius = params[:radius]
+    else
+    	@radius = 5
+    end
+    if params[:lat] && params[:lon]
+        @lat = params[:lat]
+        @lon = params[:lon]
+    else
+        if request.location.city.length == 0
+    	   @lat = 0
+           @lon = 0
+        else
+           @lat = request.location.latitude
+           @lon = request.location.longitude
+        end
+    end
+    
+    	@circles_json = '[{"lng": ' + @lon.to_s + ', "lat": ' + @lat.to_s + ', "radius": ' + (1.609344*5*1000).to_s + ' }]'
+
+  #Si hay parámetros de tags, se hace una query con ellos
+    if params[:data]
+      @array = params[:data].split(',')
+      if @lat == 0 && @lon == 0
+      	@events = Event.get_events_with_time(@time).joins(:tags).where(:tags => {:id => @array }).uniq
+      else
+      	@events = Event.near([@lat,@lon]  , @radius).get_events_with_time(@time).joins(:tags).where(:tags => {:id => @array }).uniq
+      end
+      @data = @events.to_gmaps4rails
+    #Si no, solo se usan filtros de tiempo
+    else
+      if @lat == 0 && @lon == 0
+      	@events = Event.get_events_with_time(@time)
+      else
+      	@events = Event.near([@lat,@lon] , @radius).get_events_with_time(@time)
+      end
+      @data = @events.to_gmaps4rails
+    end
+  end
+
+
+  #add Tags
+  
+  def addTags
+    tag = Tag.find(params[:tag_id].to_i)
+    event = Event.find_by_fb_id(params[:event_id].to_i)    
+    event.tags.push(tag)    
+  end
 
   def index
     session[:oauth] = Koala::Facebook::OAuth.new(APP_ID, APP_SECRET, SITE_URL + '/callback')
@@ -83,13 +130,10 @@ class EventsController < ApplicationController
 
 
   def maps
-    session[:oauth] = Koala::Facebook::OAuth.new(APP_ID, APP_SECRET, SITE_URL + '/callback')
-    @auth_url =  session[:oauth].url_for_oauth_code(:permissions=>"email, user_events, friends_events")
-    puts session.to_s + "<<< session"
-
-    @events = Event.find :all, :order => 'atenders DESC', :conditions => ['start_time > ?', Time.now]
-    @json = @events.to_gmaps4rails
-
+  
+    filter_events()
+    @json = @data
+    
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @events }
@@ -127,6 +171,7 @@ class EventsController < ApplicationController
 
   # POST /events
   # POST /events.json
+  # POST /events.xml
   def create
     @event = Event.new(params[:event])
 
@@ -134,9 +179,16 @@ class EventsController < ApplicationController
       if @event.save
         format.html { redirect_to @event, notice: 'Event was successfully created.' }
         format.json { render json: @event, status: :created, location: @event }
+         format.xml do
+         render :xml => "<result>sucess</result>", :status => :created 
+         end
+
+        
       else
         format.html { render action: "new" }
         format.json { render json: @event.errors, status: :unprocessable_entity }
+        format.xml  { render :xml => @event.errors, :status => :unprocessable_entity }
+
       end
     end
   end
