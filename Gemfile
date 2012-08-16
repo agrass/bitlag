@@ -42,6 +42,9 @@ gem "geocoder"
 # To use Jbuilder templates for JSON
 gem 'jbuilder'
 
+gem 'execjs'
+gem 'therubyracer'
+
 # Use unicorn as the web server
 # gem 'unicorn'
 
