@@ -37,7 +37,7 @@ def gmaps4rails_address
 end
 
 def gmaps4rails_infowindow
-         return "<a href='events/#{self.id}' ><p><strong>#{name}</strong></p></a> <p>#{address}</p><p>#{start_time}</P"
+         return "<div class='show_picture'> <img src='#{self.picture}' height='50' width='50' /></div> <div class='float_left' ><a href='events/#{self.id}' ><p><strong>#{name}</strong></p></a> <p>#{address}</p><p>#{start_time}</p> </div>"
 end
 
 def gmaps4rails_marker_picture
