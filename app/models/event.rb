@@ -37,7 +37,7 @@ def gmaps4rails_address
 end
 
 def gmaps4rails_infowindow
-         return "<div class='show_picture'> <img src='#{self.picture}' height='50' width='50' /></div> <div class='float_left' ><a href='events/#{self.id}' ><p><strong>#{name}</strong></p></a> <p>#{address}</p><p>#{start_time}</p> </div>"
+         return "<div class='show_picture'> <img src='#{self.picture}' height='50' width='50' /></div> <div class='float_left' ><a href='events/#{self.id}' ><p><strong>#{name}</strong></p></a> <p>#{address}</p><p>#{Time.at(start_time).strftime(I18n.t('time.formats.short'))}</p> </div>"
 end
 
 def gmaps4rails_marker_picture
@@ -62,9 +62,9 @@ end
 
 def self.get_events_with_time(time)
    if time == "today"
-   	Event.where(:end_time => (Time.now)..(Time.now.end_of_day))
+   	Event.where(:end_time => (Time.now)..(Time.now + 12.hours))
    elsif time == "week"
-   	Event.where(:end_time => (Time.now)..(Time.now.end_of_week))
+   	Event.where(:end_time => (Time.now)..(Time.now + 7.days))
    else
    	if Time.now > Time.now.end_of_week.ago(86400 * 3)
    		Event.where(:end_time => (Time.now)..(Time.now.end_of_week))
