@@ -102,7 +102,7 @@ $(window).scroll(function(){
 
 
 <% content_for :left do %>
-<div id="img-cont"></div>
+
 <div class="list_cat">
 
 </div>
