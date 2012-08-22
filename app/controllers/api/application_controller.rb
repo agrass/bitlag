@@ -4,7 +4,5 @@ module Api
 
     protect_from_forgery
 
-    
-
   end
 end

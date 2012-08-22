@@ -1,6 +1,7 @@
 Bitlag::Application.routes.draw do
 
 namespace :api, defaults: {format: 'json'} do
+  match 'events' => 'events#get_events', :as => :get_events
   end
 
   resources :users

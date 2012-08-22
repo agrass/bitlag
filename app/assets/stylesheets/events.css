@@ -13,7 +13,11 @@ z-index: 3;
 }
 
 .menu {
-opacity:0.4;
+opacity:1;
+}
+
+.select{
+	
 }
 
 .menu_top {
@@ -24,3 +28,25 @@ opacity:0.4;
 position: relative;
 top: 150px;
 }
+
+/* event show */
+
+.show_picture{ float:left; }
+.show_name{ float: left; margin-left: 30px; width: 600px; height: 25px; }
+.show_description{ float:left; width: 600px; margin-left: 30px;}
+.show_time{ float:left; margin-left: 30px; margin-top: 15px;}
+.show_address{ float: left; margin-bottom: 10px; width: 100%; margin-left: 30px; }
+.show_map{ float:left; }
+.show_general{ float: left; width: 100%; margin-bottom: 30px;}
+.show_location{ float: left; margin-left: 200px;}
+
+
+/* lista eventos */
+
+.listObject{ float: left; margin-left: 30px; width: 850px; height: 80px; margin-top: 15px; border-bottom: solid 1px #DCDCDC; }
+
+.listObject .photo { float: left; width: 65px; margin-left: 15px; }
+
+
+.category_nav{ background: #ffffff; border-bottom: solid 1px #DCDCDC; height: 20px; width: 100%; float: left; margin-top: -15px;}
+
