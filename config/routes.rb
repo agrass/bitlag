@@ -1,6 +1,7 @@
 Bitlag::Application.routes.draw do
 
 namespace :api, defaults: {format: 'json'} do
+  match 'events' => 'events#get_events', :as => :get_events
   end
 
   resources :users
@@ -26,7 +27,7 @@ namespace :api, defaults: {format: 'json'} do
   match 'lists' => 'events#lists', :as => 'lists'
   
   #ajax list refres
-  match 'refreshList/:offset/:filter' => 'events#refreshlist', :as => 'refreshList'
+  match 'refreshList/:offset/:filter/:search' => 'events#refreshlist', :as => 'refreshList'
   
   #ajax filter
   match 'filter' => 'events#filter', :as => 'filter'

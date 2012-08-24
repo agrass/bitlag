@@ -7,10 +7,16 @@ class EventsController < ApplicationController
     @active_filters = params[:filter]
     @offset = params[:offset]
 
-    #si no logra ller la ciudad
+    if params[:search] != (0).to_s
+      @events = Event.near(request.location.city + ", " + request.location.country  , 100).where("name LIKE ? AND start_time < ? AND start_time > ?", '%'+ params[:search] + '%', Time.now + 10.days, Time.now - 1.days).limit(10).offset(@offset).order('start_time ASC, atenders DESC')
+      render :file => 'events/refreshList', :layout => false
+      return
+    end
+
+    #si no logra encontrar la ciudad
     if request.location.city.length == 0
 	if @active_filters == (0).to_s
-       		@events = Event.where('start_time < ? AND start_time > ?' , Time.now + 10.days, Time.now - 1.days ).limit(10).offset(@offset).order('start_time ASC, atenders DESC')
+    @events = Event.where('start_time < ? AND start_time > ?' , Time.now + 10.days, Time.now - 1.days ).limit(10).offset(@offset).order('start_time ASC, atenders DESC')
 	else
 		@events = Event.joins(:tags).where('tags.id = ? AND start_time < ? AND start_time > ?' ,@active_filters, Time.now + 10.days, Time.now - 1.days ).limit(10).offset(@offset).order('start_time ASC, atenders DESC')
 	end
@@ -39,7 +45,6 @@ class EventsController < ApplicationController
      else
      if request.location.city.length == 0
      @events = Event.find(:all, :order => "atenders DESC" , :conditions => ["start_time < ? AND start_time > ? ", Time.now + 10.days, Time.now - 1.days], :limit => 10 )
-      #@events = Event.near("Temuco, Chile" , 100).find(:all, :order => "atenders DESC" , :conditions => ["start_time < ? AND start_time > ? ", Time.now + 10.days, Time.now - 1.days], :limit => 10 )
      else            
      @events = Event.near(request.location.city + ", " + request.location.country  , 100).find(:all, :order => "atenders DESC" , :conditions => ["start_time < ? AND start_time > ? ", Time.now + 10.days, Time.now - 1.days], :limit => 10 )      
      end
@@ -115,12 +120,11 @@ class EventsController < ApplicationController
   end
 
   def index
-    session[:oauth] = Koala::Facebook::OAuth.new(APP_ID, APP_SECRET, SITE_URL + '/callback')
-    @auth_url =  session[:oauth].url_for_oauth_code(:permissions=>"email, user_events, friends_events")
-    puts session.to_s + "<<< session"
-
-    @events = Event.find :all, :order => 'atenders DESC', :conditions => ['start_time > ?',  Time.now]
-    @json = @events.to_gmaps4rails
+    if params[:term]
+      @events = Event.near(request.location.city + ", " + request.location.country  , 100).search_by_name(params[:term])
+    else
+      @events = Event.find :all, :order => 'atenders DESC', :conditions => ['start_time > ?',  Time.now]
+    end
 
     respond_to do |format|
       format.html # index.html.erb

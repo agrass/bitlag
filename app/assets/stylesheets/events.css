@@ -26,6 +26,10 @@ opacity:0.4;
 
 }
 
+.ajax-wait{
+position: relative;
+top: 150px;
+}
 
 /* event show */
 
