@@ -70,7 +70,9 @@
 					filters();
 				},
 				slide: alignCircle
-		 	});
+		 	});	
+
+
 		}
 	);
 	
@@ -108,7 +110,7 @@
 		{
 			if((this).getAttribute("class")== "menu")
 			{
-				$('.menu').each(function(index) { (this).setAttribute("class", "select");});
+				$('.menu').each(function(index) {  (this).setAttribute("class", "select");});
 			}
 			else
 			{
@@ -180,7 +182,10 @@
 		Gmaps.map.circles[0].serviceObject.setRadius(radius * 1.609344 * 1000);
 		Gmaps.map.circles[0].serviceObject.setCenter(new google.maps.LatLng(lat,lon));
 	}
-	
+
+
+
+
 	
 	
 	
