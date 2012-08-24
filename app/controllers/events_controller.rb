@@ -8,7 +8,7 @@ class EventsController < ApplicationController
     @offset = params[:offset]
 
     if params[:search] != (0).to_s
-      @events = Event.near(request.location.city + ", " + request.location.country  , 100).where("name LIKE ? AND start_time < ? AND start_time > ?", '%'+ params[:search] + '%', Time.now + 10.days, Time.now - 1.days).limit(10).offset(@offset).order('start_time ASC, atenders DESC')
+      @events = Event.near(request.location.city + ", " + request.location.country  , 100).where("lower(name) LIKE ? AND start_time < ? AND start_time > ?", '%'+ params[:search].downcase + '%', Time.now + 10.days, Time.now - 1.days).limit(10).offset(@offset).order('start_time ASC, atenders DESC')
       render :file => 'events/refreshList', :layout => false
       return
     end
