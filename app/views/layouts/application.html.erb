@@ -11,11 +11,60 @@
     </script>
     <script type="text/javascript">
         $(function () {
-            $('div.show_description').expander({
+          
+          $('div.show_description').expander({
                 slicePoint: 600,
                 expandText: 'Read More',
                 userCollapseText: 'Hide'
-            });
+            }); 
+
+
+  $('#feedback').click(function() { 
+      if($('#feedback').css("right") == '0px'){
+
+        $('#feedbackForm').css("display","block");             
+        $('#feedbackForm').stop().animate({
+          right: '0px'
+        }, 300);
+
+    $('#feedback').stop().animate({
+    right: '400px'
+    }, 300);
+
+  }
+
+  else{
+
+        $('#feedbackForm').stop().animate({
+    right: '-400px'    
+  }, 300,  function() {
+    $('#feedbackForm').css("display","none");
+  });
+
+    $('#feedback').stop().animate({
+    right: '0px'
+
+  }, 300);
+
+  }
+
+
+});
+
+
+  $('#sendFeedback').click(function() { 
+         
+  $('#feedbackForm').stop().animate({
+    right: '-400px'    
+  }, 300,  function() {
+    $('#feedbackForm').css("display","none");
+  });
+
+    $('#feedback').stop().animate({
+    right: '0px'
+
+  }, 300);
+});
         });
     </script>
 
@@ -23,6 +72,8 @@
 
 </head>
 <body>
+
+  <div id="feedbackForm" class="feedbackForm">  <div id="sendFeedback"><a href="#">Ok</a> </div></div>
 	
 	<div id="feedback"><a href="#" ><%= image_tag "feedback.png" %></a></div>
 	
