@@ -27,7 +27,7 @@ namespace :api, defaults: {format: 'json'} do
   match 'lists' => 'events#lists', :as => 'lists'
   
   #ajax list refres
-  match 'refreshList/:offset/:filter' => 'events#refreshlist', :as => 'refreshList'
+  match 'refreshList/:offset/:filter/:search' => 'events#refreshlist', :as => 'refreshList'
   
   #ajax filter
   match 'filter' => 'events#filter', :as => 'filter'

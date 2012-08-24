@@ -2,25 +2,64 @@
 var ajax = false;
 var valoffset = 0;
 var filter = 0;
+var search = 0;
 
 $(document).ready(
 	function(){
+		//Filtros
 		$('.filter').click (select);
-});
+
+		// Autocomplete
+                
+        $( "#autocomplete" ).autocomplete({
+            minLength: 3,
+            source: '<%= events_path() %>.json',
+            select: function(event, ui) {
+                $('#autocomplete').val(ui.item.name);
+                return false;
+            },
+            focus: function(event, ui) {
+                $('#autocomplete').val(ui.item.name);
+                return false;
+            }
+        })
+        .data( "autocomplete" )._renderItem = function( ul, item ) {
+            return $( "<li></li>" )
+            .data( "item.autocomplete", item )
+            .append( "<a>" + item.name + "</a>" )
+            .appendTo( ul );
+        };
+	}
+);
 
 function select(){
 	if(ajax){
 		return;
 	}
+	search = 0;
 	filter = (this).getAttribute("alt");
 	valoffset = 0;
+	$('#autocomplete').val('');
+	$('.event_list').empty();
+	ajax_call();
+}
+
+function search_button(){
+	if($('#autocomplete').val()==''){
+		search = 0;
+		return;
+	}
+	else{
+		search = $('#autocomplete').val();
+	}
+	filter = 0;
 	$('.event_list').empty();
 	ajax_call();
 }
 
 function ajax_call(){
 	putImage();
-	$.ajax({ url: 'refreshList/'+valoffset+'/'+filter, 
+	$.ajax({ url: 'refreshList/'+valoffset+'/'+filter+'/'+search, 
 		success: function(data) {					   
 			$('.event_list').append(data);
 			removeImage();			    
@@ -35,7 +74,7 @@ function putImage(){
 
 function removeImage(){
 	ajax = false;
-	//$('.ajax-wait').remove();
+	$('.ajax-wait').remove();
 }
 
 $(window).scroll(function(){
@@ -60,7 +99,10 @@ $(window).scroll(function(){
   <% end %>
   
 </div>
-
+<div class="search">
+	<input id="autocomplete">
+	<button type="button" onclick= search_button() ><%=t('search.label')%></button>
+</div>
 
 <div class="event_list" >
 <% @events.each do |event|  %>
@@ -102,7 +144,7 @@ $(window).scroll(function(){
 
 
 <% content_for :left do %>
-<div id="img-cont">'aqui va ir la foto'</div>
+<div id="img-cont"></div>
 
 <div class="list_cat">
 

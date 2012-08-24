@@ -77,7 +77,9 @@ enUS:
     label: Groups 
     my: My Groups
     new: New Groups
-    event: Group Events    
+    event: Group Events
+  search:
+    label: Search  
   date:
     abbr_day_names:
     - Sun
