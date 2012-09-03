@@ -22,12 +22,15 @@
 	var ajax = false;
 	var lat = 0;
 	var lon = 0;
-	$(document).ready(
-		function()
+
+$(document).ready(
+		function(){
+	Gmaps.map.callback = function() {initialize();}
+});
+
+
+		function initialize()
 		{
-			
-		
-			
 		//html5 geolocalization
 		         if(navigator.geolocation) {
     				navigator.geolocation.getCurrentPosition(geo_success);
@@ -70,9 +73,10 @@
 					filters();
 				},
 				slide: alignCircle
-		 	});
+		 	});	
+
+
 		}
-	);
 	
 	function geo_success(position)
   	{
@@ -92,6 +96,7 @@
                 lat = position.coords.latitude;
                 lon = position.coords.longitude;
     		set_center(position);
+    		filters();
   	}
   			
   	function set_center(position)
@@ -108,7 +113,7 @@
 		{
 			if((this).getAttribute("class")== "menu")
 			{
-				$('.menu').each(function(index) { (this).setAttribute("class", "select");});
+				$('.menu').each(function(index) {  (this).setAttribute("class", "select");});
 			}
 			else
 			{
@@ -180,7 +185,10 @@
 		Gmaps.map.circles[0].serviceObject.setRadius(radius * 1.609344 * 1000);
 		Gmaps.map.circles[0].serviceObject.setCenter(new google.maps.LatLng(lat,lon));
 	}
-	
+
+
+
+
 	
 	
 	

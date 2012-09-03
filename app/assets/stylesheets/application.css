@@ -22,7 +22,15 @@ header, footer, section, aside, nav, article { display: block; }
 
 /* basic styles */
 
-body { font-size: 14px; line-height: 1.5em; font-family: Verdana,Helvetica,Arial,sans-serif;  background:  #F2F2F2;  }
+body { font-size: 14px; line-height: 1.5em; font-family: Verdana,Helvetica,Arial,sans-serif;  background: #141414; width: 100%; height: 100%; }
+
+body{
+ 
+  color: #333;
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size: 13px;
+  line-height: 18px;
+}
 #main{ text-align:center; background-color: #F2F2F2;  }
 
 a {
@@ -80,16 +88,22 @@ h3 {
 
 #nav_bar{ float: right; margin-right: 15%;  padding-left:20px; margin-bottom: 5px; margin-top: 5px; border-bottom: solid 1px #DCDCDC; width: 600px; margin-top: 20px; padding-bottom: 10px;}
 
-#main{ width: 100%; float: left; margin-top: 20px; margin-bottom: 0px;}
+#main{ width: 100%; float: left; margin-top: 0px; padding-top: 35px; margin-bottom: 0px; border-top: 1px solid #F2F2F2; }
 
 #footer{ float:left;   background: #222; width: 100%; margin-bottom: 0px; height: 100%; margin-top: 0px; }
 
-#logo{ float:left; width: 150px; margin-left: 6%; margin-top: 5px;}
+#logo{ float:left; width: 150px; height: 60px; margin-left: 6%; margin-top: 5px;}
 
-#feedback{ position: absolute; right: 0px; top:100px; }
+#feedback{ position: absolute; right: 0px; top:100px; z-index: 99999; }
 
+.feedbackForm{ position: absolute; right: -400px; width: 400px; display: none;  height: 300px; top: 80px; background: #000000; border: 2px solid #fff; z-index: 99998; }
 
+.feedbackForm{
+border-radius:5px; 
+-moz-border-radius:5px; /* Firefox */ 
+-webkit-border-radius:5px; /* Safari y Chrome */
 
+}
 
 
 
@@ -100,7 +114,7 @@ h3 {
 		height:72px;
 		overflow:hidden;
 		background:url(../images/header-bg.gif) 0 0 repeat-x;
-		margin-bottom: 15px;
+		margin-bottom: 0px;
 	}
 	
 	
@@ -200,6 +214,9 @@ header nav {
 			
 			background: #D00110; width: 99px; height: 12px; float:left; z-index: 11;
 		}
+
+
+
 
 
 
