@@ -88,7 +88,7 @@ h3 {
 
 #nav_bar{ float: right; margin-right: 15%;  padding-left:20px; margin-bottom: 5px; margin-top: 5px; border-bottom: solid 1px #DCDCDC; width: 600px; margin-top: 20px; padding-bottom: 10px;}
 
-#main{ width: 100%; float: left; margin-top: 0px; padding-top: 35px; margin-bottom: 0px; border-top: 1px solid #F2F2F2; }
+#main{ width: 100%; float: left; margin-top: 0px; padding-top: 35px; margin-bottom: 0px; border-top: 1px solid #F2F2F2; min-height: 450px; }
 
 #footer{ float:left;   background: #222; width: 100%; margin-bottom: 0px; height: 100%; margin-top: 0px; }
 
