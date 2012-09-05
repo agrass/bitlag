@@ -70,12 +70,12 @@ function ajax_call(){
 
 function putImage(){
 	ajax = true;
-	$('#img-cont').append('<img src="<%= asset_path 'ajax-loader.gif' %>" class="ajax-wait" >');
+	$('#img-cont').append('<img src="<%= asset_path 'ajax-loader.gif' %>" class="ajax-wait-lists" >');
 }
 
 function removeImage(){
 	ajax = false;
-	$('.ajax-wait').remove();
+	$('.ajax-wait-lists').remove();
 }
 
 $(window).scroll(function(){

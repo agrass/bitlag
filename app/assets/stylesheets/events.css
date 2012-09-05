@@ -26,9 +26,10 @@ opacity:0.4;
 
 }
 
-.ajax-wait{
+.ajax-wait-lists{
 position: relative;
 top: 150px;
+left: 420px;
 }
 
 /* event show */
