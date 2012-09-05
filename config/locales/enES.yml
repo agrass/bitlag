@@ -1,6 +1,6 @@
 enUS:
   inicio:
-    titulo: Find the best events!
+    titulo: Encuentra los mejores panoramas!
     descripcion: No te pierdas de los eventos que ocurren a tu alrededor! Fiestas, conciertos, charlas, obras de teatro y mucho más.
   tags:
     noche: Eventos Nocturnos
@@ -9,14 +9,14 @@ enUS:
     cine: Cine    
     todos: Todos   
   filter:
-    today: Today
-    week: Week
-    weekend: Week End
+    today: Hoy
+    week: Semana
+    weekend: Fin de Semana
   menu:
-    home: Home
-    event_list: List
-    map: Map
-    calendar: Calendar
+    home: Inicio
+    event_list: Eventos
+    map: Mapa
+    calendar: Agenda
   static:
     home: Home
     profile: Profile
