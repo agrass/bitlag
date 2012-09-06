@@ -1,3 +1,23 @@
+<script type="text/javascript">
+
+$(document).ready(function() {
+$("#gender_start").click(function() {
+  $("#gender").replaceWith('<div id="gender"><img src="../images/ajax-loader.gif" /></div>')
+   $.ajax({
+  url: '../extrainfo/<%= @event.fb_id %>',
+  success: function(data) {
+   $("#gender").replaceWith(data);
+  }
+});
+  
+});
+
+});
+
+
+
+</script>
+
 
 <style>
   .map_container {
@@ -52,18 +72,49 @@
 
 
 
+
+
 <div class="show_description">
 	<% if @event.description != nil %>
 	<%= @event.description %>
 	<% end %>
 	</div>
-	
-	</div>
-	
-	<div class="show_location">
+
+<% if session[:access_token] %>
+    <div class="show_friends">
+      <div class="friend_pictures">   
+        <% @friends[0..5].each do |friend| %>
+        <%= image_tag friend["pic_square"] %>
+        <% end %>
+       </div>
+    
+    <div id="gender_start">
+      <div id="gender">
+         <div class="gender">
+          <%= image_tag('event_show/man.png', :size => '35x35') %>
+          <label>?</label>
+        </div>
+        <div class="gender">
+          <%= image_tag('event_show/women.png', :size => '35x35') %>
+          <label>
+          ?
+          </label>
+        </div>
+      </div>
+</div>
+
+  <div class="more_friends">
+    <%= link_to_function 'More Friends..', "apprise('#{@list_friends}');" %>
+  </div>
+    
+
+  </div>
+<% end %>
+
+  <div class="show_location">
 
   <div class="show_address">
-  	<h3>
+    <h3>
   <%= @event.address %>
   </h3>
   </div>
@@ -75,6 +126,13 @@
 <% end %>
 
 </div>
+
+  
+
+
+	
+	</div>
+
 
 
 

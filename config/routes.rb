@@ -25,6 +25,9 @@ namespace :api, defaults: {format: 'json'} do
   match 'maps' => 'events#maps', :as => 'maps'
   
   match 'lists' => 'events#lists', :as => 'lists'
+
+  #obtener informacion extra evento (hombres/mujeres)
+  match 'extrainfo/:fb_id' => 'events#extraInfo', :as => 'extrainfo'
   
   #ajax list refres
   match 'refreshList/:offset/:filter/:search' => 'events#refreshlist', :as => 'refreshList'
