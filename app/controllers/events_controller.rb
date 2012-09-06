@@ -155,6 +155,9 @@ class EventsController < ApplicationController
   # GET /events/1
   # GET /events/1.json
   def show
+     session[:oauth] = Koala::Facebook::OAuth.new(APP_ID, APP_SECRET, SITE_URL + '/callback')
+    @auth_url =  session[:oauth].url_for_oauth_code(:permissions=>"email, user_events, friends_events")  
+    puts session.to_s + "<<< session"
     @event = Event.find(params[:id])
     @json = @event.to_gmaps4rails
     #ver amigos facebook
@@ -162,8 +165,7 @@ class EventsController < ApplicationController
     @api = Koala::Facebook::API.new(session[:access_token]) 
     @friends= @api.fql_query("SELECT name, pic_square FROM user WHERE uid IN (
 SELECT uid2 FROM friend WHERE uid2 in (select uid from event_member where eid = #{@event.fb_id} AND  rsvp_status = 'attending') AND uid1 = me() )") 
-
-    
+ 
     @list_friends = ""
     @friends.each do |friend|
       @list_friends += "<p>"+friend["name"]+"</p>"
