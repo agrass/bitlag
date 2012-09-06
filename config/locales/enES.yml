@@ -17,6 +17,8 @@ enES:
     event_list: Eventos
     map: Mapa
     calendar: Agenda
+  dialogs:
+    login: "Tienes que iniciar sesion para tener acceso a mayor información del evento"
   static:
     home: Home
     profile: Profile

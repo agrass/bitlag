@@ -12,6 +12,15 @@ $("#gender_start").click(function() {
   
 });
 
+
+$("#gender_login").click(function() {
+
+  apprise('<h2><%= t("dialogs.login") %></h2><%= link_to image_tag('login.png'), @auth_url, :class=>"button"%>');
+});
+
+
+
+
 });
 
 
@@ -80,7 +89,7 @@ $("#gender_start").click(function() {
 	<% end %>
 	</div>
 
-<% if session[:access_token] %>
+<% if session[:user_id]  %>
     <div class="show_friends">
       <div class="friend_pictures">   
         <% @friends[0..5].each do |friend| %>
@@ -88,8 +97,9 @@ $("#gender_start").click(function() {
         <% end %>
        </div>
     
-    <div id="gender_start">
-      <div id="gender">
+    
+    <div id="gender">
+      <div id="gender_start">
          <div class="gender">
           <%= image_tag('event_show/man.png', :size => '35x35') %>
           <label>?</label>
@@ -109,7 +119,31 @@ $("#gender_start").click(function() {
     
 
   </div>
-<% end %>
+<% else %>
+<div class="show_friends">    
+    
+    <div id="gender">
+      <div id="gender_login">
+         <div class="gender">
+          <%= image_tag('event_show/man.png', :size => '35x35') %>
+          <label>?</label>
+        </div>
+        <div class="gender">
+          <%= image_tag('event_show/women.png', :size => '35x35') %>
+          <label>
+          ?
+          </label>
+        </div>
+      </div>
+</div>
+
+ 
+
+  </div>
+
+  <%end %>
+
+
 
   <div class="show_location">
 

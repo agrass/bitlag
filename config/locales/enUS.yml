@@ -17,6 +17,8 @@ enUS:
     event_list: List
     map: Map
     calendar: Calendar
+  dialogs:
+    login: "You need to be logged-in!"
   static:
     home: Home
     profile: Profile
