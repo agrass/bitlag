@@ -112,10 +112,12 @@ $("#gender_login").click(function() {
         </div>
       </div>
 </div>
-
+  <% if @friends.length > 5 %>
   <div class="more_friends">
     <%= link_to_function 'More Friends..', "apprise('#{@list_friends}');" %>
   </div>
+
+  <%end %>
     
 
   </div>
