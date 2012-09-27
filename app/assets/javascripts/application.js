@@ -16,3 +16,59 @@
 
 //= require jquery-ui
 
+     $(function () {
+          
+          $('div.show_description').expander({
+                slicePoint: 600,
+                expandText: 'Read More',
+                userCollapseText: 'Hide'
+            }); 
+
+
+  $('#feedback').click(function() { 
+      if($('#feedback').css("right") == '0px'){
+
+        $('#feedbackForm').css("display","block");             
+        $('#feedbackForm').stop().animate({
+          right: '0px'
+        }, 300);
+
+    $('#feedback').stop().animate({
+    right: '400px'
+    }, 300);
+
+  }
+
+  else{
+
+        $('#feedbackForm').stop().animate({
+    right: '-400px'    
+  }, 300,  function() {
+    $('#feedbackForm').css("display","none");
+  });
+
+    $('#feedback').stop().animate({
+    right: '0px'
+
+  }, 300);
+
+  }
+
+
+});
+
+
+  $('#sendFeedback').click(function() { 
+         
+  $('#feedbackForm').stop().animate({
+    right: '-400px'    
+  }, 300,  function() {
+    $('#feedbackForm').css("display","none");
+  });
+
+    $('#feedback').stop().animate({
+    right: '0px'
+
+  }, 300);
+});
+        });

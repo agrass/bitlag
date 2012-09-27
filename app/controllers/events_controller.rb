@@ -145,12 +145,32 @@ class EventsController < ApplicationController
 
   end
 
+
+  def extraInfo
+    @api = Koala::Facebook::API.new(session[:access_token]) 
+    @female = @api.fql_query("SELECT uid FROM user WHERE uid IN (select uid from event_member where eid = #{params[:fb_id]}  AND  rsvp_status = 'attending') AND sex = 'female'").length
+    @male = @api.fql_query("SELECT uid FROM user WHERE uid IN (select uid from event_member where eid = #{params[:fb_id]}  AND  rsvp_status = 'attending') AND sex = 'male'").length
+    render :layout => false
+  end
   # GET /events/1
   # GET /events/1.json
   def show
+     session[:oauth] = Koala::Facebook::OAuth.new(APP_ID, APP_SECRET, SITE_URL + '/callback')
+    @auth_url =  session[:oauth].url_for_oauth_code(:permissions=>"email, user_events, friends_events")  
+    puts session.to_s + "<<< session"
     @event = Event.find(params[:id])
     @json = @event.to_gmaps4rails
-
+    #ver amigos facebook
+    if session[:access_token]
+    @api = Koala::Facebook::API.new(session[:access_token]) 
+    @friends= @api.fql_query("SELECT name, pic_square FROM user WHERE uid IN (
+SELECT uid2 FROM friend WHERE uid2 in (select uid from event_member where eid = #{@event.fb_id} AND  rsvp_status = 'attending') AND uid1 = me() )") 
+ 
+    @list_friends = ""
+    @friends.each do |friend|
+      @list_friends += "<p>"+friend["name"]+"</p>"
+      end
+  end
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @event }

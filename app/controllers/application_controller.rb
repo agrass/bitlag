@@ -1,4 +1,10 @@
 class ApplicationController < ActionController::Base
-
+before_filter :set_locale
+ 
+  def set_locale
+    if request.location.country == "Chile"
+      I18n.locale = :enES
+    end  
+  end
   
 end

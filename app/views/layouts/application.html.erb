@@ -8,72 +8,33 @@
   <%= javascript_include_tag "application" %>
       <script type="text/javascript"
     src="http://plugins.learningjquery.com/expander/jquery.expander.js">
-    </script>
-    <script type="text/javascript">
-        $(function () {
-          
-          $('div.show_description').expander({
-                slicePoint: 600,
-                expandText: 'Read More',
-                userCollapseText: 'Hide'
-            }); 
-
-
-  $('#feedback').click(function() { 
-      if($('#feedback').css("right") == '0px'){
-
-        $('#feedbackForm').css("display","block");             
-        $('#feedbackForm').stop().animate({
-          right: '0px'
-        }, 300);
-
-    $('#feedback').stop().animate({
-    right: '400px'
-    }, 300);
-
-  }
-
-  else{
-
-        $('#feedbackForm').stop().animate({
-    right: '-400px'    
-  }, 300,  function() {
-    $('#feedbackForm').css("display","none");
-  });
-
-    $('#feedback').stop().animate({
-    right: '0px'
-
-  }, 300);
-
-  }
-
-
-});
-
-
-  $('#sendFeedback').click(function() { 
-         
-  $('#feedbackForm').stop().animate({
-    right: '-400px'    
-  }, 300,  function() {
-    $('#feedbackForm').css("display","none");
-  });
-
-    $('#feedback').stop().animate({
-    right: '0px'
-
-  }, 300);
-});
-        });
-    </script>
+    </script>   
 
   <%= csrf_meta_tags %> 
 
 </head>
 <body>
 
-  <div id="feedbackForm" class="feedbackForm">  <div id="sendFeedback"><a href="#">Ok</a> </div></div>
+  <div id="feedbackForm" class="feedbackForm">
+   
+          <div class="box">          
+            
+             <label>
+               <span>Email</span>
+               <input type="text" class="input_text" name="email" id="email"/>
+            </label>
+            
+            <label>
+                <span>Message</span>
+                <textarea class="message" name="feedback_text" id="feedback_text"></textarea>
+                <input type="button" class="button" value="Submit Form" />
+            </label>
+            
+            
+         </div>
+ 
+
+  </div>
 	
 	<div id="feedback"><a href="#" ><%= image_tag "feedback.png" %></a></div>
 	
