@@ -75,7 +75,7 @@ def self.get_events_with_time(time)
 end
 
 def self.search_by_name(q)
-  Event.where("lower(name) LIKE ? AND start_time < ? AND start_time > ?", '%'+ q.downcase + '%', Time.now + 10.days, Time.now - 1.days).limit(10).select(:name).uniq
+  Event.where("lower(name) LIKE lower(?) AND start_time < ? AND start_time > ?", '%'+ q + '%', Time.now + 10.days, Time.now - 1.days).limit(10).select(:name).uniq
 end
 
 end
