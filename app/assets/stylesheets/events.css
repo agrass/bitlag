@@ -34,7 +34,7 @@ left: 420px;
 
 /* event show */
 
-.show_picture{ float:left; min-height: 450px; }
+.show_picture{ float:left;  }
 .show_name{ float: left; margin-left: 30px; width: 600px; height: 35px; }
 .show_description{ float:left; width: 600px; margin-left: 30px;}
 .show_time{ float:left; margin-left: 30px; margin-top: 15px;}

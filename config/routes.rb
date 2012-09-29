@@ -8,6 +8,8 @@ namespace :api, defaults: {format: 'json'} do
 
   get "home/index"
 
+  get "home/fb_login"
+
   resources :events
 
   get "utily/fbtest"  
