@@ -9,8 +9,14 @@ $(document).ready(
 		//Filtros
 		$('.filter').click (select);
 
-		// Autocomplete
-                
+		//
+		$("#autocomplete").keypress(function(e){
+        	if(e.which == 13){
+       			search_button();
+       		}
+      	});
+
+		// Autocomplete  
         $( "#autocomplete" ).autocomplete({
             minLength: 3,
             source: '<%= events_path() %>.json',
