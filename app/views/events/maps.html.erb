@@ -1,13 +1,45 @@
-<div class="dock" id="dock">
-  <div class="dock-container">
+<!--<div class="dock" id="dock">
+  <div class="dock-container navbar-inner">
   <a class="dock-item"><img src="<%= asset_path 'Filters/today.png' %>" alt="today" class="select_top"/><span><%=t('filter.today')%></span></a> 
   <a class="dock-item"><img src="<%= asset_path 'Filters/week.png' %>" alt="week" class="menu_top"/><span><%=t('filter.week')%></span></a> 
   <a class="dock-item"><img src="<%= asset_path 'Filters/weekend.png' %>" alt="weekend" class="menu_top"/><span><%=t('filter.weekend')%></span></a> 
 </div>
+</div> -->
+<div class="dock" id="dock">
+<div class="navbar-inner">  
+    <div class="btn-group" style="margin-top: 5px;" data-toggle="buttons-checkbox">
+  <button type="button" class="btn btn-large active btn-warning select_top active" alt="today" ><%=t('filter.today')%></button >
+  <button type="button" class="btn btn-large btn-warning menu_top" alt="week"><%=t('filter.week')%></button>
+  <button type="button" class="btn btn-large btn-warning menu_top" alt="weekend"><%=t('filter.weekend')%></button>
 </div>
+
+  </div>
+</div>
+
+<div class="menu_map well">
+ <legend>Radio</legend>
+<div id="slider"></div>
+<div id="img-cont"></div>
+</br>
+
+<legend>Asistentes</legend>
+<div class="warning">
+<div class="btn-group" data-toggle="buttons-checkbox">
+  <button type="button" class="btn active">+0</button>
+  <button type="button" class="btn">+200</button>
+  <button type="button" class="btn">+1000</button>
+</div>
+</div>
+
+</div>
+
+
+
 <br />
 <%= gmaps(:map_options => {:auto_adjust => false, :detect_location => true, :center_on_user => true, :auto_zoom => false, :zoom => 15}, :markers => {:data => @json, :options => {:do_clustering=> true, :clusterer_maxZoom=> 18} }, :circles => { :data => @circles_json, :options => {fillColor: "#000",fillOpacity: 0.25}}) %>
 <br />
+
+<!--
 <div class="dock" id="dock2">
   <div class="dock-container2">
   <% Tag.all.each do |tag|%>
@@ -15,9 +47,24 @@
   <% end %>
   </div>
 </div>
+-->
 
-<div id="slider"></div>
-<div id="img-cont"></div>
+
+<div class="dock2" id="dock2">
+<div class="navbar-inner">
+   <div class="btn-group" style="margin-top: 5px;" data-toggle="buttons-checkbox">  
+  <% Tag.all.each do |tag|%>
+  <button type="button" class="btn btn-large btn-inverse menu" data-loading-text="Loading..." data-toggle="button"><%=t('tags.'+ tag.name)%></button>
+  <% end %>
+</div>
+   
+</div>
+  </div>
+
+
+
+
+
 <script type="text/javascript">
 	var ajax = false;
 	var lat = 0;
@@ -26,40 +73,15 @@
 $(document).ready(
 		function(){
 	Gmaps.map.callback = function() {initialize();}
+
 });
-
-
 		function initialize()
 		{
 		//html5 geolocalization
 		         if(navigator.geolocation) {
     				navigator.geolocation.getCurrentPosition(geo_success);
   			}
-  		//Filters
-  			$('#dock').Fisheye(
-				{
-					maxWidth: 50,
-					items: 'a',
-					itemsText: 'span',
-					container: '.dock-container',
-					itemWidth: 40,
-					proximity: 90,
-					halign : 'center'
-				}
-			)
-			$('#dock2').Fisheye(
-				{
-					maxWidth: 60,
-					items: 'a',
-					itemsText: 'span',
-					container: '.dock-container2',
-					itemWidth: 40,
-					proximity: 80,
-					alignment : 'left',
-					valign: 'bottom',
-					halign : 'center'
-				}
-			)
+  		
 		//Filter events
 			$('.menu').click (select);
 			$('.menu_top').click (select_top);
@@ -108,25 +130,25 @@ $(document).ready(
 		if(ajax){
 			return;
 		}
-				
+			//alert((this).getAttribute("class"));
 		if((this).getAttribute("alt")== "<%= Tag.find_by_name("todos").id %>")
 		{
-			if((this).getAttribute("class")== "menu")
+			if((this).getAttribute("class")== "btn btn-large btn-inverse menu")
 			{
-				$('.menu').each(function(index) {  (this).setAttribute("class", "select");});
+				$('.menu').each(function(index) {  (this).setAttribute("class", "btn btn-large btn-inverse select active");});
 			}
 			else
 			{
-				$('.select').each(function(index) { (this).setAttribute("class", "menu");});
+				$('.select').each(function(index) { (this).setAttribute("class", "btn btn-large btn-inverse menu");});
 			}
 		}
-		else if((this).getAttribute("class")== "menu"  )
+		else if((this).getAttribute("class")== "btn btn-large btn-inverse menu"  )
 		{
-		    (this).setAttribute("class", "select");
+		    (this).setAttribute("class", "btn btn-large btn-inverse select active");
 		}
 		else
 		{
-		    (this).setAttribute("class", "menu");
+		    (this).setAttribute("class", "btn btn-large btn-inverse menu");
 		}
 		filters();
 	}
@@ -136,10 +158,10 @@ $(document).ready(
 			return;
 		}
 			
-		if((this).getAttribute("class")== "menu_top"  )
-		{
-		    $('.select_top').each(function(){(this).setAttribute("class", "menu_top")});
-		    (this).setAttribute("class", "select_top");
+		if((this).getAttribute("class")== "btn btn-large btn-warning menu_top"  )
+		{      
+		    $('.select_top').each(function(){(this).setAttribute("class", "btn btn-large btn-warning menu_top")});
+		    (this).setAttribute("class", "btn btn-large btn-warning select_top active");
 		    filters();
 		}
 	}

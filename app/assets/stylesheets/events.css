@@ -13,7 +13,7 @@ z-index: 3;
 }
 
 .menu {
-opacity:0.5;
+opacity:0.8;
 
 }
 
@@ -22,7 +22,7 @@ opacity:1;
 }
 
 .menu_top {
-opacity:0.4;
+opacity:0.8;
 
 }
 
@@ -59,7 +59,7 @@ left: 420px;
 
 .listObject .photo { float: left; width: 65px; margin-left: 15px; }
 
-
+.event_list{ margin-top: 20px;}
 .category_nav{ background: #ffffff; border-bottom: solid 1px #DCDCDC; height: 20px; width: 100%; float: left; margin-top: -15px;}
 
 .clearfix{*zoom:1;}.clearfix:before,.clearfix:after{display:table;content:"";line-height:0;}

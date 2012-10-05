@@ -5,8 +5,11 @@ img {
 
 /* dock - top */
 .dock {
-	position: relative; 
+	position: absolute; 
 	/*height: 50px; */
+	left: 0;
+	top:80px;
+	width: 100%;
 	height: 10px;
 	text-align: center;
 	z-index: 3;
@@ -41,10 +44,13 @@ a.dock-item {
 /* dock2 - bottom */
 #dock2 {
 
-	width: 100%;
-	position: relative;
+	left: 0;
+	top:500px;
+	height: 10px;
+	width: 100%;	
 	bottom: 50px;
-	/*position: absolute;*/
+	position: absolute;
+	text-align: center;
 	left: 0px;
 }
 .dock-container2 {
@@ -72,4 +78,14 @@ a.dock-item2 {
 	border: none; 
 	margin: 5px 10px 0px; 
 	width: 100%; 
+}
+
+.menu_map{
+
+	position: absolute;
+	z-index: 99;
+	top: 120;
+	right: 5px;
+	width: 200px;
+	height: 360px;
 }
