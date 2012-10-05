@@ -3,13 +3,16 @@ module Api
       respond_to  :json
       
       def get_events
-      filter = params[:filter]
-      limit = params[:limit]
+      category = params[:category]
+      limit = params[:when]
+      popularity = params[:popularity]
       radius = params[:radius]
       lat = params[:lat]
       lon = params[:lon]
 
-      @events = Event.near([lat, lon], radius).get_events_with_time(limit).joins(:tags).where(:tags => {:name => filter}).uniq
+
+      # @events = Event.near([lat, lon], radius).get_events_with_time(limit).joins(:tags).where('atenders >= ?',popularity,:tags => {:name => category}).uniq
+      @events = Event.limit(5)
       respond_with(@events)
 
     end
