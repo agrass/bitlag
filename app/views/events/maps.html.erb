@@ -54,7 +54,7 @@
 <div class="navbar-inner">
    <div class="btn-group" style="margin-top: 5px;" data-toggle="buttons-checkbox">  
   <% Tag.all.each do |tag|%>
-  <button type="button" class="btn btn-large btn-inverse menu" data-loading-text="Loading..." data-toggle="button"><%=t('tags.'+ tag.name)%></button>
+  <button type="button" class="btn btn-large btn-inverse menu" data-loading-text="Loading..." data-toggle="button" alt="<%= tag.id %>"><%=t('tags.'+ tag.name)%></button>
   <% end %>
 </div>
    
