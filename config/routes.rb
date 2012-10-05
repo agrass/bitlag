@@ -16,7 +16,8 @@ namespace :api, defaults: {format: 'json'} do
   root :to => 'home#index'
   
   #facebook callback y logout
-  match 'callback' => 'utily#callback'  
+  match 'callback' => 'utily#callback'
+  match 'callback2' => 'utily#callback2' 
   match 'logout' => 'utily#logout'
   
   #agregar eventos 

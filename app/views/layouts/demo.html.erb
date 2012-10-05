@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>iWuanaGo</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <%= stylesheet_link_tag 'gmaps4rails' %>
+  <%= stylesheet_link_tag 'jquery-ui-1.8.22.custom' %>
+  <%= javascript_include_tag "application" %>
+      <script type="text/javascript"
+    src="http://plugins.learningjquery.com/expander/jquery.expander.js">
+    </script>   
+
+  <%= csrf_meta_tags %> 
+
+</head>
+<body>
+
+  <div id="feedbackForm" class="feedbackForm">
+   
+          <div class="box">          
+            
+             <label>
+               <span>Email</span>
+               <input type="text" class="input_text" name="email" id="email"/>
+            </label>
+            
+            <label>
+                <span>Message</span>
+                <textarea class="message" name="feedback_text" id="feedback_text"></textarea>
+                <input type="button" class="button" value="Submit Form" />
+            </label>
+            
+            
+         </div>
+ 
+
+  </div>
+	
+	<div id="feedback"><a href="#" ><%= image_tag "feedback.png" %></a></div>
+	
+  <!-- header -->
+  <header>
+ 
+<div id="logo"><a href="/" ><%= image_tag "logo2w.png" %></a></div>
+    	
+      <nav>
+        <ul>
+        	<li></li>
+          <li> </li>
+          <li></li>
+          <li> </li>         
+          <li></li>
+        </ul>
+      </nav>
+      
+      <div class="efect"><div class="color1"> </div><div class="color2"> </div><div class="color3"> </div> <div class="color4"> </div> <div class="color5"> </div> <div class="color6"> </div></div> 
+  
+	</header>
+		<div id="main">
+		
+		<div id="leftSide">
+			<%= yield :left %>
+			</div>
+			
+			<div id="center">
+				<%= yield %>
+				<%= yield :scripts %>
+				</div>
+
+<div id="rightSide">
+	
+	</div>
+
+</div>
+
+<div id="footer">
+
+			
+</div>
+
+
+
+</body>
+</html>
