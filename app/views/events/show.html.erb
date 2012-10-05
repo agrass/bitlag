@@ -15,7 +15,7 @@ $("#gender_start").click(function() {
 
 $("#gender_login").click(function() {
 
-  apprise('<h2><%= t("dialogs.login") %></h2><%= link_to image_tag('login.png'), @auth_url, :class=>"button"%>');
+  apprise('<legend><%= t("dialogs.login") %></legend><%= link_to image_tag('login.png'), @auth_url, :class=>"button"%>');
 });
 
 
@@ -40,6 +40,7 @@ $("#gender_login").click(function() {
   -moz-box-shadow: rgba(64, 64, 64, 0.5) 0 2px 5px;
   box-shadow: rgba(64, 64, 64, 0.1) 0 2px 5px;
   width: 500px;
+  position: inherit;
 }
 
 .gmaps4rails_map {
@@ -63,9 +64,9 @@ $("#gender_login").click(function() {
 
   
   <div class="show_name">
-  	<h2>
+  	<legend>
   <%= @event.name %>
-</h2>
+</legend>
 </div>
 
 <div class="show_time">
@@ -150,9 +151,9 @@ $("#gender_login").click(function() {
   <div class="show_location">
 
   <div class="show_address">
-    <h3>
+    <legend>
   <%= @event.address %>
-  </h3>
+  </legend>
   </div>
 
 <% if @event.latitude != nil %>
