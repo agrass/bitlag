@@ -1,4 +1,13 @@
-
+<!-- Setear JS y CSS necesarios -->
+<%- content_for(:head) do %>
+<%= stylesheet_link_tag 'application' %>
+<%= stylesheet_link_tag 'home' %>
+<%= javascript_include_tag 'application' %>
+<%= javascript_include_tag 'home' %>
+<script type="text/javascript"
+    src="http://plugins.learningjquery.com/expander/jquery.expander.js">
+    </script>
+<%- end %>
 <div class="mainSlogan"> 
 <div class="slogan"><%= t('inicio.titulo') %></div> <%= t('inicio.descripcion') %>
 </div>

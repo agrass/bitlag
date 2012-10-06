@@ -44,8 +44,7 @@ a.dock-item {
 /* dock2 - bottom */
 #dock2 {
 
-	left: 0;
-	top:500px;
+	left: 0;	
 	height: 10px;
 	width: 100%;	
 	bottom: 50px;
@@ -84,8 +83,8 @@ a.dock-item2 {
 
 	position: absolute;
 	z-index: 99;
-	top: 120;
+	bottom: 50px;
 	right: 5px;
 	width: 200px;
-	height: 360px;
+	height: 200px;
 }

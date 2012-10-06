@@ -1,10 +1,16 @@
-<!--<div class="dock" id="dock">
-  <div class="dock-container navbar-inner">
-  <a class="dock-item"><img src="<%= asset_path 'Filters/today.png' %>" alt="today" class="select_top"/><span><%=t('filter.today')%></span></a> 
-  <a class="dock-item"><img src="<%= asset_path 'Filters/week.png' %>" alt="week" class="menu_top"/><span><%=t('filter.week')%></span></a> 
-  <a class="dock-item"><img src="<%= asset_path 'Filters/weekend.png' %>" alt="weekend" class="menu_top"/><span><%=t('filter.weekend')%></span></a> 
-</div>
-</div> -->
+<!-- Setear JS y CSS necesarios -->
+<%- content_for(:head) do %>
+<%= stylesheet_link_tag 'application' %>
+<%= stylesheet_link_tag 'events' %>
+<%= stylesheet_link_tag 'gmaps4rails' %>
+<%= javascript_include_tag 'application' %>
+<%= javascript_include_tag 'events' %>
+<%= javascript_include_tag 'gmaps4rails/gmaps4rails.base' ,'gmaps4rails/gmaps4rails.googlemaps', 'gmaps4rails/gmaps4rails.mapquest', 'gmaps4rails/gmaps4rails.openlayers'  %>
+<script type="text/javascript"
+    src="http://plugins.learningjquery.com/expander/jquery.expander.js">
+    </script>
+<%- end %>
+
 <div class="dock" id="dock">
 <div class="navbar-inner">  
     <div class="btn-group" style="margin-top: 5px;" data-toggle="buttons-checkbox">
@@ -38,16 +44,6 @@
 <br />
 <%= gmaps(:map_options => {:auto_adjust => false, :detect_location => true, :center_on_user => true, :auto_zoom => false, :zoom => 15}, :markers => {:data => @json, :options => {:do_clustering=> true, :clusterer_maxZoom=> 18} }, :circles => { :data => @circles_json, :options => {fillColor: "#000",fillOpacity: 0.25}}) %>
 <br />
-
-<!--
-<div class="dock" id="dock2">
-  <div class="dock-container2">
-  <% Tag.all.each do |tag|%>
-  <a class="dock-item2" ><span><%=t('tags.'+ tag.name)%></span><img src="<%= asset_path 'Filters/'+tag.name+'.png' %>" alt="<%= tag.id %>" class="menu"/></a>
-  <% end %>
-  </div>
-</div>
--->
 
 
 <div class="dock2" id="dock2">
