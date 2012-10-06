@@ -1,3 +1,19 @@
+<!-- Setear JS y CSS necesarios -->
+<%- content_for(:head) do %>
+<%= stylesheet_link_tag 'application' %>
+<%= stylesheet_link_tag 'events' %>
+<%= stylesheet_link_tag 'gmaps4rails' %>
+<%= javascript_include_tag 'application' %>
+<%= javascript_include_tag 'events' %>
+<%= javascript_include_tag 'jquery.easing.1.3' %>
+<%= javascript_include_tag 'apprise-1.5.full' %>
+
+
+<script type="text/javascript"
+    src="http://plugins.learningjquery.com/expander/jquery.expander.js">
+    </script>
+<%- end %>
+
 <script type="text/javascript">
 
 $(document).ready(function() {
@@ -157,9 +173,8 @@ $("#gender_login").click(function() {
   </div>
 
 <% if @event.latitude != nil %>
-<div class="show_map">
-<%= gmaps4rails(@json) %>
-</div>
+
+<iframe width="400" height="200" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.cl/maps?q=<%= @event.latitude.to_s + "," + @event.longitude.to_s %>&amp;num=1&amp;t=m&amp;hl=es&amp;ie=UTF8&amp;ll=<%= @event.latitude.to_s + "," + @event.longitude.to_s %>&amp;spn=0.014333,0.034246&amp;z=14&amp;output=embed"></iframe><br /><small>
 <% end %>
 
 </div>
