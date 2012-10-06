@@ -21,14 +21,14 @@ $(document).ready(
 		$('.filter').click (select);
 
 		//
-		$(".autocomplete").keypress(function(e){
+		$("#autocomplete").keypress(function(e){
         	if(e.which == 13){
        			search_button();
        		}
       	});
 
 		// Autocomplete  
-        $( ".autocomplete" ).autocomplete({
+        $( "#autocomplete" ).autocomplete({
             minLength: 3,
             source: '<%= events_path() %>.json',
             select: function(event, ui) {
