@@ -88,7 +88,12 @@ class EventsController < ApplicationController
         end
     end
     
-    atenders = Integer(params[:atenders])
+    if params[:atenders]
+      atenders = Integer(params[:atenders])
+    else
+      atenders = 0
+    end
+    
     	@circles_json = '[{"lng": ' + @lon.to_s + ', "lat": ' + @lat.to_s + ', "radius": ' + (1.609344*5*1000).to_s + ' }]'
 
   #Si hay parámetros de tags, se hace una query con ellos
