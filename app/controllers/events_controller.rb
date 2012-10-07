@@ -88,23 +88,29 @@ class EventsController < ApplicationController
         end
     end
     
+    if params[:atenders]
+      atenders = Integer(params[:atenders])
+    else
+      atenders = 0
+    end
+    
     	@circles_json = '[{"lng": ' + @lon.to_s + ', "lat": ' + @lat.to_s + ', "radius": ' + (1.609344*5*1000).to_s + ' }]'
 
   #Si hay parámetros de tags, se hace una query con ellos
     if params[:data]
       @array = params[:data].split(',')
       if @lat == 0 && @lon == 0
-      	@events = Event.get_events_with_time(@time).joins(:tags).where(:tags => {:id => @array }).uniq
+      	@events = Event.get_events_with_time(@time).joins(:tags).where(:tags => {:id => @array }).where("atenders > ?",atenders).uniq
       else
-      	@events = Event.near([@lat,@lon]  , @radius).get_events_with_time(@time).joins(:tags).where(:tags => {:id => @array }).uniq
+      	@events = Event.near([@lat,@lon]  , @radius).get_events_with_time(@time).joins(:tags).where(:tags => {:id => @array }).where("atenders > ?",atenders).uniq
       end
       @data = @events.to_gmaps4rails
     #Si no, solo se usan filtros de tiempo
     else
       if @lat == 0 && @lon == 0
-      	@events = Event.get_events_with_time(@time)
+      	@events = Event.get_events_with_time(@time).where("atenders > ?",atenders)
       else
-      	@events = Event.near([@lat,@lon] , @radius).get_events_with_time(@time)
+      	@events = Event.near([@lat,@lon] , @radius).get_events_with_time(@time).where("atenders > ?",atenders)
       end
       @data = @events.to_gmaps4rails
     end

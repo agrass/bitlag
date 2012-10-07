@@ -33,10 +33,10 @@
 
 <legend>Asistentes</legend>
 <div class="warning">
-<div class="btn-group" data-toggle="buttons-checkbox">
-  <button type="button" class="btn active">+0</button>
-  <button type="button" class="btn">+200</button>
-  <button type="button" class="btn">+1000</button>
+<div class="btn-group atenders" data-toggle="buttons-checkbox">
+  <button type="button" class="btn active" alt=0>+0</button>
+  <button type="button" class="btn" alt=200>+200</button>
+  <button type="button" class="btn" alt=1000>+1000</button>
 </div>
 </div>
 
@@ -68,6 +68,7 @@
 	var ajax = false;
 	var lat = 0;
 	var lon = 0;
+	var atenders = 0;
 
 $(document).ready(
 		function(){
@@ -77,7 +78,7 @@ $(document).ready(
 		function initialize()
 		{
 		//html5 geolocalization
-		         if(navigator.geolocation) {
+		    if(navigator.geolocation) {
     				navigator.geolocation.getCurrentPosition(geo_success);
   			}
   		
@@ -96,6 +97,8 @@ $(document).ready(
 				slide: alignCircle
 		 	});	
 
+		//Atenders
+			$('.atenders').children().click (atenders_click);
 
 		}
 	
@@ -180,7 +183,7 @@ $(document).ready(
 		});
 		items = items + "&radius=" + $('#slider').slider("option", "value");
 		var position = {coords: {latitude: Gmaps.map.map.getCenter().lat(), longitude: Gmaps.map.map.getCenter().lng()} }
-		items = items + "&lat=" + lat + "&lon=" + lon;
+		items = items + "&lat=" + lat + "&lon=" + lon + "&atenders=" + atenders;
 		putImage();
 		$.getJSON('/filter.json', items , function(data){
         				Gmaps.map.replaceMarkers(data);
@@ -207,7 +210,22 @@ $(document).ready(
 		Gmaps.map.circles[0].serviceObject.setCenter(new google.maps.LatLng(lat,lon));
 	}
 
-
+	function atenders_click(){
+		if(ajax){
+			return;
+		}
+		if((this).getAttribute("class") != "btn active")
+		{
+				$('.atenders').children().each(function(index) {  (this).setAttribute("class", "btn");});
+		}
+		else
+		{
+			(this).setAttribute("class", "btn");
+		    return;
+		}
+		atenders = (this).getAttribute("alt");
+		filters();
+	}
 
 
 	
