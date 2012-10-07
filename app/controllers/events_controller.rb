@@ -129,8 +129,8 @@ class EventsController < ApplicationController
     session[:oauth] = Koala::Facebook::OAuth.new(APP_ID, APP_SECRET, SITE_URL + '/callback')
     @auth_url =  session[:oauth].url_for_oauth_code(:permissions=>"email, user_events, friends_events")
     if session[:user_id]
-      user = User.find(session[:user_id])
-      events = user.events.where('end_time > ?',Time.now)
+      @user = User.find_by_fb_id(session[:user_id])
+      events = @user.events.where('end_time > ?',Time.now)
       @json = events.to_gmaps4rails
     else
       @json = '[]'
@@ -178,7 +178,7 @@ class EventsController < ApplicationController
     puts session.to_s + "<<< session"
 
     if session[:user_id]
-      @user = User.find(session[:user_id])
+      @user = User.find_by_fb_id(session[:user_id])
     else
       @user = nil
     end
@@ -203,12 +203,12 @@ SELECT uid2 FROM friend WHERE uid2 in (select uid from event_member where eid = 
   end
 
   def add_to_list
-    user = User.find(session[:user_id])
+    user = User.find_by_fb_id(session[:user_id])
     user.events.push(Event.find(params[:event_id]))
   end
 
   def remove_from_list
-    user = User.find(session[:user_id])
+    user = User.find_by_fb_id(session[:user_id])
     user.events.delete(Event.find(params[:event_id]))
   end
 

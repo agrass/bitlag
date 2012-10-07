@@ -18,7 +18,7 @@
 var ajax = true;
 var added = false;
 <% if @user %>
-  <% if @user.events.exits?(@event) %>
+  <% if @user.events.exists?(@event) %>
     added = true;
   <% end %>
 <% end %>
@@ -45,22 +45,28 @@ $("#add").click(function() {
     if(!added){
       ajax = false;
       $('.btn').button('loading');
+
       $.ajax({
         url: '../add_to_list/<%= @event.id %>',
         success: function(data) {
-        $('.btn').button('<%= t('personal.remove') %>');
-        ajax = true;
+          $('.btn').button('reset');
+          $('.btn').text('<%= t('personal.remove') %>');
+          ajax = true;
+          added = true;
         }
       });
     }
     else{
       ajax = false;
       $('.btn').button('loading');
+
       $.ajax({
         url: '../remove_from_list/<%= @event.id %>',
         success: function(data) {
-        $('.btn').button('<%= t('personal.add') %>');
-        ajax = true;
+          $('.btn').button('reset');
+          $('.btn').text('<%= t('personal.add') %>');
+          ajax = true;
+          added = false;
         }
       });
     }
@@ -68,9 +74,6 @@ $("#add").click(function() {
 });
 
 });
-
-function
-
 </script>
 
 <div id="fb-root"></div>
@@ -119,10 +122,8 @@ function
 
   
   <div class="show_name">
-  
-  <p><%= @event.name %> </p>
-
-</div>
+    <p><%= @event.name %></p>
+  </div>
 
 <div class="show_time">
 	<% if @event.start_time %>
@@ -172,16 +173,8 @@ function
   <div class="more_friends">
     <%= link_to_function 'More Friends..', "apprise('#{@list_friends}');" %>
   </div>
-  <div class="btn-group">
-    <% if @user.events.exits?(@event) %>
-      <button id="add" class="btn btn-primary" data-loading-text="Loading..."><%= t('personal.remove') %></button>
-    <% else %>
-      <button id="add" class="btn btn-primary" data-loading-text="Loading..."><%= t('personal.add') %></button>
-    <% end %>
-  </div>
   <%end %>
     
-
   </div>
 <% else %>
 <div class="show_friends">    
@@ -210,7 +203,16 @@ function
 
 
   <div class="show_location">
-
+    <% if session[:user_id]  %>
+      <div class="btn-group">
+        <% if @user.events.exists?(@event) %>
+          <button id="add" class="btn btn-primary" data-loading-text="Loading..."><%= t('personal.remove') %></button>
+        <% else %>
+          <button id="add" class="btn btn-primary" data-loading-text="Loading..."><%= t('personal.add') %></button>
+        <% end %>
+      </div>
+    <% end %>
+    
   <div class="show_address">
     <legend>
   <%= @event.address %>
