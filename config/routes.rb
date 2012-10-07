@@ -29,6 +29,10 @@ namespace :api, defaults: {format: 'json'} do
   
   match 'lists' => 'events#lists', :as => 'lists'
 
+  match 'personal_info' => 'events#personal_info', :as => 'personal_info'
+
+  match 'add_to_list/:event_id' => 'events#add_to_list', :as => 'add_to_list'
+  match 'remove_from_list/:event_id' => 'events#remove_from_list', :as => 'remove_from_list'
   #obtener informacion extra evento (hombres/mujeres)
   match 'extrainfo/:fb_id' => 'events#extraInfo', :as => 'extrainfo'
   

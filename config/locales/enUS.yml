@@ -12,11 +12,18 @@ enUS:
     today: Today
     week: Week
     weekend: Week End
+  personal:
+    me_events: Add my Events
+    friens_events: Add Friends Events
+    add: Add to my Events
+    remove: Remove from my Events
   menu:
     home: Home
     event_list: List
     map: Map
-    calendar: Calendar
+    personal: My Events
+    login: Login
+    logout: Logout
   dialogs:
     login: "You need to be logged-in!"
   static:

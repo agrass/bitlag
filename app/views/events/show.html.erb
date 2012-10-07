@@ -15,6 +15,13 @@
 <%- end %>
 
 <script type="text/javascript">
+var ajax = true;
+var added = false;
+<% if @user %>
+  <% if @user.events.exits?(@event) %>
+    added = true;
+  <% end %>
+<% end %>
 
 $(document).ready(function() {
 $("#gender_start").click(function() {
@@ -28,18 +35,41 @@ $("#gender_start").click(function() {
   
 });
 
-
 $("#gender_login").click(function() {
 
   apprise('<legend><%= t("dialogs.login") %></legend><%= link_to image_tag('login.png'), @auth_url, :class=>"button"%>');
 });
 
-
-
+$("#add").click(function() {
+  if(ajax){
+    if(!added){
+      ajax = false;
+      $('.btn').button('loading');
+      $.ajax({
+        url: '../add_to_list/<%= @event.id %>',
+        success: function(data) {
+        $('.btn').button('<%= t('personal.remove') %>');
+        ajax = true;
+        }
+      });
+    }
+    else{
+      ajax = false;
+      $('.btn').button('loading');
+      $.ajax({
+        url: '../remove_from_list/<%= @event.id %>',
+        success: function(data) {
+        $('.btn').button('<%= t('personal.add') %>');
+        ajax = true;
+        }
+      });
+    }
+  }
+});
 
 });
 
-
+function
 
 </script>
 
@@ -133,7 +163,13 @@ $("#gender_login").click(function() {
   <div class="more_friends">
     <%= link_to_function 'More Friends..', "apprise('#{@list_friends}');" %>
   </div>
-
+  <div class="btn-group">
+    <% if @user.events.exits?(@event) %>
+      <button id="add" class="btn btn-primary" data-loading-text="Loading..."><%= t('personal.remove') %></button>
+    <% else %>
+      <button id="add" class="btn btn-primary" data-loading-text="Loading..."><%= t('personal.add') %></button>
+    <% end %>
+  </div>
   <%end %>
     
 

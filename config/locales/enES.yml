@@ -12,11 +12,18 @@ enES:
     today: Hoy
     week: Semana
     weekend: Fin de Semana
+  personal:
+    me_events: Agregar mis Eventos
+    friens_events: Agregar Eventos de Amigos
+    add: Añadir a mis Eventos
+    remove: Remover de mis Eventos
   menu:
     home: Inicio
     event_list: Eventos
     map: Mapa
-    calendar: Agenda
+    personal: Mis Eventos
+    login: Login
+    logout: Logout
   dialogs:
     login: "Tienes que iniciar sesion para tener acceso a mayor información del evento"
   static:

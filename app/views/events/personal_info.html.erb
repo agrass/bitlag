@@ -1,0 +1,80 @@
+<%- content_for(:head) do %>
+<%= stylesheet_link_tag 'application' %>
+<%= stylesheet_link_tag 'events' %>
+<%= stylesheet_link_tag 'gmaps4rails' %>
+<%= javascript_include_tag 'application' %>
+<%= javascript_include_tag 'events' %>
+<%= javascript_include_tag 'gmaps4rails/gmaps4rails.base' ,'gmaps4rails/gmaps4rails.googlemaps', 'gmaps4rails/gmaps4rails.mapquest', 'gmaps4rails/gmaps4rails.openlayers'  %>
+<%= javascript_include_tag 'apprise-1.5.full' %>
+<%= javascript_include_tag 'bootstrap.min' %>
+
+<script type="text/javascript"
+    src="http://plugins.learningjquery.com/expander/jquery.expander.js">
+    </script>
+<script type="text/css">
+.gmaps4rails_map {
+  height: 50%;
+}
+</script>
+<%- end %>
+<div class="btn-group">
+  <button id="me" class="btn btn-primary"><%= t('personal.me_events') %></button>
+  <button id="friends" class="btn btn-primary"><%= t('personal.friends_events') %></button>
+</div>
+<%= gmaps(:map_options => {:auto_adjust => false, :detect_location => true, :center_on_user => true, :auto_zoom => false, :zoom => 15}, :markers => {:data => @json, :options => {:do_clustering=> true, :clusterer_maxZoom=> 18} }) %>
+
+<style>
+
+.btn-group {
+	text-align: center;
+	position: relative;
+	z-index: 1;
+	bottom: 20px;
+}
+
+.map_container {
+  width: 99%;
+  height: 83%;
+  top: 75px;
+  background-color: #F7F7F7;
+}
+
+.gmaps4rails_map {
+  width: 100%;
+  height: 90%;
+  top: 50px;
+}
+
+</style>
+<script type="text/javascript">
+<% if session[:user_id] %>
+var session = true;
+<% else %>
+var session = false;
+<% end %>
+
+$(document).ready(
+	function() {
+		if(session){
+			$("#me").click(me_click);
+			$("#friends").click(friends_click);
+		}
+		else{
+			$("#me").click(login);
+			$("#friends").click(login);
+		}
+	}
+);
+
+function login() {
+  apprise('<legend><%= t("dialogs.login") %></legend><%= link_to image_tag('login.png'), @auth_url, :class=>"button"%>');
+}
+
+function me_click() {
+	alert("me click");
+}
+
+function friends_click() {
+alert("friends click");
+}
+</script>

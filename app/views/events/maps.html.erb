@@ -33,10 +33,10 @@
 
 <legend>Asistentes</legend>
 <div class="warning">
-<div class="btn-group atenders" data-toggle="buttons-checkbox">
-  <button type="button" class="btn active" alt=0>+0</button>
-  <button type="button" class="btn" alt=200>+200</button>
-  <button type="button" class="btn" alt=1000>+1000</button>
+<div class="btn-group atenders" data-toggle="buttons-radio">
+  <button type="button" class="btn active" data-loading-text="Loading..." alt=0>+0</button>
+  <button type="button" class="btn" data-loading-text="Loading..." alt=200>+200</button>
+  <button type="button" class="btn" data-loading-text="Loading..." alt=1000>+1000</button>
 </div>
 </div>
 
@@ -195,12 +195,14 @@ $(document).ready(
 
 	function putImage(){
 		ajax = true;
-		$('#img-cont').append('<img src="<%= asset_path 'ajax-loader.gif' %>" class="ajax-wait" >');
+		//$('#img-cont').append('<img src="<%= asset_path 'ajax-loader.gif' %>" class="ajax-wait" >');
+		$(".btn").button("loading");
 	}
 
 	function removeImage(){
 		ajax = false;
-		$('.ajax-wait').remove();
+		//$('.ajax-wait').remove();
+		$(".btn").button("reset");
 	}
 
 	function alignCircle (event, ui){
@@ -216,15 +218,9 @@ $(document).ready(
 		}
 		if((this).getAttribute("class") != "btn active")
 		{
-				$('.atenders').children().each(function(index) {  (this).setAttribute("class", "btn");});
-		}
-		else
-		{
-			(this).setAttribute("class", "btn");
-		    return;
-		}
-		atenders = (this).getAttribute("alt");
-		filters();
+				atenders = (this).getAttribute("alt");
+				filters();
+		}	
 	}
 
 

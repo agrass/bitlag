@@ -93,7 +93,7 @@ class EventsController < ApplicationController
     else
       atenders = 0
     end
-    
+
     	@circles_json = '[{"lng": ' + @lon.to_s + ', "lat": ' + @lat.to_s + ', "radius": ' + (1.609344*5*1000).to_s + ' }]'
 
   #Si hay parámetros de tags, se hace una query con ellos
@@ -123,6 +123,18 @@ class EventsController < ApplicationController
     tag = Tag.find(params[:tag_id].to_i)
     event = Event.find_by_fb_id(params[:event_id].to_i)    
     event.tags.push(tag)    
+  end
+
+  def personal_info
+    session[:oauth] = Koala::Facebook::OAuth.new(APP_ID, APP_SECRET, SITE_URL + '/callback')
+    @auth_url =  session[:oauth].url_for_oauth_code(:permissions=>"email, user_events, friends_events")
+    if session[:user_id]
+      user = User.find(session[:user_id])
+      events = user.events.where('end_time > ?',Time.now)
+      @json = events.to_gmaps4rails
+    else
+      @json = '[]'
+    end
   end
 
   def index
@@ -161,9 +173,16 @@ class EventsController < ApplicationController
   # GET /events/1
   # GET /events/1.json
   def show
-     session[:oauth] = Koala::Facebook::OAuth.new(APP_ID, APP_SECRET, SITE_URL + '/callback')
+    session[:oauth] = Koala::Facebook::OAuth.new(APP_ID, APP_SECRET, SITE_URL + '/callback')
     @auth_url =  session[:oauth].url_for_oauth_code(:permissions=>"email, user_events, friends_events")  
     puts session.to_s + "<<< session"
+
+    if session[:user_id]
+      @user = User.find(session[:user_id])
+    else
+      @user = nil
+    end
+
     @event = Event.find(params[:id])
     @json = @event.to_gmaps4rails
     #ver amigos facebook
@@ -181,6 +200,16 @@ SELECT uid2 FROM friend WHERE uid2 in (select uid from event_member where eid = 
       format.html # show.html.erb
       format.json { render json: @event }
     end
+  end
+
+  def add_to_list
+    user = User.find(session[:user_id])
+    user.events.push(Event.find(params[:event_id]))
+  end
+
+  def remove_from_list
+    user = User.find(session[:user_id])
+    user.events.delete(Event.find(params[:event_id]))
   end
 
   # GET /events/new
