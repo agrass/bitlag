@@ -43,6 +43,15 @@ $("#gender_login").click(function() {
 
 </script>
 
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/es_LA/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
+
 
 <style>
   .map_container {
@@ -80,9 +89,9 @@ $("#gender_login").click(function() {
 
   
   <div class="show_name">
-  	<legend>
-  <%= @event.name %>
-</legend>
+  
+  <p><%= @event.name %> </p>
+
 </div>
 
 <div class="show_time">
@@ -169,6 +178,7 @@ $("#gender_login").click(function() {
   <div class="show_address">
     <legend>
   <%= @event.address %>
+  <div class="fb-send" data-href="http://<%= request.host+request.fullpath %>"></div>
   </legend>
   </div>
 

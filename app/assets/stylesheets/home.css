@@ -13,7 +13,7 @@
 .menu_image3{ float:left; width: 170px;  z-index: 15; background: #F17B02;  } 
 .menu_text{  background: #000000; float:left; width: 170px; height: 40px;}
 .menu_text_grey{  background: #1C1C1C; }
-.menu_text h2 { color: #FFFFFF; float: left; margin-left: 35px; margin-top: 5px;}
+.menu_text p { color: #FFFFFF; float: left; margin-left: 35px; margin-top: 10px; font-size: 20px;}
 .menu_image{ padding-top: 5px; height:  158px; float: left;}
 .menu_image img { height: 100px; width: 100px; margin-top: 30px; margin-left: 20px;}
 
