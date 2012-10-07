@@ -5,8 +5,13 @@ rails generate scaffold Event
 
 Comandos Utiles
 
-netstat -anp|grep 3000
+netstat -anp|grep 12006
 
 kill -9 3853
 
 http://stackoverflow.com/questions/11058952/why-do-i-get-an-error-installing-the-json-gem-in-ubuntu
+
+RewriteEngine on
+RewriteCond %{HTTP_HOST} ^iwuanago.com$ [OR]
+RewriteCond %{HTTP_HOST} ^www.iwuanago.com$
+RewriteRule ^(.*)$ http://iwuanago:3000/$1 [P,QSA,L]

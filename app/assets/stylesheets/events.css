@@ -52,6 +52,16 @@ left: 420px;
 #gender_login{ width: 200px; height: 60px;}
 #gender_new{ width: 200px; height: 60px;}
 
+.show_name p{ display: block;
+width: 100%;
+padding: 0;
+margin-bottom: 20px;
+font-size: 21px;
+line-height: 24px;
+color: #333;
+border: 0;
+border-bottom: 1px solid #E5E5E5; }
+
 
 /* lista eventos */
 
