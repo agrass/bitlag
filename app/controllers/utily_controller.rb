@@ -37,7 +37,11 @@ class UtilyController < ApplicationController
      format.html {   }       
     end
     
-    redirect_to root_path
+    if params[:event_id]
+      redirect_to Event.find(params[:event_id])
+    else
+      redirect_to root_path
+    end
   end
 
 

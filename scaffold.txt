@@ -9,6 +9,8 @@ netstat -anp|grep 12006
 
 kill -9 3853
 
+nohup rails server -e production&
+
 http://stackoverflow.com/questions/11058952/why-do-i-get-an-error-installing-the-json-gem-in-ubuntu
 
 RewriteEngine on

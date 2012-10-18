@@ -1,13 +1,13 @@
 enUS:
   inicio:
     titulo: Find the best events!
-    descripcion: No te pierdas de los eventos que ocurren a tu alrededor! Fiestas, conciertos, charlas, obras de teatro y mucho más.
+    descripcion: Do not miss the events happening around you! Parties, concerts, conferences, plays and more.
   tags:
-    noche: Eventos Nocturnos
-    musica: Conciertos y tocatas
-    cultura: Teatro, Arte y Charlas
-    cine: Cine    
-    todos: Todos   
+    noche: Night events
+    musica: Gigs and Concerts
+    cultura: Teatro, Arte y Conferences
+    cine: Cinema   
+    todos: All  
   filter:
     today: Today
     week: Week

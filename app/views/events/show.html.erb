@@ -24,6 +24,7 @@ var added = false;
 <% end %>
 
 $(document).ready(function() {
+
 $("#gender_start").click(function() {
   $("#gender").replaceWith('<div id="gender"><img src="../images/ajax-loader.gif" /></div>')
    $.ajax({
@@ -34,6 +35,18 @@ $("#gender_start").click(function() {
 });
   
 });
+
+<% if session[:user_id] %>
+$("#gender").replaceWith('<div id="gender"><img src="../images/ajax-loader.gif" /></div>')
+   $.ajax({
+  url: '../extrainfo/<%= @event.fb_id %>',
+  success: function(data) {
+   $("#gender").replaceWith(data);
+  }
+});
+
+<% end %>
+
 
 $("#gender_login").click(function() {
 
@@ -142,15 +155,19 @@ $("#add").click(function() {
 
 <div class="show_description">
 	<% if @event.description != nil %>
-	<%= @event.description %>
+	<%= simple_format(@event.description) %>
 	<% end %>
 	</div>
 
 <% if session[:user_id]  %>
-    <div class="show_friends">
+    <div class="well show_left show_full_bar" >
+      <div class="show_friends">
       <div class="friend_pictures">   
         <% @friends[0..5].each do |friend| %>
-        <%= image_tag friend["pic_square"] %>
+        
+        <a href="#" rel="tooltip" data-placement="top" data-original-title="Tooltip on top" class="tooltip"> 
+         <%= image_tag friend["pic_square"] %>
+           </a>
         <% end %>
        </div>
     
@@ -176,8 +193,22 @@ $("#add").click(function() {
   <%end %>
     
   </div>
+
+   <div class="show_left">
+        <% if @user.events.exists?(@event) %>
+          <button id="add" class="btn btn-primary" data-loading-text="Loading..."><%= t('personal.remove') %></button>
+        <% else %>
+          <button id="add" class="btn btn-primary" data-loading-text="Loading..."><%= t('personal.add') %></button>
+        <% end %>
+      </div>
+</div>
 <% else %>
-<div class="show_friends">    
+<div class="well show_left show_full_bar" >
+  <div class="alert fade in show_half_bar show_left">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong>Extra Info!</strong> Get more information about the assistans, like the amount of girls and boys or the average age.
+          </div>
+<div class="show_friends">
     
     <div id="gender">
       <div id="gender_login">
@@ -194,9 +225,9 @@ $("#add").click(function() {
       </div>
 </div>
 
- 
-
   </div>
+
+</div>
 
   <%end %>
 
@@ -204,13 +235,7 @@ $("#add").click(function() {
 
   <div class="show_location">
     <% if session[:user_id]  %>
-      <div class="btn-group">
-        <% if @user.events.exists?(@event) %>
-          <button id="add" class="btn btn-primary" data-loading-text="Loading..."><%= t('personal.remove') %></button>
-        <% else %>
-          <button id="add" class="btn btn-primary" data-loading-text="Loading..."><%= t('personal.add') %></button>
-        <% end %>
-      </div>
+     
     <% end %>
     
   <div class="show_address">
@@ -221,8 +246,9 @@ $("#add").click(function() {
   </div>
 
 <% if @event.latitude != nil %>
-
-<iframe width="400" height="200" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.cl/maps?q=<%= @event.latitude.to_s + "," + @event.longitude.to_s %>&amp;num=1&amp;t=m&amp;hl=es&amp;ie=UTF8&amp;ll=<%= @event.latitude.to_s + "," + @event.longitude.to_s %>&amp;spn=0.014333,0.034246&amp;z=14&amp;output=embed"></iframe><br /><small>
+<div class="show_map">
+<iframe width="600" height="200" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.cl/maps?q=<%= @event.latitude.to_s + "," + @event.longitude.to_s %>&amp;num=1&amp;t=m&amp;hl=es&amp;ie=UTF8&amp;ll=<%= @event.latitude.to_s + "," + @event.longitude.to_s %>&amp;spn=0.014333,0.034246&amp;z=14&amp;output=embed"></iframe><br /><small>
+</div>
 <% end %>
 
 </div>
