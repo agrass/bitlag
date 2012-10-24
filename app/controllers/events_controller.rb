@@ -234,7 +234,6 @@ SELECT uid2 FROM friend WHERE uid2 in (select uid from event_member where eid = 
   # POST /events.xml
   def create
     @event = Event.new(params[:event])
-
     respond_to do |format|
       if @event.save
         format.html { redirect_to @event, notice: 'Event was successfully created.' }

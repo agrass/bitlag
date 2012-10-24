@@ -101,6 +101,16 @@ $(document).ready(
 			$('.atenders').children().click (atenders_click);
 
 		}
+
+		function geoError(error)
+		{
+
+		}
+
+		function showMessage()
+		{
+			apprise('<legend><%= t("dialogs.geo") %></legend>');
+		}
 	
 	function geo_success(position)
   	{
@@ -169,6 +179,11 @@ $(document).ready(
 	}
 			
 	function filters(){
+		if(lat == 0 && lon == 0)
+		{
+			showMessage();
+			return;
+		}
 	        alignCircle();
 		 var count = 0;
 		 var items = "data=";
