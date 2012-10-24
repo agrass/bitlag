@@ -1,10 +1,10 @@
 class Event < ActiveRecord::Base
-acts_as_gmappable
-acts_as_mappable :default_units => :kms,
-                   :default_formula => :sphere,
-                   :distance_field_name => :distance,
-                   :lat_column_name => :latitude,
-                   :lng_column_name => :longitude
+#acts_as_gmappable
+#acts_as_mappable :default_units => :kms,
+                   #:default_formula => :sphere,
+                   #:distance_field_name => :distance,
+                   #:lat_column_name => :latitude,
+                   #:lng_column_name => :longitude
 
 has_and_belongs_to_many :tags
 
@@ -12,10 +12,12 @@ has_and_belongs_to_many :tags
 
 validates :fb_id, :uniqueness => true
 
-
-
+#reverse_geocoded_by :latitude, :longitude
+#after_validation :reverse_geocode  # auto-fetch address
+geocoded_by :address
 reverse_geocoded_by :latitude, :longitude
-after_validation :reverse_geocode  # auto-fetch address
+after_validation :geocode, :reverse_geocode
+
 
 def set_tag
    Tag.find(:all).each do |tag|

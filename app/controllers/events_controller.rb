@@ -31,25 +31,29 @@ class EventsController < ApplicationController
   end
 
   def lists
-    
-    #si contiene filtro
-    if params[:data]
-     #si no logra reconocer la ciudad
-    if request.location.city.length == 0
-     @events = Event.find(:all, :order => "atenders DESC" , :conditions => ["start_time < ? AND start_time > ? ", Time.now + 10.days, Time.now - 10.hours], :limit => 10 )      
-     else            
-     @events = Event.near(request.location.city + ", " + request.location.country  , 100).find(:all, :order => "atenders DESC" , :conditions => ["start_time < ? AND start_time > ? ", Time.now + 10.days, Time.now - 1.days], :limit => 10 )      
-     end
-     
-     #sin filtro
-     else
-     if request.location.city.length == 0
-     @events = Event.find(:all, :order => "atenders DESC" , :conditions => ["start_time < ? AND start_time > ? ", Time.now + 10.days, Time.now - 1.days], :limit => 10 )
-     else            
-     @events = Event.near(request.location.city + ", " + request.location.country  , 100).find(:all, :order => "atenders DESC" , :conditions => ["start_time < ? AND start_time > ? ", Time.now + 10.days, Time.now - 1.days], :limit => 10 )      
-     end
-       
-     end
+    #si encuentra la ciudad
+    if request.location
+      #si contiene filtro
+      if params[:data]
+       #si no logra reconocer la ciudad
+        if request.location.city.length == 0
+          @events = Event.find(:all, :order => "atenders DESC" , :conditions => ["start_time < ? AND start_time > ? ", Time.now + 10.days, Time.now - 10.hours], :limit => 10 )      
+        else            
+          @events = Event.near(request.location.city + ", " + request.location.country  , 100).find(:all, :order => "atenders DESC" , :conditions => ["start_time < ? AND start_time > ? ", Time.now + 10.days, Time.now - 1.days], :limit => 10 )      
+        end
+         
+         #sin filtro
+      else
+        if request.location.city.length == 0
+          @events = Event.find(:all, :order => "atenders DESC" , :conditions => ["start_time < ? AND start_time > ? ", Time.now + 10.days, Time.now - 1.days], :limit => 10 )
+        else            
+          @events = Event.near(request.location.city + ", " + request.location.country  , 100).find(:all, :order => "atenders DESC" , :conditions => ["start_time < ? AND start_time > ? ", Time.now + 10.days, Time.now - 1.days], :limit => 10 )      
+        end
+         
+        end
+    else
+      @events = Event.all(:limit => 10)
+    end
      
   end
 
@@ -121,8 +125,12 @@ class EventsController < ApplicationController
   
   def addTags
     tag = Tag.find(params[:tag_id].to_i)
-    event = Event.find_by_fb_id(params[:event_id].to_i)    
-    event.tags.push(tag)    
+    event = Event.find_by_fb_id(params[:event_id].to_i)
+    if tag && event
+      event.tags.push(tag)
+    end
+
+    render :layout => false 
   end
 
   def personal_info
@@ -165,9 +173,14 @@ class EventsController < ApplicationController
 
 
   def extraInfo
-    @api = Koala::Facebook::API.new(session[:access_token]) 
-    @female = @api.fql_query("SELECT uid FROM user WHERE uid IN (select uid from event_member where eid = #{params[:fb_id]}  AND  rsvp_status = 'attending') AND sex = 'female'").length
-    @male = @api.fql_query("SELECT uid FROM user WHERE uid IN (select uid from event_member where eid = #{params[:fb_id]}  AND  rsvp_status = 'attending') AND sex = 'male'").length
+    begin
+      @api = Koala::Facebook::API.new(session[:access_token]) 
+      @female = @api.fql_query("SELECT uid FROM user WHERE uid IN (select uid from event_member where eid = #{params[:fb_id]}  AND  rsvp_status = 'attending') AND sex = 'female'").length
+      @male = @api.fql_query("SELECT uid FROM user WHERE uid IN (select uid from event_member where eid = #{params[:fb_id]}  AND  rsvp_status = 'attending') AND sex = 'male'").length
+    rescue
+      @female = ""
+      @male = ""
+    end
     render :layout => false
   end
   # GET /events/1
@@ -205,12 +218,16 @@ SELECT uid2 FROM friend WHERE uid2 in (select uid from event_member where eid = 
 
   def add_to_list
     user = User.find_by_fb_id(session[:user_id])
-    user.events.push(Event.find(params[:event_id]))
+    if user 
+      user.events.push(Event.find(params[:event_id]))
+    end
   end
 
   def remove_from_list
     user = User.find_by_fb_id(session[:user_id])
-    user.events.delete(Event.find(params[:event_id]))
+    if user
+      user.events.delete(Event.find(params[:event_id]))
+    end
   end
 
   # GET /events/new
@@ -233,7 +250,7 @@ SELECT uid2 FROM friend WHERE uid2 in (select uid from event_member where eid = 
   # POST /events.json
   # POST /events.xml
   def create
-    @event = Event.new(params[:event])
+    @event = Event.new(params[:event])    
 
     respond_to do |format|
       if @event.save
@@ -241,7 +258,7 @@ SELECT uid2 FROM friend WHERE uid2 in (select uid from event_member where eid = 
         format.json { render json: @event, status: :created, location: @event }
          format.xml do
          render :xml => "<result>sucess</result>", :status => :created 
-         end
+      end
 
         
       else

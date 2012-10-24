@@ -17,3 +17,12 @@ RewriteEngine on
 RewriteCond %{HTTP_HOST} ^iwuanago.com$ [OR]
 RewriteCond %{HTTP_HOST} ^www.iwuanago.com$
 RewriteRule ^(.*)$ http://iwuanago:3000/$1 [P,QSA,L]
+
+
+Errores
+
+malformed XML: missing tag start
+Line: 58
+Position: 1710
+Last 80 unconsumed characters:
+<======== ------------------->presenta<-------------------- ---------------* 

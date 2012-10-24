@@ -26,7 +26,7 @@ var added = false;
 $(document).ready(function() {
 
 $("#gender_start").click(function() {
-  $("#gender").replaceWith('<div id="gender"><img src="../images/ajax-loader.gif" /></div>')
+  $("#gender").replaceWith('<div id="gender"><img src="../assets/ajax-loader.gif" /></div>')
    $.ajax({
   url: '../extrainfo/<%= @event.fb_id %>',
   success: function(data) {
@@ -37,7 +37,7 @@ $("#gender_start").click(function() {
 });
 
 <% if session[:user_id] %>
-$("#gender").replaceWith('<div id="gender"><img src="../images/ajax-loader.gif" /></div>')
+$("#gender").replaceWith('<div id="gender"><img src="../assets/ajax-loader.gif" /></div>')
    $.ajax({
   url: '../extrainfo/<%= @event.fb_id %>',
   success: function(data) {
@@ -208,7 +208,7 @@ $("#add").click(function() {
             <button type="button" class="close" data-dismiss="alert">×</button>
             <strong>Extra Info!</strong> Get more information about the assistans, like the amount of girls and boys or the average age.
           </div>
-<div class="show_friends">
+<div class="show_friends_login">
     
     <div id="gender">
       <div id="gender_login">
