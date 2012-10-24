@@ -26,6 +26,7 @@ enUS:
     logout: Logout
   dialogs:
     login: "You need to be logged-in!"
+    geo: "Please share your location with us in your browser. More info in:"
   static:
     home: Home
     profile: Profile

@@ -26,6 +26,7 @@ enES:
     logout: Logout
   dialogs:
     login: "Tienes que iniciar sesion para tener acceso a mayor información del evento"
+    geo: "Por favor acepta compartir tu localización con nosotros en tu navegador. Busca más información en:"
   static:
     home: Home
     profile: Profile
