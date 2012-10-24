@@ -31,7 +31,7 @@ end
 
 gem 'jquery-rails'
 
-gem 'geokit-rails3'
+#gem 'geokit-rails3'
 
 gem "geocoder"
 
