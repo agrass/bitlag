@@ -10,7 +10,7 @@ module Api
       lat = params[:lat]
       lon = params[:lon]
       
-      if popularity
+      if not popularity
         @events = Event.limit(5)
       else
         @events = Event.near([lat, lon], radius).get_events_with_time(limit).joins(:tags).where('atenders >= ?',popularity).where(:tags => {:name => category}).uniq
