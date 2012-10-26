@@ -79,7 +79,7 @@ $(document).ready(
 		{
 		//html5 geolocalization
 		    if(navigator.geolocation) {
-    				navigator.geolocation.getCurrentPosition(geo_success);
+    				navigator.geolocation.getCurrentPosition(geo_success, geoError);
   			}
   		
 		//Filter events
@@ -104,12 +104,12 @@ $(document).ready(
 
 		function geoError(error)
 		{
-
+			showMessage();
 		}
 
 		function showMessage()
 		{
-			apprise('<legend><%= t("dialogs.geo") %></legend>');
+			apprise('<legend><%= t("dialogs.geo") %></legend><%= link_to image_tag('browsers/chrome.png'), "http://support.google.com/chrome/bin/answer.py?hl=en&answer=142065"%><%= link_to image_tag('browsers/firefox.png'), "http://www.mozilla.org/en-US/firefox/geolocation/"%><%= link_to image_tag('browsers/ie.png'), "http://www.sevenforums.com/tutorials/149275-internet-explorer-allow-prevent-websites-request-your-location.html"%><%= link_to image_tag('browsers/safari.png'), "http://support.apple.com/kb/HT4239"%><%= link_to image_tag('browsers/opera.png'), "http://help.opera.com/Linux/12.00/en/geolocation.html"%>');
 		}
 	
 	function geo_success(position)
@@ -237,10 +237,5 @@ $(document).ready(
 				filters();
 		}	
 	}
-
-
-	
-	
-	
 
 </script>

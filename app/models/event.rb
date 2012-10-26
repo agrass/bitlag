@@ -12,8 +12,6 @@ has_and_belongs_to_many :tags
 
 validates :fb_id, :uniqueness => true
 
-#reverse_geocoded_by :latitude, :longitude
-#after_validation :reverse_geocode  # auto-fetch address
 geocoded_by :address
 reverse_geocoded_by :latitude, :longitude
 after_validation :geocode, :reverse_geocode

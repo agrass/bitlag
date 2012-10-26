@@ -83,8 +83,8 @@ class EventsController < ApplicationController
         @lat = params[:lat]
         @lon = params[:lon]
     else
-        if request.location.city.length == 0
-    	   @lat = 0
+        if request.location == nil
+    	     @lat = 0
            @lon = 0
         else
            @lat = request.location.latitude
