@@ -1,0 +1,2 @@
+module EventsTagsHelper
+end

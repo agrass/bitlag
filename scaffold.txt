@@ -5,24 +5,16 @@ rails generate scaffold Event
 
 Comandos Utiles
 
-netstat -anp|grep 12006
+netstat -anp|grep 3000
 
 kill -9 3853
 
 nohup rails server -e production&
 
-http://stackoverflow.com/questions/11058952/why-do-i-get-an-error-installing-the-json-gem-in-ubuntu
+rake db:seed:dump FILE=db/events.rb MODELS=Event
+rake db:seed:dump FILE=db/users.rb MODELS=User
+rake db:seed:dump FILE=db/tags.rb MODELS=EventsTag
 
-RewriteEngine on
-RewriteCond %{HTTP_HOST} ^iwuanago.com$ [OR]
-RewriteCond %{HTTP_HOST} ^www.iwuanago.com$
-RewriteRule ^(.*)$ http://iwuanago:3000/$1 [P,QSA,L]
+rake db:seed tags.rb
 
-
-Errores
-
-malformed XML: missing tag start
-Line: 58
-Position: 1710
-Last 80 unconsumed characters:
-<======== ------------------->presenta<-------------------- ---------------* 
+rake db:seed FILE=db/Tags.rb MODELS=EventsTag
