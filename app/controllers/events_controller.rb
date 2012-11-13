@@ -7,52 +7,59 @@ class EventsController < ApplicationController
     @active_filters = params[:filter]
     @offset = params[:offset]
 
+    #Uso de busquedas
     if params[:search] != (0).to_s
-      @events = Event.near(request.location.city + ", " + request.location.country  , 100).where("lower(name) LIKE lower(?) AND start_time < ? AND start_time > ?", '%'+ params[:search] + '%', Time.now + 10.days, Time.now - 1.days).limit(10).offset(@offset).order('start_time ASC, atenders DESC')
-      render :file => 'events/refreshList', :layout => false
+      if session[:city]
+        @events = Event.near(session[:city] + ", " + session[:country]  , 100).where("lower(name) LIKE lower(?) AND start_time < ? AND start_time > ?", '%'+ params[:search] + '%', Time.now + 10.days, Time.now - 1.days).limit(10).offset(@offset).order('start_time ASC, atenders DESC')
+        render :file => 'events/refreshList', :layout => false
+      end
       return
     end
 
-    #si no logra encontrar la ciudad
-    if request.location.city.length == 0
-	if @active_filters == (0).to_s
-    @events = Event.where('start_time < ? AND start_time > ?' , Time.now + 10.days, Time.now - 1.days ).limit(10).offset(@offset).order('start_time ASC, atenders DESC')
-	else
-		@events = Event.joins(:tags).where('tags.id = ? AND start_time < ? AND start_time > ?' ,@active_filters, Time.now + 10.days, Time.now - 1.days ).limit(10).offset(@offset).order('start_time ASC, atenders DESC')
-	end
+    #si logra encontrar la ciudad
+    if session[:city]
+      if @active_filters == (0).to_s
+        @events = Event.near(session[:city] + ", " + session[:country]  , 100).find(:all, :order => "atenders DESC" , :conditions => ["start_time < ? AND start_time > ?", Time.now + 10.days, Time.now - 10.hours], :limit => 10, :offset => @offset )
+      else
+        @events = Event.near(session[:city] + ", " + session[:country]  , 100).joins(:tags).where('tags.id = ? AND start_time < ? AND start_time > ?' ,@active_filters, Time.now + 10.days, Time.now - 1.days ).limit(10).offset(@offset).order('start_time ASC, atenders DESC')
+      end
     else
-	if @active_filters == (0).to_s
-		 @events = Event.near(request.location.city + ", " + request.location.country  , 100).find(:all, :order => "atenders DESC" , :conditions => ["start_time < ? AND start_time > ?", Time.now + 10.days, Time.now - 10.hours], :limit => 10, :offset => @offset )
-	else
-		@events = Event.near(request.location.city + ", " + request.location.country  , 100).joins(:tags).where('tags.id = ? AND start_time < ? AND start_time > ?' ,@active_filters, Time.now + 10.days, Time.now - 1.days ).limit(10).offset(@offset).order('start_time ASC, atenders DESC')
-	end
+      if @active_filters == (0).to_s
+        @events = Event.where('start_time < ? AND start_time > ?' , Time.now + 10.days, Time.now - 1.days ).limit(10).offset(@offset).order('start_time ASC, atenders DESC')
+      else
+        @events = Event.joins(:tags).where('tags.id = ? AND start_time < ? AND start_time > ?' ,@active_filters, Time.now + 10.days, Time.now - 1.days ).limit(10).offset(@offset).order('start_time ASC, atenders DESC')
+      end
     end
     render :file => 'events/refreshList', :layout => false    
   end
 
   def lists
-    #si encuentra la ciudad
+
     if request.location
+      session[:city] = request.location.city
+      session[:country] = request.location.country
+    end
+
+    #si encuentra la ciudad
+    if session[:city]
       #si contiene filtro
       if params[:data]
        #si no logra reconocer la ciudad
-        if request.location.city.length == 0
+        if session[:city].length == 0
           @events = Event.find(:all, :order => "atenders DESC" , :conditions => ["start_time < ? AND start_time > ? ", Time.now + 10.days, Time.now - 10.hours], :limit => 10 )      
         else            
-          @events = Event.near(request.location.city + ", " + request.location.country  , 100).find(:all, :order => "atenders DESC" , :conditions => ["start_time < ? AND start_time > ? ", Time.now + 10.days, Time.now - 1.days], :limit => 10 )      
+          @events = Event.near(session[:city] + ", " + session[:country]  , 100).find(:all, :order => "atenders DESC" , :conditions => ["start_time < ? AND start_time > ? ", Time.now + 10.days, Time.now - 1.days], :limit => 10 )      
         end
-         
          #sin filtro
       else
-        if request.location.city.length == 0
+        if session[:city].length == 0
           @events = Event.find(:all, :order => "atenders DESC" , :conditions => ["start_time < ? AND start_time > ? ", Time.now + 10.days, Time.now - 1.days], :limit => 10 )
         else            
-          @events = Event.near(request.location.city + ", " + request.location.country  , 100).find(:all, :order => "atenders DESC" , :conditions => ["start_time < ? AND start_time > ? ", Time.now + 10.days, Time.now - 1.days], :limit => 10 )      
-        end
-         
-        end
+          @events = Event.near(session[:city] + ", " + session[:country]  , 100).find(:all, :order => "atenders DESC" , :conditions => ["start_time < ? AND start_time > ? ", Time.now + 10.days, Time.now - 1.days], :limit => 10 )      
+        end   
+      end
     else
-      @events = Event.all(:limit => 10)
+      @events = Event.find(:all, :order => "atenders DESC" , :conditions => ["start_time < ? AND start_time > ? ", Time.now + 10.days, Time.now - 1.days], :limit => 10 )
     end
      
   end
@@ -83,13 +90,13 @@ class EventsController < ApplicationController
         @lat = params[:lat]
         @lon = params[:lon]
     else
-        if request.location == nil
-    	     @lat = 0
-           @lon = 0
-        else
-           @lat = request.location.latitude
-           @lon = request.location.longitude
-        end
+      if request.location == nil
+      	@lat = 0
+        @lon = 0
+      else
+        @lat = request.location.latitude
+        @lon = request.location.longitude
+      end
     end
     
     if params[:atenders]
@@ -146,8 +153,8 @@ class EventsController < ApplicationController
   end
 
   def index
-    if params[:term]
-      @events = Event.near(request.location.city + ", " + request.location.country  , 100).search_by_name(params[:term])
+    if params[:term] && session[:city]
+      @events = Event.near(session[:city] + ", " + session[:country]  , 100).search_by_name(params[:term])
     else
       @events = Event.find :all, :order => 'atenders DESC', :conditions => ['start_time > ?',  Time.now]
     end
