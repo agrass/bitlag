@@ -230,6 +230,11 @@ SELECT uid2 FROM friend WHERE uid2 in (select uid from event_member where eid = 
     end
   end
 
+  def admin_events
+
+
+  end
+
   # GET /events/new
   # GET /events/new.json
   def new

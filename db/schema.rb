@@ -40,15 +40,6 @@ ActiveRecord::Schema.define(:version => 20121026175712) do
 
   add_index "events_tags", ["event_id", "tag_id"], :name => "index_events_tags_on_event_id_and_tag_id"
 
-  create_table "expressions", :force => true do |t|
-    t.integer  "tag_id"
-    t.string   "expression"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  add_index "expressions", ["tag_id"], :name => "index_expressions_on_tag_id"
-
   create_table "tags", :force => true do |t|
     t.string   "name"
     t.datetime "created_at", :null => false

@@ -14,7 +14,8 @@ enES:
     weekend: Fin de Semana
   personal:
     me_events: Agregar mis Eventos
-    friens_events: Agregar Eventos de Amigos
+    admin_events: Administrar Eventos
+    friends_events: Agregar Eventos de Amigos
     add: Añadir a mis Eventos
     remove: Remover de mis Eventos
   menu:

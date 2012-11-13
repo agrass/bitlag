@@ -1,0 +1,300 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ *= require_self
+ *= require_tree .
+*/
+
+/* style the head section */
+
+/* reset */
+* {	margin: 0; padding: 0; }
+
+/* tell the browser to render HTML 5 elements as block */
+header, footer, section, aside, nav, article { display: block; }
+
+/* basic styles */
+
+body { font-size: 14px; line-height: 1.5em; font-family: Verdana,Helvetica,Arial,sans-serif;  background: #141414; width: 100%; height: 100%; }
+
+body{
+ 
+  color: #333;
+  font-family: verdana, arial, helvetica, sans-serif;
+  font-size: 13px;
+  line-height: 18px;
+}
+#main{ text-align:center; background-color: #F2F2F2;  }
+
+a {
+	color:#333131; 
+	outline:none;
+}
+a:hover{
+	text-decoration:none;
+}
+
+h1 {
+	font-size:34px;
+	line-height:1.2em;
+	color:#fff;
+	font-weight:normal;
+	background:url(../assets/logo.jpg) no-repeat 0 0;
+	padding:6px 0 8px 69px;
+	position:absolute;
+	left:39px;
+	top:6px;
+}
+	h1 a {
+		color:#fff;
+		text-decoration:none;
+	}
+legend {
+	font-size:25px;
+	line-height:1.2em;
+	font-weight:normal;
+	color: white;
+	margin-bottom:22px;
+	margin-left: 20px;
+}
+	h2 span {
+		color:#8a8a8a;
+	}
+h3 {
+	font-size:1em;
+	margin-bottom:6px;
+}
+	h3 a { color:#242424; }
+	h3 a:hover {
+		text-shadow: 1px 1px 1px #888; 
+	}
+
+
+
+#headLogin {float:right; margin-right: 20px; margin-bottom: 5px; background-color: #F2F2F2; }
+
+
+#leftSide{ float:left;}
+#center{  text-align:left; margin:0 auto 0 auto; width: 850px;  }
+#rightSide{float:left;}
+
+.float_left{ float: left; margin-left: 15px;}
+
+#nav_bar{ float: right; margin-right: 15%;  padding-left:20px; margin-bottom: 5px; margin-top: 5px; border-bottom: solid 1px #DCDCDC; width: 600px; margin-top: 20px; padding-bottom: 10px;}
+
+#main{ width: 100%; float: left; margin-top: 0px; padding-top: 35px; margin-bottom: 0px; border-top: 1px solid #F2F2F2; min-height: 450px; }
+
+#footer{ float:left;   background: #222; width: 100%; margin-bottom: 0px; height: 100%; margin-top: 0px; }
+
+#logo{ float:left; width: 150px; height: 60px; margin-left: 6%; margin-top: 5px;}
+
+#feedback{ position: absolute; right: 0px; top:100px; z-index: 99999; }
+
+.feedbackForm{ position: absolute; right: -400px; width: 400px; display: none;  height: 300px; top: 80px; background: #000000; border: 2px solid #fff; z-index: 99998; }
+
+.feedbackForm{
+border-radius:5px; 
+-moz-border-radius:5px; /* Firefox */ 
+-webkit-border-radius:5px; /* Safari y Chrome */
+
+}
+
+
+
+/* LAYOUT */
+
+	/* Header */
+	header{
+		height:72px;
+		overflow:hidden;
+		background:url(../assets/header-bg.gif) 0 0 repeat-x;
+		margin-bottom: 0px;
+	}
+	
+	
+/*===== header =====*/
+header nav {
+	float:right;
+	margin-right: 10%;
+	z-index: 9;
+}
+		header nav ul li {
+			float:left;
+			list-style-type: none;
+		}
+			header nav ul li a {
+				font-size:22px;
+				color:#fff;
+				height:67px;
+				line-height:67px;
+				text-decoration:none;
+				width:101px;
+				text-align:center;
+				float:left;
+				background:#433b8f;
+				background-image: gradient(top, #383282, #484095); /* FF3.6 */
+				background-image: -moz-linear-gradient(top, #383282, #484095); /* FF3.6 */
+				background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, #383282),color-stop(1, #484095)); /* Saf4+, Chrome */
+        filter:  progid:DXImageTransform.Microsoft.gradient(startColorStr='#383282', EndColorStr='#484095'); /* IE6,IE7 */
+        -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#383282', EndColorStr='#484095')"; /* IE8 */
+		}
+		header nav ul li a.current, header nav ul li a:hover {
+			padding-bottom:5px;
+		}
+		
+		header nav ul li:nth-of-type(2) a {
+			background:#0184cd;
+			background-image: -moz-linear-gradient(top, #017bc8, #018ed3); /* FF3.6 */
+			background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, #017bc8),color-stop(1, #018ed3)); /* Saf4+, Chrome */
+			filter:  progid:DXImageTransform.Microsoft.gradient(startColorStr='#017bc8', EndColorStr='#018ed3'); /* IE6,IE7 */
+			-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#017bc8', EndColorStr='#018ed3')"; /* IE8 */
+		}
+		header nav ul li:nth-of-type(3) a {
+			background:#7cbc19;
+			background-image: -moz-linear-gradient(top, #73b515, #86c31d); /* FF3.6 */
+			background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, #73b515),color-stop(1, #86c31d)); /* Saf4+, Chrome */
+			filter:  progid:DXImageTransform.Microsoft.gradient(startColorStr='#73b515', EndColorStr='#86c31d'); /* IE6,IE7 */
+			-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#73b515', EndColorStr='#86c31d')"; /* IE8 */
+		}
+		header nav ul li:nth-of-type(4) a {
+			background:#ffbc00;
+			background-image: -moz-linear-gradient(top, #ffb500, #ffc300); /* FF3.6 */
+			background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, #ffb500),color-stop(1, #ffc300)); /* Saf4+, Chrome */
+			filter:  progid:DXImageTransform.Microsoft.gradient(startColorStr='#ffb500', EndColorStr='#ffc300'); /* IE6,IE7 */
+			-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#ffb500', EndColorStr='#ffc300')"; /* IE8 */
+		}
+		header nav ul li:nth-of-type(5) a {
+			background:#f07502;
+			background-image: -moz-linear-gradient(top, #ee6c01, #f27f02); /* FF3.6 */
+			background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, #ee6c01),color-stop(1, #f27f02)); /* Saf4+, Chrome */
+			filter:  progid:DXImageTransform.Microsoft.gradient(startColorStr='#ee6c01', EndColorStr='#f27f02'); /* IE6,IE7 */
+			-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#ee6c01', EndColorStr='#f27f02')"; /* IE8 */
+		}
+		header nav ul li:nth-of-type(6) a {
+			background:#d00110;
+			background-image: -moz-linear-gradient(top, #d00110, #da0116); /* FF3.6 */
+			background-image: -webkit-gradient(linear,left top,left bottom,color-stop(0, #d00110),color-stop(1, #da0116)); /* Saf4+, Chrome */
+			filter:  progid:DXImageTransform.Microsoft.gradient(startColorStr='#d00110', EndColorStr='#da0116'); /* IE6,IE7 */
+			-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorStr='#d00110', EndColorStr='#da0116')"; /* IE8 */
+		}
+
+
+
+		.efect{			
+			float:left; width: 594px; height: 12px; z-index: 10;
+		}
+		.color1{
+			
+			background: #38347E; width: 99px; height: 12px; float:left; z-index: 11;
+		}
+		.color2{
+			
+			background: #017BC8; width: 99px; height: 12px; float:left; z-index: 11;
+		}
+		.color3{
+			
+			background: #79B517; width: 99px; height: 12px; float:left; z-index: 11;
+		}
+		.color4{
+			
+			background: #FFB403; width: 99px; height: 12px; float:left; z-index: 11;
+		}
+		
+		.color5{
+			
+			background: #EE6C00; width: 99px;  height: 12px; float:left; z-index: 11;
+		}
+		.color6{
+			
+			background: #D00110; width: 99px; height: 12px; float:left; z-index: 11;
+		}
+
+/* feedback form */
+
+div.box {
+margin:0 auto;
+width:395px;
+background:#222222;
+position:relative;
+top:0px;
+padding-top: 20px;
+border:1px solid #262626;
+}
+
+div.box h1 { 
+color:#ffffff;
+font-size:18px;
+text-transform:uppercase;
+padding:5px 0 5px 5px;
+border-bottom:1px solid #161712;
+border-top:1px solid #161712; 
+}
+
+div.box label {
+width:100%;
+display: block;
+background:#1C1C1C;
+border-top:1px solid #262626;
+border-bottom:1px solid #161712;
+padding:10px 0 10px 0;
+}
+
+div.box label span {
+display: block;
+color:#bbbbbb;
+font-size:12px;
+float:left;
+width:100px;
+text-align:right;
+padding:5px 20px 0 0;
+}
+
+div.box .input_text {
+padding:10px 10px;
+width:200px;
+background:#262626;
+border-bottom: 1px double #171717;
+border-top: 1px double #171717;
+border-left:1px double #333333;
+border-right:1px double #333333;
+}
+
+div.box .message{
+padding:7px 7px;
+width:210px;
+background:#262626;
+border-bottom: 1px double #171717;
+border-top: 1px double #171717;
+border-left:1px double #333333;
+border-right:1px double #333333;
+overflow:hidden;
+height:110px;
+}
+
+div.box .button
+{
+margin:0 0 40px 0;
+padding:4px 7px;
+background:#CC0000;
+border:0px;
+position: relative;
+top:20px;
+left:200px;
+width:100px;
+border-bottom: 1px double #660000;
+border-top: 1px double #660000;
+border-left:1px double #FF0033;
+border-right:1px double #FF0033;
+}
+
+
+
+
+

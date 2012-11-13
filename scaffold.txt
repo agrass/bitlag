@@ -9,6 +9,7 @@ netstat -anp|grep 3000
 
 kill -9 3853
 
+nohup rails server -e production -p 80&
 nohup rails server -e production&
 
 rake db:seed:dump FILE=db/events.rb MODELS=Event
@@ -18,3 +19,7 @@ rake db:seed:dump FILE=db/tags.rb MODELS=EventsTag
 rake db:seed tags.rb
 
 rake db:seed FILE=db/Tags.rb MODELS=EventsTag
+
+Event.find(:all,  :conditions => ["start_time < ?", DateTime.now - 1.day])
+
+("fiesta" =~ /(\s[fF]|^[fF])[iI][eE][sS][tT][aA]/ ).nil?

@@ -17,6 +17,13 @@ opacity:0.8;
 
 }
 
+.current_location{
+
+  position: absolute; 
+  top: 5px;
+  left: 20px;
+}
+
 .select{
 opacity:1;  
 }

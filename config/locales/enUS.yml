@@ -14,6 +14,7 @@ enUS:
     weekend: Week End
   personal:
     me_events: Add my Events
+    admin_events: Events Admin
     friens_events: Add Friends Events
     add: Add to my Events
     remove: Remove from my Events

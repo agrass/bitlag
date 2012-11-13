@@ -22,6 +22,10 @@
   <button type="button" class="btn btn-large btn-warning menu_top" alt="weekend"><%=t('filter.weekend')%></button>
 </div>
 
+<div class="current_location">
+<img src="<%= asset_path 'current_location.gif' %>" />
+</div>
+
   </div>
 </div>
 
@@ -118,9 +122,9 @@ $(document).ready(
                         Lat: position.coords.latitude,
                        	Lng: position.coords.longitude, 
                         rich_marker: null, 
-                        marker_picture: "<%= asset_path 'position.png' %>",
-                        marker_width: 60,
-   			marker_height: 80,
+                        marker_picture: "<%= asset_path 'home.png' %>",
+                        marker_width: 33,
+   			marker_height: 41,
    			marker_anchor: null,
    			shadow_anchor: null,
    			shadow_picture: null,
