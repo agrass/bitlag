@@ -139,7 +139,7 @@ class EventsController < ApplicationController
 
   def index
     if params[:term] && session[:city]
-      @events = Event.near(session[:city] + ", " + session[:country]  , 100, :select => 'name').search_by_name(params[:term])
+      @events = Event.near(session[:city] + ", " + session[:country]  , 100, :order => 'atenders DESC', :select => 'name').search_by_name(params[:term])
     else
       @events = Event.find :all, :order => 'atenders DESC', :conditions => ['start_time > ?',  Time.now]
     end
