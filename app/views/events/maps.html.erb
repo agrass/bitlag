@@ -82,7 +82,7 @@ top: 450px;
 	var lon = 0;
 	var atenders = 0;
 
-function modal(header, content, footer){
+function modalInfo(header, content, footer){
 
   $('#myModalLabel').html(header);
   $('.modal-body').html(content);
@@ -141,7 +141,7 @@ $(document).ready(
 
 		function showMessage()
 		{
-			modal('<%= t("dialogs.geo") %>', '<%= link_to image_tag('browsers/chrome.png'), "http://support.google.com/chrome/bin/answer.py?hl=en&answer=142065"%><%= link_to image_tag('browsers/firefox.png'), "http://www.mozilla.org/en-US/firefox/geolocation/"%><%= link_to image_tag('browsers/ie.png'), "http://www.sevenforums.com/tutorials/149275-internet-explorer-allow-prevent-websites-request-your-location.html"%><%= link_to image_tag('browsers/safari.png'), "http://support.apple.com/kb/HT4239"%><%= link_to image_tag('browsers/opera.png'), "http://help.opera.com/Linux/12.00/en/geolocation.html"%>', '');
+			modalInfo('<%= t("dialogs.geo") %>', '<%= link_to image_tag('browsers/chrome.png'), "http://support.google.com/chrome/bin/answer.py?hl=en&answer=142065"%><%= link_to image_tag('browsers/firefox.png'), "http://www.mozilla.org/en-US/firefox/geolocation/"%><%= link_to image_tag('browsers/ie.png'), "http://www.sevenforums.com/tutorials/149275-internet-explorer-allow-prevent-websites-request-your-location.html"%><%= link_to image_tag('browsers/safari.png'), "http://support.apple.com/kb/HT4239"%><%= link_to image_tag('browsers/opera.png'), "http://help.opera.com/Linux/12.00/en/geolocation.html"%>', '');
 		}
 	
 	function geo_success(position)
