@@ -14,6 +14,7 @@
 //= require jquery_ujs
 //= require jquery-ui
 
+
      $(function () {
           
           $('div.show_description').expander({

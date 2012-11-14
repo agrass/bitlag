@@ -5,7 +5,6 @@
 <%= javascript_include_tag 'application' %>
 <%= javascript_include_tag 'events' %>
 <%= javascript_include_tag 'gmaps4rails/gmaps4rails.base' ,'gmaps4rails/gmaps4rails.googlemaps', 'gmaps4rails/gmaps4rails.mapquest', 'gmaps4rails/gmaps4rails.openlayers'  %>
-<%= javascript_include_tag 'apprise-1.5.full' %>
 <%= javascript_include_tag 'bootstrap.min' %>
 
 <script type="text/javascript"
@@ -25,6 +24,11 @@
 <%= gmaps(:map_options => {:auto_adjust => false, :detect_location => true, :center_on_user => true, :auto_zoom => false, :zoom => 15}, :markers => {:data => @json, :options => {:do_clustering=> true, :clusterer_maxZoom=> 18} }) %>
 
 <style>
+
+.modal {
+top: 450px;
+}
+
 
 .btn-group {
 	text-align: center;
@@ -48,6 +52,23 @@
 
 </style>
 <script type="text/javascript">
+
+function modalInfo(header, content, footer){
+
+  $('#myModalLabel').html(header);
+  $('.modal-body').html(content);
+  $('.modal-footer').html(footer);
+  $('#myModal').modal('show');
+}
+
+
+function modal(html){
+
+  $('#myModal').html(html);
+
+  $('#myModal').modal('show');
+}
+
 <% if session[:user_id] %>
 var session = true;
 <% else %>
@@ -68,7 +89,7 @@ $(document).ready(
 );
 
 function login() {
-  apprise('<legend><%= t("dialogs.login") %></legend><%= link_to image_tag('login.png'), @auth_url, :class=>"button"%>');
+  modalInfo('<%= t("dialogs.login") %>', '<%= link_to image_tag("login.png"), @auth_url, :class=>"button"%>', '<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button> ');
 }
 
 function me_click() {
@@ -79,3 +100,19 @@ function friends_click() {
 alert("friends click");
 }
 </script>
+
+
+<!-- Modal -->
+<div id="myModal" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Modal header</h3>
+  </div>
+  <div class="modal-body">
+    <p>One fine body…</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    <button class="btn btn-primary">Save changes</button>
+  </div>
+</div>

@@ -38,7 +38,7 @@ def gmaps4rails_address
 end
 
 def gmaps4rails_infowindow
-         return "<div class='show_picture'> <img src='#{self.picture}' height='50' width='50' /></div> <div class='float_left' ><a href='events/#{self.id}' ><p><strong>#{name}</strong></p></a> <p>#{address}</p><p>#{Time.at(start_time).strftime(I18n.t('time.formats.short'))}</p> </div>"
+  return "<div class='modal-header'><h3 id='myModalLabel'><a href='events/#{self.id}' ><p><strong>#{name}</strong></p></a></h3></div><div class='modal-body'><div class='show_picture'> <img src='#{self.picture}' height='50' width='50' /></div><p>#{address}</p><p>#{Time.at(start_time).strftime(I18n.t('time.formats.short'))}</p></div><div class='modal-footer'><a class='btn btn-primary' href='events/#{self.id}'>Go</a><button class='btn' data-dismiss='modal' aria-hidden='true'>Close</button></div>"
 end
 
 def gmaps4rails_marker_picture

@@ -43,9 +43,9 @@ left: 420px;
 
 .show_left{ float:left;  }
 .show_right{ float:right;  }
-.show_full_bar{ width: 100%; height: 60px; margin-top: 10px; margin-bottom: 10px; }
+.show_full_bar{ width: 100%; height: 80px; margin-top: 10px; margin-bottom: 10px; }
 .show_half_bar{ width: 50%; height: 40px; }
-.show_picture{ float:left;  }
+.show_picture{ float:left; margin-right: 10px; }
 .show_name{ float: left; margin-left: 30px; width: 600px; height: 40px; }
 .show_description{ float:left; width: 600px; margin-left: 30px;}
 .show_time{ float:left; margin-left: 30px; margin-top: 15px;}

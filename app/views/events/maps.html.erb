@@ -6,7 +6,15 @@
 <%= javascript_include_tag 'application' %>
 <%= javascript_include_tag 'events' %>
 <%= javascript_include_tag 'gmaps4rails/gmaps4rails.base' ,'gmaps4rails/gmaps4rails.googlemaps', 'gmaps4rails/gmaps4rails.mapquest', 'gmaps4rails/gmaps4rails.openlayers'  %>
-<%= javascript_include_tag 'apprise-1.5.full' %>
+
+<style>
+
+.modal {
+top: 450px;
+}
+</style>
+
+
 <%= javascript_include_tag 'bootstrap.min' %>
 
 <script type="text/javascript"
@@ -74,6 +82,26 @@
 	var lon = 0;
 	var atenders = 0;
 
+function modal(header, content, footer){
+
+  $('#myModalLabel').html(header);
+  $('.modal-body').html(content);
+  $('.modal-footer').html(footer);
+  $('#myModal').modal('show');
+}
+
+
+function modal(html){
+
+  $('#myModal').html(html);
+
+  $('#myModal').modal('show');
+}
+
+
+
+
+
 $(document).ready(
 		function(){
 	Gmaps.map.callback = function() {initialize();}
@@ -113,7 +141,7 @@ $(document).ready(
 
 		function showMessage()
 		{
-			apprise('<legend><%= t("dialogs.geo") %></legend><%= link_to image_tag('browsers/chrome.png'), "http://support.google.com/chrome/bin/answer.py?hl=en&answer=142065"%><%= link_to image_tag('browsers/firefox.png'), "http://www.mozilla.org/en-US/firefox/geolocation/"%><%= link_to image_tag('browsers/ie.png'), "http://www.sevenforums.com/tutorials/149275-internet-explorer-allow-prevent-websites-request-your-location.html"%><%= link_to image_tag('browsers/safari.png'), "http://support.apple.com/kb/HT4239"%><%= link_to image_tag('browsers/opera.png'), "http://help.opera.com/Linux/12.00/en/geolocation.html"%>');
+			modal('<%= t("dialogs.geo") %>', '<%= link_to image_tag('browsers/chrome.png'), "http://support.google.com/chrome/bin/answer.py?hl=en&answer=142065"%><%= link_to image_tag('browsers/firefox.png'), "http://www.mozilla.org/en-US/firefox/geolocation/"%><%= link_to image_tag('browsers/ie.png'), "http://www.sevenforums.com/tutorials/149275-internet-explorer-allow-prevent-websites-request-your-location.html"%><%= link_to image_tag('browsers/safari.png'), "http://support.apple.com/kb/HT4239"%><%= link_to image_tag('browsers/opera.png'), "http://help.opera.com/Linux/12.00/en/geolocation.html"%>', '');
 		}
 	
 	function geo_success(position)
@@ -243,3 +271,20 @@ $(document).ready(
 	}
 
 </script>
+
+
+
+<!-- Modal -->
+<div id="myModal" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Modal header</h3>
+  </div>
+  <div class="modal-body">
+    <p>One fine body…</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    <button class="btn btn-primary">Save changes</button>
+  </div>
+</div>
