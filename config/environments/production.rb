@@ -62,6 +62,30 @@ Bitlag::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
 
+
+    config.action_mailer.delivery_method = :sendmail
+# Defaults to:
+# config.action_mailer.sendmail_settings = {
+#   :location => '/usr/sbin/sendmail',
+#   :arguments => '-i -t'
+# }
+config.action_mailer.perform_deliveries = true
+config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.delivery_method = :smtp
+config.action_mailer.smtp_settings = {
+  :address              => "smtp.gmail.com",
+  :port                 => 587,
+  :domain               => 'baci.lindsaar.net',
+  :user_name            => 'iwuanago',
+  :password             => 'Felipe67890',
+  :authentication       => 'plain',
+  :enable_starttls_auto => true  }
+
+  config.action_mailer.default_url_options = {
+  :host => 'iwuanago.com',
+}
+
+
   # Log the query plan for queries taking more than this (works
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
