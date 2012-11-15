@@ -127,7 +127,7 @@ class EventsController < ApplicationController
 
   def personal_info
     session[:oauth] = Koala::Facebook::OAuth.new(APP_ID, APP_SECRET, SITE_URL + '/callback')
-    @auth_url =  session[:oauth].url_for_oauth_code(:permissions=>"email, user_events, friends_events")
+    @auth_url =  session[:oauth].url_for_oauth_code(:permissions=>"email, user_events, friends_events, rsvp_event")
     if session[:user_id]
       @user = User.find_by_fb_id(session[:user_id])
       events = @user.events.where('end_time > ?',Time.now)
@@ -179,7 +179,7 @@ class EventsController < ApplicationController
   # GET /events/1.json
   def show
     session[:oauth] = Koala::Facebook::OAuth.new(APP_ID, APP_SECRET, SITE_URL + '/callback?event_id='+params[:id])
-    @auth_url =  session[:oauth].url_for_oauth_code(:permissions=>"email, user_events, friends_events")  
+    @auth_url =  session[:oauth].url_for_oauth_code(:permissions=>"email, user_events, friends_events, rsvp_event")  
     puts session.to_s + "<<< session"
     
 
