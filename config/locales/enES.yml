@@ -7,7 +7,10 @@ enES:
     musica: Conciertos y tocatas
     cultura: Teatro, Arte y Charlas
     cine: Cine    
-    todos: Todos   
+    todos: Todos
+  show:
+    extra_info: Información extra!
+    extra_details: Obten información sobre los asistentes, como la cantidad de hombres y mujeres y amigos que asisten.
   filter:
     today: Hoy
     week: Semana

@@ -7,7 +7,10 @@ enUS:
     musica: Gigs and Concerts
     cultura: Theatre, Art y Conferences
     cine: Cinema   
-    todos: All  
+    todos: All
+  show:
+    extra_info: Extra Info!
+    extra_details: Get more information about the assistans, like the amount of girls and boys or the average age.
   filter:
     today: Today
     week: Week
