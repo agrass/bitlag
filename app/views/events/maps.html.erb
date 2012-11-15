@@ -31,7 +31,7 @@ top: 450px;
 </div>
 
 <div class="current_location">
-<img src="<%= asset_path 'current_location.gif' %>" />
+	<img src="<%= asset_path 'current_location.gif' %>" />
 </div>
 
   </div>
@@ -81,6 +81,7 @@ top: 450px;
 	var lat = 0;
 	var lon = 0;
 	var atenders = 0;
+	var geolocation_ask = false;
 
 function modalInfo(header, content, footer){
 
@@ -132,6 +133,18 @@ $(document).ready(
 		//Atenders
 			$('.atenders').children().click (atenders_click);
 
+		//Map events
+			google.maps.event.addListener(Gmaps.map.map, 'center_changed', function() {
+				if(lat == 0 && lon == 0 && geolocation_ask)
+				{
+					showMessage();
+				}
+				geolocation_ask = true;
+			});
+			$('.current_location').click (function(){
+				var position = {coords: {latitude: lat, longitude: lon} }
+                set_center(position);
+			});
 		}
 
 		function geoError(error)
