@@ -1,8 +1,42 @@
+<!-- Setear JS y CSS necesarios -->
+<%- content_for(:head) do %>
+<%= stylesheet_link_tag 'application' %>
+<%= stylesheet_link_tag 'events' %>
+<%= stylesheet_link_tag 'gmaps4rails' %>
+<%= javascript_include_tag 'application' %>
+<%= javascript_include_tag 'events' %>
+<%= javascript_include_tag 'jquery.easing.1.3' %>
+<%= javascript_include_tag 'bootstrap.min' %>
+
+
+<script type="text/javascript"
+    src="http://plugins.learningjquery.com/expander/jquery.expander.js">
+    </script>
+<%- end %>
+
 <script type="text/javascript">
+var ajax = true;
+var added = false;
+<% if @user %>
+  <% if @user.events.exists?(@event) %>
+    added = true;
+  <% end %>
+<% end %>
+
+function modal(header, content, footer){
+
+  $('#myModalLabel').html(header);
+  $('.modal-body').html(content);
+  $('.modal-footer').html(footer);
+  $('#myModal').modal('show');
+}
+
 
 $(document).ready(function() {
+  
+
 $("#gender_start").click(function() {
-  $("#gender").replaceWith('<div id="gender"><img src="../images/ajax-loader.gif" /></div>')
+  $("#gender").replaceWith('<div id="gender"><img src="../assets/ajax-loader.gif" /></div>')
    $.ajax({
   url: '../extrainfo/<%= @event.fb_id %>',
   success: function(data) {
@@ -12,20 +46,67 @@ $("#gender_start").click(function() {
   
 });
 
+<% if session[:user_id] %>
+$("#gender").replaceWith('<div id="gender"><img src="../assets/ajax-loader.gif" /></div>')
+   $.ajax({
+  url: '../extrainfo/<%= @event.fb_id %>',
+  success: function(data) {
+   $("#gender").replaceWith(data);
+  }
+});
+
+<% end %>
+
 
 $("#gender_login").click(function() {
 
-  apprise('<h2><%= t("dialogs.login") %></h2><%= link_to image_tag('login.png'), @auth_url, :class=>"button"%>');
+  modal('<%= t("dialogs.login") %>', '<%= link_to image_tag('login.png'), @auth_url, :class=>"button"%>', '<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>');
 });
 
+$("#add").click(function() {
+  if(ajax){
+    if(!added){
+      ajax = false;
+      $('.btn').button('loading');
 
+      $.ajax({
+        url: '../add_to_list/<%= @event.id %>',
+        success: function(data) {
+          $('.btn').button('reset');
+          $('.btn').text('<%= t('personal.remove') %>');
+          ajax = true;
+          added = true;
+        }
+      });
+    }
+    else{
+      ajax = false;
+      $('.btn').button('loading');
 
-
+      $.ajax({
+        url: '../remove_from_list/<%= @event.id %>',
+        success: function(data) {
+          $('.btn').button('reset');
+          $('.btn').text('<%= t('personal.add') %>');
+          ajax = true;
+          added = false;
+        }
+      });
+    }
+  }
 });
 
-
-
+});
 </script>
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/es_LA/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 
 
 <style>
@@ -40,6 +121,7 @@ $("#gender_login").click(function() {
   -moz-box-shadow: rgba(64, 64, 64, 0.5) 0 2px 5px;
   box-shadow: rgba(64, 64, 64, 0.1) 0 2px 5px;
   width: 500px;
+  position: inherit;
 }
 
 .gmaps4rails_map {
@@ -49,6 +131,8 @@ $("#gender_login").click(function() {
 
 
 </style>
+
+  
 
 <p id="notice"><%= notice %></p>
 
@@ -63,10 +147,8 @@ $("#gender_login").click(function() {
 
   
   <div class="show_name">
-  	<h2>
-  <%= @event.name %>
-</h2>
-</div>
+    <p><%= @event.name[0..90] %></p>
+  </div>
 
 <div class="show_time">
 	<% if @event.start_time %>
@@ -85,15 +167,21 @@ $("#gender_login").click(function() {
 
 <div class="show_description">
 	<% if @event.description != nil %>
-	<%= @event.description %>
+	<%= simple_format(@event.description) %>
 	<% end %>
 	</div>
 
 <% if session[:user_id]  %>
-    <div class="show_friends">
+    <div class="well show_left show_full_bar" >
+      <div class="show_friends">
+
+    <div class ="show_half_bar show_left" >
       <div class="friend_pictures">   
         <% @friends[0..5].each do |friend| %>
-        <%= image_tag friend["pic_square"] %>
+        
+        <a href="#" rel="tooltip" data-placement="top" data-original-title="Tooltip on top" class="tooltip"> 
+         <%= image_tag friend["pic_square"] %>
+           </a>
         <% end %>
        </div>
     
@@ -112,17 +200,39 @@ $("#gender_login").click(function() {
         </div>
       </div>
 </div>
-  <% if @friends.length > 5 %>
-  <div class="more_friends">
-    <%= link_to_function 'More Friends..', "apprise('#{@list_friends}');" %>
-  </div>
 
+<% if @friends.length > 5 %>
+    <div class="more_friends">
+      <%= link_to_function 'More Friends..', "modal('Friends', '#{@list_friends}', '');" %>
+    </div>
   <%end %>
-    
 
+
+
+</div>
+  
+  <div class="show_half_bar show_left">
+        <% if @user.events.exists?(@event) %>
+          <button id="add" class="btn btn-primary" data-loading-text="Loading..."><%= t('personal.remove') %></button>
+        <% else %>
+          <button id="add" class="btn btn-primary" data-loading-text="Loading..."><%= t('personal.add') %></button>
+        <% end %>
+      </div>
+
+  
+
+    
   </div>
+
+   
+</div>
 <% else %>
-<div class="show_friends">    
+<div class="well show_left show_full_bar" >
+  <div class="alert fade in show_half_bar show_left">
+            <button type="button" class="close" data-dismiss="alert">×</button>
+            <strong><%= t('show.extra_info') %></strong> <%= t('show.extra_details') %>
+          </div>
+<div class="show_friends_login">
     
     <div id="gender">
       <div id="gender_login">
@@ -139,35 +249,52 @@ $("#gender_login").click(function() {
       </div>
 </div>
 
- 
-
   </div>
+
+</div>
 
   <%end %>
 
 
 
-  <div class="show_location">
 
+  <div class="show_location">
+    <% if session[:user_id]  %>
+     
+    <% end %>
+    
   <div class="show_address">
-    <h3>
+    <legend>
   <%= @event.address %>
-  </h3>
+  <div class="fb-send" data-href="http://<%= request.host+request.fullpath %>"></div>
+  </legend>
   </div>
 
 <% if @event.latitude != nil %>
 <div class="show_map">
-<%= gmaps4rails(@json) %>
+<iframe width="600" height="200" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="http://maps.google.cl/maps?q=<%= @event.latitude.to_s + "," + @event.longitude.to_s %>&amp;num=1&amp;t=m&amp;hl=es&amp;ie=UTF8&amp;ll=<%= @event.latitude.to_s + "," + @event.longitude.to_s %>&amp;spn=0.014333,0.034246&amp;z=14&amp;output=embed"></iframe><br /><small>
 </div>
 <% end %>
 
+</div>	
+	</div>
+
+
+<!-- Modal -->
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Modal header</h3>
+  </div>
+  <div class="modal-body">
+    <p>One fine body…</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    <button class="btn btn-primary">Save changes</button>
+  </div>
 </div>
 
-  
-
-
-	
-	</div>
 
 
 

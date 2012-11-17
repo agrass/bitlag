@@ -11,10 +11,10 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120822161442) do
+ActiveRecord::Schema.define(:version => 20121026175712) do
 
   create_table "events", :force => true do |t|
-    t.string   "name"
+    t.text     "name"
     t.float    "longitude"
     t.float    "latitude"
     t.boolean  "gmaps"
@@ -40,15 +40,6 @@ ActiveRecord::Schema.define(:version => 20120822161442) do
 
   add_index "events_tags", ["event_id", "tag_id"], :name => "index_events_tags_on_event_id_and_tag_id"
 
-  create_table "expressions", :force => true do |t|
-    t.integer  "tag_id"
-    t.string   "expression"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  add_index "expressions", ["tag_id"], :name => "index_expressions_on_tag_id"
-
   create_table "tags", :force => true do |t|
     t.string   "name"
     t.datetime "created_at", :null => false
@@ -63,5 +54,15 @@ ActiveRecord::Schema.define(:version => 20120822161442) do
     t.datetime "updated_at",   :null => false
     t.string   "api_key"
   end
+
+  create_table "users_events", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "event_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "users_events", ["event_id"], :name => "index_users_events_on_event_id"
+  add_index "users_events", ["user_id"], :name => "index_users_events_on_user_id"
 
 end

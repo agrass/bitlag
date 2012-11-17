@@ -1,0 +1,19 @@
+---
+applications:
+  .:
+    name: iwuanago
+    framework:
+      name: rails3
+      info:
+        mem: 256M
+        description: Rails Application
+        exec: !!null 
+    infra: aws
+    url: ${name}.${target-base}
+    mem: 256M
+    instances: 1
+    services:
+      postgresql-6d06a:
+        type: postgresql
+      n:
+        type: postgresql

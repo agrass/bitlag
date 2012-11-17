@@ -56,12 +56,13 @@ h1 {
 		color:#fff;
 		text-decoration:none;
 	}
-h2 {
-	font-size:20px;
+legend {
+	font-size:25px;
 	line-height:1.2em;
 	font-weight:normal;
-	color:#212222;
+	color: white;
 	margin-bottom:22px;
+	margin-left: 20px;
 }
 	h2 span {
 		color:#8a8a8a;
@@ -292,7 +293,6 @@ border-top: 1px double #660000;
 border-left:1px double #FF0033;
 border-right:1px double #FF0033;
 }
-
 
 
 

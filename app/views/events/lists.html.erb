@@ -1,3 +1,14 @@
+<!-- Setear JS y CSS necesarios -->
+<%- content_for(:head) do %>
+<%= stylesheet_link_tag 'application' %>
+<%= stylesheet_link_tag 'events' %>
+<%= javascript_include_tag 'application' %>
+<%= javascript_include_tag 'events' %>
+<script type="text/javascript"
+    src="http://plugins.learningjquery.com/expander/jquery.expander.js">
+    </script>
+<%- end %>
+
 <script>
 var ajax = false;
 var valoffset = 0;
@@ -39,6 +50,7 @@ $(document).ready(
 );
 
 function select(){
+  
 	if(ajax){
 		return;
 	}
@@ -98,18 +110,26 @@ $(window).scroll(function(){
 });
 </script>
 
-<div class="category_nav">
-  <% Tag.all.each do |tag|%>
- 
-  <a alt="<%=tag.id%>" class="filter"><%=t('tags.'+ tag.name)%></a> |
+
+
   
-  <% end %>
-  
+<div class="navbar">
+  <div class="navbar-inner">
+    <div class="btn-group">
+      <% Tag.all.each do |tag|%> 
+        <button class="btn filter" alt="<%=tag.id%>" ><%=t('tags.'+ tag.name)%></button> 
+      <% end %>
+    </div>
+  </div>
 </div>
-<div class="search">
-	<input id="autocomplete">
-	<button type="button" onclick= search_button() ><%=t('search.label')%></button>
+<div class="well">
+<div class="input-append">
+  <div class="search">  
+  <input class="span2" id="autocomplete" size="16" type="text"><button class="btn btn-info" type="button" onclick= search_button() ><%=t('search.label')%></button>
 </div>
+</div>
+</div>
+
 
 <div class="event_list" >
 <% @events.each do |event|  %>

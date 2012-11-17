@@ -1,21 +1,21 @@
 class Event < ActiveRecord::Base
 acts_as_gmappable
-acts_as_mappable :default_units => :kms,
-                   :default_formula => :sphere,
-                   :distance_field_name => :distance,
-                   :lat_column_name => :latitude,
-                   :lng_column_name => :longitude
+#acts_as_mappable :default_units => :kms,
+                   #:default_formula => :sphere,
+                   #:distance_field_name => :distance,
+                   #:lat_column_name => :latitude,
+                   #:lng_column_name => :longitude
 
 has_and_belongs_to_many :tags
 
 #before_save :set_tag
 
 validates :fb_id, :uniqueness => true
-# validates :api_key, :uniqueness => true
 
-
+geocoded_by :address
 reverse_geocoded_by :latitude, :longitude
-after_validation :reverse_geocode  # auto-fetch address
+after_validation :geocode, :reverse_geocode
+
 
 def set_tag
    Tag.find(:all).each do |tag|
@@ -31,14 +31,14 @@ end
 def gmaps4rails_address
 #describe how to retrieve the address from your model, if you use directly a db column, you can dry your code, see wiki
    if self.latitude   
-   return "#{self.latitude}, #{self.longitude}"
+    return "#{self.latitude}, #{self.longitude}"
    else
      return address
    end
 end
 
 def gmaps4rails_infowindow
-         return "<div class='show_picture'> <img src='#{self.picture}' height='50' width='50' /></div> <div class='float_left' ><a href='events/#{self.id}' ><p><strong>#{name}</strong></p></a> <p>#{address}</p><p>#{Time.at(start_time).strftime(I18n.t('time.formats.short'))}</p> </div>"
+  return "<div class='modal-header'><h3 id='myModalLabel'><a href='events/#{self.id}' ><p><strong>#{name}</strong></p></a></h3></div><div class='modal-body'><div class='show_picture'> <img src='#{self.picture}' height='50' width='50' /></div><p>#{address}</p><p>#{Time.at(start_time).strftime(I18n.t('time.formats.short'))}</p></div><div class='modal-footer'><a class='btn btn-primary' href='events/#{self.id}'>Go</a><button class='btn' data-dismiss='modal' aria-hidden='true'>Close</button></div>"
 end
 
 def gmaps4rails_marker_picture

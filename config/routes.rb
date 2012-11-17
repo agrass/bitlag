@@ -1,5 +1,7 @@
 Bitlag::Application.routes.draw do
 
+  resources :events_tags
+
 namespace :api, defaults: {format: 'json'} do
   match 'events' => 'events#get_events', :as => :get_events
   match 'event' => 'events#get_event', :as => :get_event
@@ -17,7 +19,8 @@ namespace :api, defaults: {format: 'json'} do
   root :to => 'home#index'
   
   #facebook callback y logout
-  match 'callback' => 'utily#callback'  
+  match 'callback' => 'utily#callback'
+  match 'callback2' => 'utily#callback2' 
   match 'logout' => 'utily#logout'
   
   #agregar eventos 
@@ -29,6 +32,10 @@ namespace :api, defaults: {format: 'json'} do
   
   match 'lists' => 'events#lists', :as => 'lists'
 
+  match 'personal_info' => 'events#personal_info', :as => 'personal_info'
+
+  match 'add_to_list/:event_id' => 'events#add_to_list', :as => 'add_to_list'
+  match 'remove_from_list/:event_id' => 'events#remove_from_list', :as => 'remove_from_list'
   #obtener informacion extra evento (hombres/mujeres)
   match 'extrainfo/:fb_id' => 'events#extraInfo', :as => 'extrainfo'
   

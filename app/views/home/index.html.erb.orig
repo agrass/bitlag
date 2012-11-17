@@ -1,0 +1,129 @@
+<!-- Setear JS y CSS necesarios -->
+<%- content_for(:head) do %>
+<%= stylesheet_link_tag 'application' %>
+<%= stylesheet_link_tag 'home' %>
+<%= javascript_include_tag 'application' %>
+<%= javascript_include_tag 'home' %>
+<script type="text/javascript"
+    src="http://plugins.learningjquery.com/expander/jquery.expander.js">
+    </script>
+<%- end %>
+<div class="mainSlogan"> 
+<div class="slogan"><%= t('inicio.titulo') %></div> <%= t('inicio.descripcion') %>
+</div>
+
+<div class="sliderMain"> 
+<div class="pix_diapo">
+
+                    <div data-thumb="images/thumbs/megamind1048.jpg">
+                        <img src="images/slides/party_banner.jpg">
+                        <div class="caption elemHover fromLeft">
+                           
+                        </div>
+                    </div>
+                    
+                    <div data-thumb="images/thumbs/megamind1048.jpg">
+                        <img src="images/slides/calendar_banner.jpg">
+                        <div class="caption elemHover fromLeft">
+                            
+                        </div>
+                    </div>
+                           
+            
+                    
+               </div><!-- #pix_diapo -->
+
+</div>
+
+<div class="index_menu_back">
+		<div class="index_menu_back_down">
+			</div>
+		
+		</div>
+
+<div class="index_menu">
+	
+	
+	<div class="menu_container">
+	
+	<a href="lists">
+	<div class="menu_image1">
+		<div class="menu_image">
+		<%= image_tag "list_menu.png" %>
+		</div>
+		<div class="menu_text menu_text_grey">
+		<p><%= t('menu.event_list') %></p>	
+		</div>	
+		</div>
+		</a>
+	
+	<a href="maps">
+	<div class="menu_image2">
+		<div class="menu_image">
+		<%= image_tag "mapa_menu.png" %>
+		</div>
+		<div class="menu_text">
+		<p><%= t('menu.map') %></p>
+		</div>
+		
+		</div>
+	</a>
+	<a href="personal_info">
+		<div class="menu_image3">
+			<div class="menu_image">
+		<%= image_tag "calendar_menu.png" %>
+		</div>
+		<div class="menu_text menu_text_grey">
+<<<<<<< HEAD
+		<p><legend><%= t('menu.personal') %></legend></p>
+=======
+		<p><%= t('menu.calendar') %></p>
+>>>>>>> 62a59976714dcd8c1f4e70000ac149bf6004e1ba
+		</div>
+		
+		</div>
+	</a>
+	</div>
+	
+	</div>
+	
+		<% if session[:user_id] == nil %>
+	<div class="login">
+			<%= link_to image_tag('login.png'), @auth_url, :class=>"button"%>
+	</div>
+			
+			<% else %>
+			<%= link_to 'Logout', logout_path , :class=>"button"%>
+			<% end %>
+			
+			
+			<div class="movilapp">
+				<%= image_tag 'appstore.png' %>
+				<%= image_tag 'android.png' %>
+				
+				</div>
+	
+	
+	<script language="JavaScript">
+
+$('.menu_image').mouseover(function() {
+  $(this).stop().animate({
+    opacity: 1   
+    
+  }, 200);
+});
+
+$('.menu_image').mouseout(function() {
+  $(this).stop().animate({
+  	opacity: 0.5
+  }, 200);
+});
+</script>
+
+
+<script>
+$(function(){
+	$('.pix_diapo').diapo();
+});
+
+</script>

@@ -1,24 +1,36 @@
 enUS:
   inicio:
     titulo: Find the best events!
-    descripcion: No te pierdas de los eventos que ocurren a tu alrededor! Fiestas, conciertos, charlas, obras de teatro y mucho más.
+    descripcion: Do not miss the events happening around you! Parties, concerts, conferences, plays and more.
   tags:
-    noche: Eventos Nocturnos
-    musica: Conciertos y tocatas
-    cultura: Teatro, Arte y Charlas
-    cine: Cine    
-    todos: Todos   
+    noche: Night events
+    musica: Gigs and Concerts
+    cultura: Theatre, Art y Conferences
+    cine: Cinema   
+    todos: All
+  show:
+    extra_info: Extra Info!
+    extra_details: Get more information about the assistans, like the amount of girls and boys or the average age.
   filter:
     today: Today
     week: Week
     weekend: Week End
+  personal:
+    me_events: Add my Events
+    admin_events: Events Admin
+    friens_events: Add Friends Events
+    add: Add to my Events
+    remove: Remove from my Events
   menu:
     home: Home
     event_list: List
     map: Map
-    calendar: Calendar
+    personal: My Events
+    login: Login
+    logout: Logout
   dialogs:
     login: "You need to be logged-in!"
+    geo: "Please share your location with us in your browser. More info in:"
   static:
     home: Home
     profile: Profile

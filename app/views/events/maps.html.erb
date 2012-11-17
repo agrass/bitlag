@@ -1,65 +1,120 @@
+<!-- Setear JS y CSS necesarios -->
+<%- content_for(:head) do %>
+<%= stylesheet_link_tag 'application' %>
+<%= stylesheet_link_tag 'events' %>
+<%= stylesheet_link_tag 'gmaps4rails' %>
+<%= javascript_include_tag 'application' %>
+<%= javascript_include_tag 'events' %>
+<%= javascript_include_tag 'gmaps4rails/gmaps4rails.base' ,'gmaps4rails/gmaps4rails.googlemaps', 'gmaps4rails/gmaps4rails.mapquest', 'gmaps4rails/gmaps4rails.openlayers'  %>
+
+<style>
+
+.modal {
+top: 450px;
+}
+</style>
+
+
+<%= javascript_include_tag 'bootstrap.min' %>
+
+<script type="text/javascript"
+    src="http://plugins.learningjquery.com/expander/jquery.expander.js">
+    </script>
+<%- end %>
+
 <div class="dock" id="dock">
-  <div class="dock-container">
-  <a class="dock-item"><img src="<%= asset_path 'Filters/today.png' %>" alt="today" class="select_top"/><span><%=t('filter.today')%></span></a> 
-  <a class="dock-item"><img src="<%= asset_path 'Filters/week.png' %>" alt="week" class="menu_top"/><span><%=t('filter.week')%></span></a> 
-  <a class="dock-item"><img src="<%= asset_path 'Filters/weekend.png' %>" alt="weekend" class="menu_top"/><span><%=t('filter.weekend')%></span></a> 
+<div class="navbar-inner">  
+    <div class="btn-group" style="margin-top: 5px;" data-toggle="buttons-checkbox">
+  <button type="button" class="btn btn-large active btn-warning select_top active" alt="today" ><%=t('filter.today')%></button >
+  <button type="button" class="btn btn-large btn-warning menu_top" alt="week"><%=t('filter.week')%></button>
+  <button type="button" class="btn btn-large btn-warning menu_top" alt="weekend"><%=t('filter.weekend')%></button>
 </div>
+
+<div class="current_location">
+	<img src="<%= asset_path 'current_location.gif' %>" />
 </div>
-<br />
-<%= gmaps(:map_options => {:auto_adjust => false, :detect_location => true, :center_on_user => true, :auto_zoom => false, :zoom => 15}, :markers => {:data => @json, :options => {:do_clustering=> true, :clusterer_maxZoom=> 18} }, :circles => { :data => @circles_json, :options => {fillColor: "#000",fillOpacity: 0.25}}) %>
-<br />
-<div class="dock" id="dock2">
-  <div class="dock-container2">
-  <% Tag.all.each do |tag|%>
-  <a class="dock-item2" ><span><%=t('tags.'+ tag.name)%></span><img src="<%= asset_path 'Filters/'+tag.name+'.png' %>" alt="<%= tag.id %>" class="menu"/></a>
-  <% end %>
+
   </div>
 </div>
 
+<div class="menu_map well">
+ <legend>Radio</legend>
 <div id="slider"></div>
 <div id="img-cont"></div>
+</br>
+
+<legend>Asistentes</legend>
+<div class="warning">
+<div class="btn-group atenders" data-toggle="buttons-radio">
+  <button type="button" class="btn active" data-loading-text="Loading..." alt=0>+0</button>
+  <button type="button" class="btn" data-loading-text="Loading..." alt=200>+200</button>
+  <button type="button" class="btn" data-loading-text="Loading..." alt=1000>+1000</button>
+</div>
+</div>
+
+</div>
+
+
+
+<br />
+<%= gmaps(:map_options => {:auto_adjust => false, :detect_location => true, :center_on_user => true, :auto_zoom => false, :zoom => 15}, :markers => {:data => @json, :options => {:do_clustering=> true, :clusterer_maxZoom=> 18} }, :circles => { :data => @circles_json, :options => {fillColor: "#000",fillOpacity: 0.25}}) %>
+<br />
+
+
+<div class="dock2" id="dock2">
+<div class="navbar-inner">
+   <div class="btn-group" style="margin-top: 5px;" data-toggle="buttons-checkbox">  
+  <% Tag.all.each do |tag|%>
+  <button type="button" class="btn btn-large btn-inverse menu" data-loading-text="Loading..." data-toggle="button" alt="<%= tag.id %>"><%=t('tags.'+ tag.name)%></button>
+  <% end %>
+</div>
+   
+</div>
+  </div>
+
+
+
+
+
 <script type="text/javascript">
 	var ajax = false;
 	var lat = 0;
 	var lon = 0;
+	var atenders = 0;
+	var geolocation_ask = false;
+
+function modalInfo(header, content, footer){
+
+  $('#myModalLabel').html(header);
+  $('.modal-body').html(content);
+  $('.modal-footer').html(footer);
+  $('#myModal').modal('show');
+}
+
+
+function modal(html){
+
+  $('#myModal').html(html);
+
+  $('#myModal').modal('show');
+}
+
+
+
+
 
 $(document).ready(
 		function(){
 	Gmaps.map.callback = function() {initialize();}
+
 });
-
-
 		function initialize()
 		{
 		//html5 geolocalization
-		         if(navigator.geolocation) {
-    				navigator.geolocation.getCurrentPosition(geo_success);
+		    if(navigator.geolocation) {
+    				navigator.geolocation.getCurrentPosition(geo_success, geoError);
   			}
-  		//Filters
-  			$('#dock').Fisheye(
-				{
-					maxWidth: 50,
-					items: 'a',
-					itemsText: 'span',
-					container: '.dock-container',
-					itemWidth: 40,
-					proximity: 90,
-					halign : 'center'
-				}
-			)
-			$('#dock2').Fisheye(
-				{
-					maxWidth: 60,
-					items: 'a',
-					itemsText: 'span',
-					container: '.dock-container2',
-					itemWidth: 40,
-					proximity: 80,
-					alignment : 'left',
-					valign: 'bottom',
-					halign : 'center'
-				}
-			)
+  		
 		//Filter events
 			$('.menu').click (select);
 			$('.menu_top').click (select_top);
@@ -75,7 +130,31 @@ $(document).ready(
 				slide: alignCircle
 		 	});
 
+		//Atenders
+			$('.atenders').children().click (atenders_click);
 
+		//Map events
+			google.maps.event.addListener(Gmaps.map.map, 'center_changed', function() {
+				if(lat == 0 && lon == 0 && geolocation_ask)
+				{
+					showMessage();
+				}
+				geolocation_ask = true;
+			});
+			$('.current_location').click (function(){
+				var position = {coords: {latitude: lat, longitude: lon} }
+                set_center(position);
+			});
+		}
+
+		function geoError(error)
+		{
+			showMessage();
+		}
+
+		function showMessage()
+		{
+			modalInfo('<%= t("dialogs.geo") %>', '<%= link_to image_tag('browsers/chrome.png'), "http://support.google.com/chrome/bin/answer.py?hl=en&answer=142065"%><%= link_to image_tag('browsers/firefox.png'), "http://www.mozilla.org/en-US/firefox/geolocation/"%><%= link_to image_tag('browsers/ie.png'), "http://www.sevenforums.com/tutorials/149275-internet-explorer-allow-prevent-websites-request-your-location.html"%><%= link_to image_tag('browsers/safari.png'), "http://support.apple.com/kb/HT4239"%><%= link_to image_tag('browsers/opera.png'), "http://help.opera.com/Linux/12.00/en/geolocation.html"%>', '');
 		}
 	
 	function geo_success(position)
@@ -84,9 +163,9 @@ $(document).ready(
                         Lat: position.coords.latitude,
                        	Lng: position.coords.longitude, 
                         rich_marker: null, 
-                        marker_picture: "<%= asset_path 'position.png' %>",
-                        marker_width: 60,
-   			marker_height: 80,
+                        marker_picture: "<%= asset_path 'home.png' %>",
+                        marker_width: 33,
+   			marker_height: 41,
    			marker_anchor: null,
    			shadow_anchor: null,
    			shadow_picture: null,
@@ -108,25 +187,25 @@ $(document).ready(
 		if(ajax){
 			return;
 		}
-				
+			//alert((this).getAttribute("class"));
 		if((this).getAttribute("alt")== "<%= Tag.find_by_name("todos").id %>")
 		{
-			if((this).getAttribute("class")== "menu")
+			if((this).getAttribute("class")== "btn btn-large btn-inverse menu")
 			{
-				$('.menu').each(function(index) {  (this).setAttribute("class", "select");});
+				$('.menu').each(function(index) {  (this).setAttribute("class", "btn btn-large btn-inverse select active");});
 			}
 			else
 			{
-				$('.select').each(function(index) { (this).setAttribute("class", "menu");});
+				$('.select').each(function(index) { (this).setAttribute("class", "btn btn-large btn-inverse menu");});
 			}
 		}
-		else if((this).getAttribute("class")== "menu"  )
+		else if((this).getAttribute("class")== "btn btn-large btn-inverse menu"  )
 		{
-		    (this).setAttribute("class", "select");
+		    (this).setAttribute("class", "btn btn-large btn-inverse select active");
 		}
 		else
 		{
-		    (this).setAttribute("class", "menu");
+		    (this).setAttribute("class", "btn btn-large btn-inverse menu");
 		}
 		filters();
 	}
@@ -136,15 +215,20 @@ $(document).ready(
 			return;
 		}
 			
-		if((this).getAttribute("class")== "menu_top"  )
-		{
-		    $('.select_top').each(function(){(this).setAttribute("class", "menu_top")});
-		    (this).setAttribute("class", "select_top");
+		if((this).getAttribute("class")== "btn btn-large btn-warning menu_top"  )
+		{      
+		    $('.select_top').each(function(){(this).setAttribute("class", "btn btn-large btn-warning menu_top")});
+		    (this).setAttribute("class", "btn btn-large btn-warning select_top active");
 		    filters();
 		}
 	}
 			
 	function filters(){
+		if(lat == 0 && lon == 0)
+		{
+			showMessage();
+			return;
+		}
 	        alignCircle();
 		 var count = 0;
 		 var items = "data=";
@@ -159,7 +243,7 @@ $(document).ready(
 		});
 		items = items + "&radius=" + $('#slider').slider("option", "value");
 		var position = {coords: {latitude: Gmaps.map.map.getCenter().lat(), longitude: Gmaps.map.map.getCenter().lng()} }
-		items = items + "&lat=" + lat + "&lon=" + lon;
+		items = items + "&lat=" + lat + "&lon=" + lon + "&atenders=" + atenders;
 		putImage();
 		$.getJSON('/filter.json', items , function(data){
         				Gmaps.map.replaceMarkers(data);
@@ -171,12 +255,14 @@ $(document).ready(
 
 	function putImage(){
 		ajax = true;
-		$('#img-cont').append('<img src="<%= asset_path 'ajax-loader.gif' %>" class="ajax-wait" >');
+		//$('#img-cont').append('<img src="<%= asset_path 'ajax-loader.gif' %>" class="ajax-wait" >');
+		$(".btn").button("loading");
 	}
 
 	function removeImage(){
 		ajax = false;
-		$('.ajax-wait').remove();
+		//$('.ajax-wait').remove();
+		$(".btn").button("reset");
 	}
 
 	function alignCircle (event, ui){
@@ -186,11 +272,32 @@ $(document).ready(
 		Gmaps.map.circles[0].serviceObject.setCenter(new google.maps.LatLng(lat,lon));
 	}
 
-
-
-
-	
-	
-	
+	function atenders_click(){
+		if(ajax){
+			return;
+		}
+		if((this).getAttribute("class") != "btn active")
+		{
+				atenders = (this).getAttribute("alt");
+				filters();
+		}	
+	}
 
 </script>
+
+
+
+<!-- Modal -->
+<div id="myModal" class="modal hide" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Modal header</h3>
+  </div>
+  <div class="modal-body">
+    <p>One fine body…</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+    <button class="btn btn-primary">Save changes</button>
+  </div>
+</div>

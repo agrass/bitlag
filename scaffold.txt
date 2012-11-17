@@ -9,4 +9,25 @@ netstat -anp|grep 3000
 
 kill -9 3853
 
-http://stackoverflow.com/questions/11058952/why-do-i-get-an-error-installing-the-json-gem-in-ubuntu
+nohup rails server -e production -p 80&
+nohup rails server -e production&
+
+rake db:seed:dump FILE=db/events.rb MODELS=Event
+rake db:seed:dump FILE=db/users.rb MODELS=User
+rake db:seed:dump FILE=db/tags.rb MODELS=EventsTag
+
+rake db:seed tags.rb
+
+rake db:seed FILE=db/Tags.rb MODELS=EventsTag
+
+Event.find(:all,  :conditions => ["start_time < ?", DateTime.now - 1.day])
+
+("fiesta" =~ /(\s[fF]|^[fF])[iI][eE][sS][tT][aA]/ ).nil?
+
+
+
+
+Event.near("Santiago, Chile"  , 100, :order => 'DATE(start_time) ASC, atenders DESC').joins(:tags).where(:tags => {:id => 1 }).where("start_time < ? AND start_time > ? ", Time.now + 10.days, Time.now - 10.hours).limit(1)
+
+RESET DB HEROKU
+heroku pg:reset DATABASE

@@ -1,5 +1,12 @@
 
-			<%= link_to image_tag('login.png'), @auth_url, :class=>"button"%>
+		    <% if session[:user_id] == nil %>
+
+      <%= link_to image_tag('login.png'), @auth_url, :class=>"button"%>
+
+      
+      <% else %>
+      <h2> Thanks! </h2>
+      <% end %>
 	
 	
 	

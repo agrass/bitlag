@@ -1,4 +1,13 @@
-
+<!-- Setear JS y CSS necesarios -->
+<%- content_for(:head) do %>
+<%= stylesheet_link_tag 'application' %>
+<%= stylesheet_link_tag 'home' %>
+<%= javascript_include_tag 'application' %>
+<%= javascript_include_tag 'home' %>
+<script type="text/javascript"
+    src="http://plugins.learningjquery.com/expander/jquery.expander.js">
+    </script>
+<%- end %>
 <div class="mainSlogan"> 
 <div class="slogan"><%= t('inicio.titulo') %></div> <%= t('inicio.descripcion') %>
 </div>
@@ -6,15 +15,15 @@
 <div class="sliderMain"> 
 <div class="pix_diapo">
 
-                    <div data-thumb="images/thumbs/megamind1048.jpg">
-                        <img src="images/slides/party_banner.jpg">
+                    <div data-thumb="assets/thumbs/megamind1048.jpg">
+                        <%= image_tag 'slides/party_banner.jpg' %>
                         <div class="caption elemHover fromLeft">
                            
                         </div>
                     </div>
                     
-                    <div data-thumb="images/thumbs/megamind1048.jpg">
-                        <img src="images/slides/calendar_banner.jpg">
+                    <div data-thumb="assets/thumbs/megamind1048.jpg">
+                      <%= image_tag 'slides/calendar_banner.jpg' %>                       
                         <div class="caption elemHover fromLeft">
                             
                         </div>
@@ -43,7 +52,7 @@
 		<%= image_tag "list_menu.png" %>
 		</div>
 		<div class="menu_text menu_text_grey">
-		<p><h2><%= t('menu.event_list') %></h2></p>	
+		<p><%= t('menu.event_list') %></p>	
 		</div>	
 		</div>
 		</a>
@@ -54,22 +63,22 @@
 		<%= image_tag "mapa_menu.png" %>
 		</div>
 		<div class="menu_text">
-		<p><h2><%= t('menu.map') %></h2></p>
+		<p><%= t('menu.map') %></p>
 		</div>
 		
 		</div>
-		
+	</a>
+	<a href="personal_info">
 		<div class="menu_image3">
 			<div class="menu_image">
 		<%= image_tag "calendar_menu.png" %>
 		</div>
 		<div class="menu_text menu_text_grey">
-		<p><h2><%= t('menu.calendar') %></h2></p>
+		<p><%= t('menu.personal') %></p>
 		</div>
 		
 		</div>
-	
-	
+	</a>
 	</div>
 	
 	</div>
@@ -80,7 +89,9 @@
 	</div>
 			
 			<% else %>
+      <div class="login">
 			<%= link_to 'Logout', logout_path , :class=>"button"%>
+      </div>
 			<% end %>
 			
 			

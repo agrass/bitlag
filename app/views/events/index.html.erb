@@ -1,5 +1,7 @@
 
  <script type="text/javascript">
+
+ 
  $(document).ready(function(){
  if(navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(geo_success);
@@ -11,9 +13,9 @@
                         Lat: position.coords.latitude,
                         Lng: position.coords.longitude, 
                         rich_marker: null, 
-                        marker_picture: "<%= asset_path 'position.png' %>",
-                        marker_width: 60,
-   			marker_height: 80,
+                        marker_picture: "<%= asset_path 'home.png' %>",
+                        marker_width: 33,
+   			marker_height: 41,
    			marker_anchor: null,
    			shadow_anchor: null,
    			shadow_picture: null,

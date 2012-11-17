@@ -24,17 +24,18 @@ group :assets do
   gem 'coffee-rails', '~> 3.2.1'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  # gem 'therubyracer'
+#gem 'therubyracer'
 
   gem 'uglifier', '>= 1.0.3'
 end
 
 gem 'jquery-rails'
 
-gem 'geokit-rails3'
+#gem 'geokit-rails3'
 
 gem "geocoder"
 
+gem 'seed_dump'
 
 
 # To use ActiveModel has_secure_password
@@ -44,7 +45,7 @@ gem "geocoder"
 # gem 'jbuilder'
 
 gem 'execjs'
-gem 'therubyracer'
+
 
 gem 'rabl'
 

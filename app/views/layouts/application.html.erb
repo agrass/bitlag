@@ -2,18 +2,25 @@
 <html>
 <head>
   <title>iWuanaGo</title>
-  <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= stylesheet_link_tag 'gmaps4rails' %>
-  <%= stylesheet_link_tag 'jquery-ui-1.8.22.custom' %>
-  <%= javascript_include_tag "application" %>
-      <script type="text/javascript"
-    src="http://plugins.learningjquery.com/expander/jquery.expander.js">
-    </script>   
-
-  <%= csrf_meta_tags %> 
-
+  <%= yield(:head) %>
+  <%= csrf_meta_tags %>
 </head>
 <body>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-36377967-1']);
+  _gaq.push(['_setDomainName', 'iwuanago.com']);
+  _gaq.push(['_setAllowLinker', true]);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
 
   <div id="feedbackForm" class="feedbackForm">
    
@@ -48,7 +55,7 @@
         	<li><%= link_to t('menu.home'), '/' %></li>
           <li><%= link_to t('menu.event_list'), lists_path %> </li>
           <li><%= link_to t('menu.map'), maps_path %></li>
-          <li><%= link_to t('menu.calendar'), '#' %> </li>         
+          <li><%= link_to t('menu.personal'), personal_info_path %> </li>
           <li><a href="#">Contact</a></li>
         </ul>
       </nav>
