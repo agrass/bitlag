@@ -41,10 +41,12 @@ gem "geocoder"
 # gem 'bcrypt-ruby', '~> 3.0.0'
 
 # To use Jbuilder templates for JSON
-gem 'jbuilder'
+# gem 'jbuilder'
 
 gem 'execjs'
 gem 'therubyracer'
+
+gem 'rabl'
 
 # Use unicorn as the web server
 # gem 'unicorn'
