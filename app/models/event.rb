@@ -63,9 +63,9 @@ end
 
 def self.get_events_with_time(time)
    if time == "today"
-   	Event.where(:end_time => (Time.now)..(Time.now + 12.hours))
+   	Event.where("(end_time >= ? AND end_time <= ?)  OR ( start_time >= ? AND start_time <= ?)", (Time.now - 5.hours), (Time.now + 12.hours), (Time.now - 1.hours), (Time.now + 10.hours) )
    elsif time == "week"
-   	Event.where(:end_time => (Time.now)..(Time.now + 7.days))
+   	Event.where(:end_time => (Time.now - 5.hours)..(Time.now + 7.days))
    else
    	if Time.now > Time.now.end_of_week.ago(86400 * 3)
    		Event.where(:end_time => (Time.now)..(Time.now.end_of_week))

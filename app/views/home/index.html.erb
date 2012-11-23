@@ -4,6 +4,15 @@
 <%= stylesheet_link_tag 'home' %>
 <%= javascript_include_tag 'application' %>
 <%= javascript_include_tag 'home' %>
+
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/es_LA/all.js#xfbml=1";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 <script type="text/javascript"
     src="http://plugins.learningjquery.com/expander/jquery.expander.js">
     </script>
@@ -100,6 +109,13 @@
 				<%= image_tag 'android.png' %>
 				
 				</div>
+
+
+        <div class="fb_page" >
+<div class="fb-like-box" data-href="http://www.facebook.com/IWuanago" data-width="250" data-height="60" data-show-faces="false"  data-stream="false" data-header="false"></div>
+        </div>
+
+        
 	
 	
 	<script language="JavaScript">

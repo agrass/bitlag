@@ -31,3 +31,6 @@ Event.near("Santiago, Chile"  , 100, :order => 'DATE(start_time) ASC, atenders D
 
 RESET DB HEROKU
 heroku pg:reset DATABASE
+heroku pg:info
+
+git commit -m 'seeds' -- db/seeds.rb

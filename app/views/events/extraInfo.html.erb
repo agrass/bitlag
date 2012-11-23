@@ -1,4 +1,25 @@
 
+<div class="well show_left show_full_bar" >
+      <div class="show_friends">
+
+
+    <div class ="show_half_bar show_left" >
+      <div class="friend_pictures">
+        <% if @friends %>
+          <% @friends[0..5].each do |friend| %>          
+            <a href="#" rel="tooltip" data-placement="top" data-original-title="Tooltip on top" > 
+             <%= image_tag friend["pic_square"] %>
+               </a>
+          <% end %>
+        <% end %>
+
+      </div>    
+        
+       </div>
+
+
+    
+    
 <div id="gender">
   <div class="gender"><%= image_tag('event_show/man.png', :size => '35x35') %>
     <label><%= @male %></label>
@@ -11,4 +32,31 @@
  </div>
 
 </div>
+
+<%=  @friends.length  %>
+
+<% if @friends.length > 5 %>
+    <div class="more_friends">
+      <%= link_to_function 'More Friends..', "modal('Friends', '#{@list_friends}', '');" %>
+    </div>
+  <%end %>
+
+
+
+
+
+</div>
+  
+  <div class="show_half_bar show_left">
+        <% if @user.events.exists?(@event) %>
+          <button id="add" class="btn btn-primary" data-loading-text="Loading..."><%= t('personal.remove') %></button>
+        <% else %>
+          <button id="add" class="btn btn-primary" data-loading-text="Loading..."><%= t('personal.add') %></button>
+        <% end %>
+      </div>
+
+  
+
+    
+  </div>
 

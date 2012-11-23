@@ -10,7 +10,7 @@ class EventsController < ApplicationController
     #Uso de busquedas
     if params[:search] != (0).to_s
       if session[:city] != ""
-        @events = Event.near(session[:city] + ", " + session[:country]  , 100, :order => 'DATE(start_time) ASC, atenders DESC').where("lower(name) LIKE lower(?) AND start_time < ? AND start_time > ?", '%'+ params[:search] + '%', Time.now + 10.days, Time.now - 1.days).limit(10).offset(@offset)
+        @events = Event.near(session[:city] + ", " + session[:country]  , 100, :order => 'DATE(start_time) ASC, atenders DESC').where("lower(name) LIKE lower(?) AND start_time < ? AND start_time > ?", '%'+ params[:search] + '%', Time.now + 10.days, Time.now - 10.hours).limit(10).offset(@offset).uniq
         render :file => 'events/refreshList', :layout => false
       end
       return
@@ -19,15 +19,15 @@ class EventsController < ApplicationController
     #si logra encontrar la ciudad
     if session[:city] != ""
       if @active_filters == (0).to_s
-        @events = Event.near(session[:city] + ", " + session[:country]  , 100, :order => 'DATE(start_time) ASC, atenders DESC').where('start_time < ? AND start_time > ?' , Time.now + 10.days, Time.now - 1.days ).limit(10).offset(@offset)
+        @events = Event.near(session[:city] + ", " + session[:country]  , 100, :order => 'DATE(start_time) ASC, atenders DESC').where('start_time < ? AND start_time > ?' , Time.now + 10.days, Time.now - 10.hours ).limit(10).offset(@offset).uniq
       else
-        @events = Event.near(session[:city] + ", " + session[:country]  , 100, :order => 'DATE(start_time) ASC, atenders DESC').joins(:tags).where('tags.id = ? AND start_time < ? AND start_time > ?' ,@active_filters, Time.now + 10.days, Time.now - 1.days ).limit(10).offset(@offset)
+        @events = Event.near(session[:city] + ", " + session[:country]  , 100, :order => 'DATE(start_time) ASC, atenders DESC').joins(:tags).where('tags.id = ? AND start_time < ? AND start_time > ?' ,@active_filters, Time.now + 10.days, Time.now - 10.hours ).limit(10).offset(@offset).uniq
       end
     else
       if @active_filters == (0).to_s
-        @events = Event.where('start_time < ? AND start_time > ?' , Time.now + 10.days, Time.now - 1.days ).limit(10).offset(@offset).order('DATE(start_time) ASC, atenders DESC')
+        @events = Event.where('start_time < ? AND start_time > ?' , Time.now + 10.days, Time.now - 10.hours ).limit(10).offset(@offset).order('DATE(start_time) ASC, atenders DESC')
       else
-        @events = Event.joins(:tags).where('tags.id = ? AND start_time < ? AND start_time > ?' ,@active_filters, Time.now + 10.days, Time.now - 1.days ).limit(10).offset(@offset).order('DATE(start_time) ASC, atenders DESC')
+        @events = Event.joins(:tags).where('tags.id = ? AND start_time < ? AND start_time > ?' ,@active_filters, Time.now + 10.days, Time.now - 10.hours ).limit(10).offset(@offset).order('DATE(start_time) ASC, atenders DESC').uniq
       end
     end    
     render :file => 'events/refreshList', :layout => false    
@@ -165,15 +165,27 @@ class EventsController < ApplicationController
 
 
   def extraInfo
-    begin
+    begin      
       @api = Koala::Facebook::API.new(session[:access_token]) 
+      @event = Event.find_by_fb_id(params[:fb_id])
+      @user = User.find_by_fb_id(session[:user_id])
       @female = @api.fql_query("SELECT uid FROM user WHERE uid IN (select uid from event_member where eid = #{params[:fb_id]}  AND  rsvp_status = 'attending') AND sex = 'female'").length
       @male = @api.fql_query("SELECT uid FROM user WHERE uid IN (select uid from event_member where eid = #{params[:fb_id]}  AND  rsvp_status = 'attending') AND sex = 'male'").length
+      @friends= @api.fql_query("SELECT name, pic_square FROM user WHERE uid IN (
+  SELECT uid2 FROM friend WHERE uid2 in (select uid from event_member where eid = #{params[:fb_id]} AND  rsvp_status = 'attending') AND uid1 = me() )")     
+      @list_friends = ""
+      @friends.each do |friend|
+        @list_friends += "<p>"+friend["name"]+"</p>"
+      end
     rescue
       @female = ""
       @male = ""
+      @friends = []
     end
     render :layout => false
+
+
+
   end
   # GET /events/1
   # GET /events/1.json
@@ -181,27 +193,11 @@ class EventsController < ApplicationController
     session[:oauth] = Koala::Facebook::OAuth.new(APP_ID, APP_SECRET, SITE_URL + '/callback?event_id='+params[:id])
     @auth_url =  session[:oauth].url_for_oauth_code(:permissions=>"email, user_events, friends_events, rsvp_event")  
     puts session.to_s + "<<< session"
-    
-
-    if session[:user_id]
-      @user = User.find_by_fb_id(session[:user_id])
-    else
-      @user = nil
-    end
+   
 
     @event = Event.find(params[:id])
-    @json = @event.to_gmaps4rails
-    #ver amigos facebook
-    if session[:access_token]
-    @api = Koala::Facebook::API.new(session[:access_token]) 
-    @friends= @api.fql_query("SELECT name, pic_square FROM user WHERE uid IN (
-SELECT uid2 FROM friend WHERE uid2 in (select uid from event_member where eid = #{@event.fb_id} AND  rsvp_status = 'attending') AND uid1 = me() )") 
- 
-    @list_friends = ""
-    @friends.each do |friend|
-      @list_friends += "<p>"+friend["name"]+"</p>"
-      end
-  end
+    
+    
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @event }

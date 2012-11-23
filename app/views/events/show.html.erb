@@ -47,7 +47,7 @@ $("#gender_start").click(function() {
 });
 
 <% if session[:user_id] %>
-$("#gender").replaceWith('<div id="gender"><img src="../assets/ajax-loader.gif" /></div>')
+$("#extra_info_bar").replaceWith('<div id="gender"><img src="../assets/ajax-loader.gif" /></div>')
    $.ajax({
   url: '../extrainfo/<%= @event.fb_id %>',
   success: function(data) {
@@ -162,72 +162,15 @@ $("#add").click(function() {
 
 
 
-
-
-
 <div class="show_description">
 	<% if @event.description != nil %>
 	<%= simple_format(@event.description) %>
 	<% end %>
 	</div>
 
-<% if session[:user_id]  %>
-    <div class="well show_left show_full_bar" >
-      <div class="show_friends">
-
-    <div class ="show_half_bar show_left" >
-      <div class="friend_pictures">   
-        <% @friends[0..5].each do |friend| %>
-        
-        <a href="#" rel="tooltip" data-placement="top" data-original-title="Tooltip on top" class="tooltip"> 
-         <%= image_tag friend["pic_square"] %>
-           </a>
-        <% end %>
-       </div>
-    
-    
-    <div id="gender">
-      <div id="gender_start">
-         <div class="gender">
-          <%= image_tag('event_show/man.png', :size => '35x35') %>
-          <label>?</label>
-        </div>
-        <div class="gender">
-          <%= image_tag('event_show/women.png', :size => '35x35') %>
-          <label>
-          ?
-          </label>
-        </div>
-      </div>
-</div>
-
-<% if @friends.length > 5 %>
-    <div class="more_friends">
-      <%= link_to_function 'More Friends..', "modal('Friends', '#{@list_friends}', '');" %>
-    </div>
-  <%end %>
 
 
-
-</div>
-  
-  <div class="show_half_bar show_left">
-        <% if @user.events.exists?(@event) %>
-          <button id="add" class="btn btn-primary" data-loading-text="Loading..."><%= t('personal.remove') %></button>
-        <% else %>
-          <button id="add" class="btn btn-primary" data-loading-text="Loading..."><%= t('personal.add') %></button>
-        <% end %>
-      </div>
-
-  
-
-    
-  </div>
-
-   
-</div>
-<% else %>
-<div class="well show_left show_full_bar" >
+<div class="well show_left show_full_bar" id="extra_info_bar" >
   <div class="alert fade in show_half_bar show_left">
             <button type="button" class="close" data-dismiss="alert">×</button>
             <strong><%= t('show.extra_info') %></strong> <%= t('show.extra_details') %>
@@ -253,7 +196,7 @@ $("#add").click(function() {
 
 </div>
 
-  <%end %>
+  
 
 
 
