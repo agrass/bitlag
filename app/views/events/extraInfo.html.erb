@@ -33,8 +33,6 @@
 
 </div>
 
-<%=  @friends.length  %>
-
 <% if @friends.length > 5 %>
     <div class="more_friends">
       <%= link_to_function 'More Friends..', "modal('Friends', '#{@list_friends}', '');" %>
